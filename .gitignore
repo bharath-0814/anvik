@@ -64,3 +64,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Datasets & incoming data
+backend/data/
+shivam -- data/
+*.zip
+
