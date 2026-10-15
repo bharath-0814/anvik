@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 
+from app.api.routes.graph import router as graph_router
 from app.api.routes.health import router as health_router
 from app.api.routes.ready import router as ready_router
 
@@ -13,3 +14,4 @@ app = FastAPI(
 
 app.include_router(health_router, prefix="/api")
 app.include_router(ready_router, prefix="/api")
+app.include_router(graph_router, prefix="/api")
