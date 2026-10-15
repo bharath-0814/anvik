@@ -148,5 +148,33 @@ Format per entry:
 - **Alternatives Considered:** Fixed bucket time windowing (e.g. hourly cron; rejected: splits bursts that cross hour boundaries); counting total transactions without distinct sender deduplication (rejected: allows a single sender making 10 rapid transfers to trigger a fan-in alert).
 - **Consequences & Trade-offs:** Sliding window requires per-receiver transaction sorting ($O(N \log N)$ where $N$ is incoming transactions per receiver), which is computationally lightweight for real-time and batch investigation.
 - **Affected Files / Components:** `backend/app/detection/rules/multi_source_fan_in.py`, `backend/app/detection/rules/__init__.py`, `backend/app/detection/registry.py`, `backend/app/detection/scoring.py`, `backend/tests/test_detection_fan_in.py`.
-- **Verification Method / Test Result:** Verified against ground truth: $S03\_MANY\_SOURCES$ triggers alert with exact accounts (`ACC0030` collector + 30 senders) and 30 transaction IDs (`TXN002489` - `TXN002543`); $S04\_CHARITY\_COLLECTION$ generates zero alerts. 11/11 tests passing in `backend/tests/test_detection_fan_in.py`.
+---
+
+### DEC-011: Independent Frontend Deployment Repository and Typed API Adapter Layer
+- **Date/Time (UTC):** 2026-10-16 05:45:00Z
+- **Decision:** Establish a dedicated frontend repository `bharath-0814/anvik-frontend` derived from Piyush's original frontend (`Kbharti-25/avnikfrontend`), deploy it publicly on Vercel (`https://anvik-frontend-alpha.vercel.app`), and integrate a typed API client and adapter layer (`src/services/api.ts`) connecting to the FastAPI/Turso backend (`GET /api/graph`).
+- **Status:** accepted (verified)
+- **Context / Problem:**
+  - Piyush's original deployment on Vercel had Deployment Protection enabled, preventing external evaluators and teammates from inspecting the UI without team SSO credentials.
+  - The original frontend codebase was completely decoupled from the backend (0 API calls, hardcoded mock data, and an SVG canvas instead of dynamic Cytoscape.js).
+  - Backend and frontend must maintain clean separation of concerns and team ownership boundaries: Piyush owns frontend UI/UX and graph design; Bharath owns the backend, database, and deployment.
+- **Reason & Rationale:**
+  - An independent deployment repository under Bharath's GitHub/Vercel accounts allows deployment without altering Piyush's original repository (`Kbharti-25/avnikfrontend`).
+  - Deploying with public access guarantees hackathon judges can evaluate the live interface unhindered.
+  - Activating `GraphExplorer.tsx` with dynamic spring-embedded layout (`cose`) enables real NetworkX topology visualization while preserving Piyush's SVG canvas as an alternate demo view mode.
+  - Transparent data mode indicators (`Live API` vs `Demo Synthetic Mode`) guarantee that simulated mock data is never misrepresented as live backend results.
+- **Alternatives Considered:**
+  - Rewriting frontend in the backend monorepo (rejected: violates ownership rules and discards Piyush's comprehensive UI work).
+  - Forcing direct code modifications into Piyush's repository (rejected: violates Phase 5 boundary rules).
+- **Consequences & Trade-offs:**
+  - Requires maintaining the adapter mapping between backend Cytoscape elements and frontend node attributes.
+  - Unit tests for adapter logic were added (`tests/api_adapter.test.mjs`) to prevent contract regressions.
+- **Affected Files / Components:**
+  - Frontend repo: `bharath-0814/anvik-frontend` (`src/services/api.ts`, `src/App.tsx`, `src/components/GraphExplorer.tsx`, `tests/api_adapter.test.mjs`, `README.md`).
+  - Backend repo: `docs/API_CONTRACT.md`, `docs/DECISIONS.md`, `docs/FLOW.md`.
+- **Verification Method / Test Result:**
+  - Public Vercel URL verified in unauthenticated session: HTTP 200 OK (`https://anvik-frontend-alpha.vercel.app`).
+  - Frontend unit tests passing: 3/3 tests passing in 65ms (`npm test`).
+  - Frontend production build passing: `tsc && vite build` built in 4.69s.
+  - Real backend graph queried: 396 nodes, 3,362 edges verified from Turso database.
 
