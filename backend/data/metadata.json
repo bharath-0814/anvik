@@ -1,0 +1,14 @@
+{
+  "dataset_id": "shivam_synthetic_v1",
+  "source_repository": "https://github.com/krifficyall/fraud_detection_dataset",
+  "source_commit": "4259dc5c317365e16a0dc9b9c4a49fc61e6d5023",
+  "generated_at_utc": "2026-10-15T12:00:00Z",
+  "synthetic_policy": "Strict synthetic data - no real PII or live banking data",
+  "metrics": {
+    "accounts": 200,
+    "devices": 196,
+    "transactions": 3129,
+    "account_devices": 233,
+    "complaints": 10
+  }
+}

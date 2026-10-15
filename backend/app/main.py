@@ -13,6 +13,7 @@ app = FastAPI(
     title="Anvik Backend API",
     version="0.1.0",
     description="UPI Fraud-Ring Graph Investigator Backend",
+    redirect_slashes=False,
 )
 
 # CORS Configuration allowing production Vercel frontend, local development, and preview deployments
@@ -32,8 +33,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/", summary="Root status check")
+@app.get("/api/index.py", summary="Serverless entrypoint fallback")
+@app.get("/api/index", summary="Serverless entrypoint fallback")
+def root_check():
+    """Service liveness indicator at root."""
+    return {"status": "healthy", "service": "anvik-backend"}
+
+# Mount with /api prefix
 app.include_router(health_router, prefix="/api")
 app.include_router(ready_router, prefix="/api")
 app.include_router(graph_router, prefix="/api")
 app.include_router(complaints_router, prefix="/api")
 app.include_router(alerts_router, prefix="/api")
+
+# Also mount without /api prefix for routing flexibility under serverless rewrites
+app.include_router(health_router)
+app.include_router(ready_router)
+app.include_router(graph_router)
+app.include_router(complaints_router)
+app.include_router(alerts_router)
