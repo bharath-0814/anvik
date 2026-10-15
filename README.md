@@ -12,10 +12,10 @@
 Anvik constructs a graph of synthetic financial interactions to surface explainable, evidence-backed transaction clusters, timeline anomalies, and counterfactual insights for fraud analysts and investigators.
 
 > [!IMPORTANT]
-> **Investigative Decision Support Only**: Anvik is an analytical aid for investigators, not an automated system for declaring individuals guilty. Suspicious alerts and graph anomalies represent investigative leads, not legal proof of wrongdoing.
+> **Investigative Decision Support Only**: Anvik is an analytical aid for investigators, not an automated system for declaring individuals guilty. Suspicious alerts, graph anomalies, and shared identifiers represent investigative leads, not legal proof of wrongdoing.
 
 > [!NOTE]
-> **Synthetic Data Policy**: Anvik exclusively operates on synthetic transaction datasets. It does not connect to real banking infrastructure, payment gateways, or live customer financial records.
+> **Synthetic Data Policy**: Anvik exclusively operates on synthetic transaction datasets. It does not connect to real banking infrastructure, payment gateways, live customer financial records, or real personal credentials.
 
 ---
 
@@ -31,9 +31,9 @@ Anvik constructs a graph of synthetic financial interactions to surface explaina
 
 ---
 
-## 3. Planned Technology Stack
+## 3. Technology Stack
 
-### Frontend (Owned by Members 1 & 2)
+### Frontend (Owned by Piyush — Members 1 & 2)
 - **Framework & Language**: React 18 / TypeScript
 - **Tooling & Build**: Vite
 - **Styling & UI**: Tailwind CSS, shadcn/ui, Lucide React
@@ -41,82 +41,73 @@ Anvik constructs a graph of synthetic financial interactions to surface explaina
 - **Graph Visualization**: Cytoscape.js
 - **Testing**: Vitest, React Testing Library
 
-### Backend (Owned by Bharath)
+### Backend (Owned by Bharath — Member 3)
 - **Language & Runtime**: Python 3.11+
 - **API Framework**: FastAPI, Uvicorn, Pydantic
-- **Database & ORM**: PostgreSQL, SQLAlchemy, Alembic
+- **Database & Storage**: Turso hosted SQL (via `turso_serverless`)
 - **Graph Engine & Processing**: NetworkX, Pandas, NumPy
 - **Testing & Verification**: pytest, HTTPX
-
-*(Note: These technologies represent planned architectural choices. Application code has not yet been built in this initialization phase.)*
 
 ---
 
 ## 4. Current Development Status
 
-**Status: Repository Initialization Phase.**
+**Status: Backend Foundation Phase.**
 
-The project structure, development guidelines, ownership boundaries, and empty documentation scaffolds have been created. No frontend or backend application code is active in this phase.
+- **Backend Foundation**: Active implementation of FastAPI application structure, Pydantic schemas, Turso database connection, NetworkX graph engine, and rule-based detection logic.
+- **Data Engineering Handoff**: The finalized synthetic JSON dataset (`anvik_dataset_v1.json`) and ground-truth expected detection results (`anvik_expected_results_v1.json`) are currently being generated and validated by Shivam (Dataset Generation) and Aryan (QA & Validation).
+- **Frontend Preparation**: UI component scaffolding and Cytoscape.js graph canvas preparation will integrate with backend endpoints once the foundation is active.
+- **Data Policy & Ethics**: Strict synthetic data only policy is enforced across all environments. All flagged patterns serve as investigative leads, not proof of guilt.
 
 ---
 
 ## 5. Team Ownership & Responsibilities
 
-The Anvik project is developed by a 6-member team with clear ownership boundaries:
+The Anvik project is organized across defined member ownership boundaries:
 
-### Member 1 — Frontend Development and UI/UX
-- React and TypeScript application interface.
-- Dashboard layout, navigation, and reusable UI components.
-- Complaint intake forms and transaction tables.
-- Responsive design, visual consistency, and UI state handling (loading/empty/error).
-- Frontend integration with backend APIs.
+### Piyush — Members 1 & 2: Frontend Development, UI/UX & Graph Visualization
+- Owns the entire frontend codebase, UI/UX design, and presentation layer.
+- React 18, TypeScript, Vite, Tailwind CSS, and shadcn/ui component architecture.
+- Interactive Cytoscape.js graph canvas for visualizing accounts, devices, merchants, transactions, and complaints.
+- Node/edge styling, layouts, zoom/pan controls, path highlighting, and graph filtering.
+- Transaction timelines, complaint forms, evidence inspector, and case management UI.
+- Direct integration with Bharath's backend REST APIs.
 
-### Member 2 — Graph Visualization and Investigation Interface
-- Interactive graph visualization using Cytoscape.js.
-- Graph modeling for accounts, devices, transactions, merchants, and complaints.
-- Node/edge interactions, zooming, panning, selection, and filtering.
-- Highlighting suspicious paths and related evidence trails.
-- Usability, performance, and responsive graph rendering.
+### Bharath — Member 3: Backend, Database & Fraud Detection Engine
+- **Sole owner of the entire backend, database, and detection engine.**
+- Python 3.11+ FastAPI service architecture and Pydantic request/response validation.
+- Turso hosted SQL database schema, queries, and client connectivity (via `turso_serverless`).
+- Synthetic dataset ingestion and validation service (`anvik_dataset_v1.json`).
+- NetworkX graph construction, cycle detection, path traversal, and community analysis.
+- Rule-based fraud detection engine (structuring, mule fan-out/fan-in, circular routing, high-risk device sharing).
+- Evidence-linked alert generation and explainable priority scoring.
+- Counterfactual analysis engine (node/edge perturbation and impact assessment).
+- Automated backend testing suite (pytest, HTTPX) and deployment configuration.
 
-### Member 3 — Bharath: Backend, Database and Fraud Detection
-- **Sole owner of the entire backend and detection engine.**
-- PostgreSQL schema, persistence, and Alembic migrations.
-- FastAPI endpoints and Pydantic request/response schemas.
-- Data validation and synthetic dataset import services.
-- Graph construction and analysis using NetworkX.
-- Rule-based detection of suspicious transaction patterns.
-- Evidence-linked alerts and explainable priority scoring.
-- Transaction timelines, complaint associations, and investigation case APIs.
-- Counterfactual analysis engine.
-- Backend unit/integration tests and backend deployment.
+### Aryan — Member 4: Synthetic Dataset Validation, Quality & QA
+- Synthetic dataset validation, data quality checks, and schema conformance.
+- Authoring test scenarios, edge cases, and ground-truth expected outcomes (`anvik_expected_results_v1.json`).
+- Verifying detection engine accuracy, false positive rates, and rule precision.
+- Handoff validation between synthetic data generation and backend ingestion.
 
-### Member 4 — Data Engineering, Testing and QA
-- Synthetic dataset generation (accounts, devices, merchants, transactions, complaints).
-- Planting known suspicious patterns and legitimate lookalike control scenarios.
-- Ground-truth labeling and expected outcome matrices.
-- Verification of API contracts, data integrity, detection accuracy, and false positives.
-- Coordination with Bharath on data schemas and evaluation metrics.
+### Shivam — Member 5: Synthetic Transaction Dataset Engineering
+- Generates comprehensive synthetic transaction datasets (`anvik_dataset_v1.json`).
+- Synthesizes realistic entities: accounts, devices, merchants, transactions, and complaints.
+- Plants distinct fraud ring topologies alongside realistic benign control transactions.
+- Coordinates data structure alignment with Aryan (QA) and Bharath (Backend).
 
-### Member 5 — Integration, Case Management and Deployment Coordination
-- Cross-team repository integration and merge coordination.
-- API contract alignment between frontend and backend.
-- Case-management workflow integration with Member 1.
-- Conflict resolution and end-to-end integration verification.
-- Deployment configuration coordination.
-
-### Member 6 — Demo, Presentation and Deployment Coordination
-- Realistic synthetic demonstration scenarios and walkthrough scripts.
-- Presentation slide deck, architecture diagrams, and visuals.
-- Demonstration rehearsals and final verification.
-- Coordination of deployment checks and submission deliverables.
+### Member 6 (Unconfirmed): Demo, Presentation & PPT
+- Demonstrations, walkthrough scenarios, and investigator storytelling scripts.
+- Presentation slide deck, architecture diagrams, and submission deliverables.
+- Rehearsal coordination and live presentation delivery.
 
 ---
 
 ## 6. Proposed Development Sequence
 
-1. **Phase 1: Repository Initialization & Ownership (Current)** — Establish git hygiene, documentation scaffold, and project instructions.
-2. **Phase 2: Data Engineering & API Contract Specification** — Define synthetic data formats, ground-truth patterns, and Pydantic/OpenAPI contracts.
-3. **Phase 3: Backend Core & Detection Engine** — Database schema, NetworkX graph engine, and detection rule implementation (Bharath).
-4. **Phase 4: Frontend Core & Graph Interface** — UI shell, tables, forms (Member 1), and Cytoscape.js visualization canvas (Member 2).
-5. **Phase 5: Integration & Case Management** — Connecting frontend to backend APIs and validating end-to-end flows (Member 5 & Team).
-6. **Phase 6: QA, Evaluation & Demonstration Prep** — Benchmark detection accuracy, conduct user walkthrough rehearsals, and deploy (Member 4, 6 & Team).
+1. **Phase 1: Repository Initialization & Ownership** — Project hygiene, configuration, team boundaries, and documentation scaffold.
+2. **Phase 2: Synthetic Data & Ground Truth Generation** — Creation of `anvik_dataset_v1.json` (Shivam) and validation of `anvik_expected_results_v1.json` (Aryan).
+3. **Phase 3: Backend Foundation & Detection Engine (Current)** — FastAPI endpoints, Turso database integration, NetworkX graph modeling, detection rules, and counterfactual engine (Bharath).
+4. **Phase 4: Frontend Development & Graph Visualization** — UI dashboard, Cytoscape.js canvas, and evidence panels (Piyush).
+5. **Phase 5: API Integration & Case Management** — End-to-end integration between frontend and backend APIs.
+6. **Phase 6: Verification, Rehearsal & Demonstration** — Ground-truth benchmark verification, demonstration walk-throughs, slide deck finalization, and deployment.
