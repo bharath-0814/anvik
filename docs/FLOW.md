@@ -110,6 +110,7 @@ flowchart TD
     A["Caller: Investigation Run / API / Batch"] --> B["app.detection.registry:RuleRegistry"]
     B --> C1["Rule: RapidOnwardTransferRule"]
     B --> C2["Rule: TransactionCycleRule"]
+    B --> C3["Rule: MultipleIncomingSourcesRule"]
     
     subgraph "Rapid Onward Transfer Detection"
         C1 --> D1["Fetch SUCCESS transactions ordered chronologically"]
@@ -128,13 +129,23 @@ flowchart TD
         H2 --> I2["_create_cycle_alert(): generate evidence, narrative, limitations"]
     end
 
+    subgraph "Multiple-Source Fan-In Detection"
+        C3 --> D3["Fetch SUCCESS transactions ordered chronologically"]
+        D3 --> E3["Group inflows by receiver account (filter min_amount_inr)"]
+        E3 --> F3["Scan sliding windows (time_window_hours, default 3.0h)"]
+        F3 --> G3["Filter distinct senders >= min_distinct_senders (default 10)"]
+        G3 --> H3["Merge overlapping qualifying windows into maximal contiguous bursts"]
+        H3 --> I3["_create_fan_in_alert(): generate evidence, narrative, limitations"]
+    end
+
     H1 --> J["app.detection.scoring:calculate_alert_score()"]
     I2 --> J
+    I3 --> J
     J --> K["Return List of app.detection.models:DetectionAlert"]
 ```
 
 ### Execution Steps
-1. **Registry Coordination:** `app.detection.registry:RuleRegistry` maintains all active rule instances. Calling `registry.run_all(conn)` or `registry.run_rule(rule_id, conn)` dispatches detection against an active database connection.
+1. **Registry Coordination:** `app.detection.registry:RuleRegistry` maintains all active rule instances. Calling `registry.run_all(conn)` or `registry.run_rule(rule_id, conn)` dispatches detection against an active database connection. Rules can be queried by canonical ID or configured aliases.
 2. **Rule 1 — Rapid Onward Transfer:**
    - Implemented in `app.detection.rules.rapid_transfer:RapidOnwardTransferRule`.
    - Queries `SUCCESS` transactions ordered chronologically.
@@ -148,8 +159,14 @@ flowchart TD
    - Enforces chronological sequence ($t_{i+1} > t_i$) and eliminates non-circular settlements.
    - Deduplicates cycle alerts across starting perspectives using canonical sorted transaction key.
    - Generates deterministic alert ID (`alt_cyc_<hash>`), structured evidence payload, and decision-support caveats.
-4. **Scoring:** Both rules delegate prioritization scoring to `app.detection.scoring:calculate_alert_score()`. Scores are bounded in $[0.0, 100.0]$ and remain modular pending Aryan's finalized formula.
-5. **Output Serialization:** Findings are emitted as `app.detection.models:DetectionAlert` objects with embedded Cytoscape graph contexts.
+4. **Rule 3 — Multiple-Source Fan-In:**
+   - Implemented in `app.detection.rules.multi_source_fan_in:MultipleIncomingSourcesRule` (canonical ID: `multiple_incoming_sources`, alias: `multiple_source_fan_in`).
+   - Groups `SUCCESS` inflows by receiver account.
+   - Uses sliding-window evaluation over `time_window_hours` (default: 3.0h) and merges overlapping windows into maximal contiguous bursts.
+   - Triggers when distinct sender count $\ge \text{min\_distinct\_senders}$ (default: 10), naturally isolating rapid fraud surges ($S03\_MANY\_SOURCES$, 30 senders in 2.81h) from multi-day charity collections ($S04\_CHARITY\_COLLECTION$, max 5 senders in 3h).
+   - Generates deterministic alert ID (`alt_fanin_<hash>`), structured evidence, narrative, limitations, and alternative explanations.
+5. **Scoring:** All rules delegate prioritization scoring to `app.detection.scoring:calculate_alert_score()`. Scores are bounded in $[0.0, 100.0]$ and remain modular pending Aryan's finalized formula.
+6. **Output Serialization:** Findings are emitted as `app.detection.models:DetectionAlert` objects with embedded Cytoscape graph contexts.
 
 ---
 
@@ -173,6 +190,7 @@ flowchart TD
     D --> F1["test_graph.py: Subgraph queries & Cytoscape JSON export"]
     D --> F2["test_detection_rapid_transfer.py: S01 trigger & S02 legitimate control"]
     D --> F3["test_detection_cycle.py: S05 trigger & S06 roommate settleup control"]
+    D --> F4["test_detection_fan_in.py: S03 trigger & S04 charity collection control"]
 ```
 
 ### Execution Steps
@@ -184,6 +202,7 @@ flowchart TD
    - Use `populated_shivam_db` fixture to import Shivam's synthetic dataset into an in-memory SQLite instance.
    - Verify that positive scenario $S01\_RAPID\_CHAIN$ triggers `RAPID_ONWARD_TRANSFER` and negative control $S02\_SHOP\_SUPPLIER$ does not.
    - Verify that positive scenario $S05\_CYCLE$ triggers `TRANSACTION_CYCLE` and negative control $S06\_ROOMMATE\_SETTLEUP$ does not.
+   - Verify that positive scenario $S03\_MANY\_SOURCES$ triggers `multiple_incoming_sources` and negative control $S04\_CHARITY\_COLLECTION$ does not.
    - Verify idempotency: running detection multiple times produces identical alert IDs and outputs.
 
 ---
@@ -211,5 +230,10 @@ flowchart TD
 | `backend/app/detection/registry.py` | Rule Registry | Registry coordinating discovery and batch execution of detection rules. |
 | `backend/app/detection/rules/rapid_transfer.py` | Detection Rule | Implements `RapidOnwardTransferRule` for rapid pass-through and mule routing. |
 | `backend/app/detection/rules/transaction_cycle.py` | Detection Rule | Implements `TransactionCycleRule` for closed circular fund routing. |
+| `backend/app/detection/rules/multi_source_fan_in.py` | Detection Rule | Implements `MultipleIncomingSourcesRule` for multi-source fund consolidation. |
+| `backend/tests/test_detection_rapid_transfer.py` | Test Suite | Unit and ground-truth scenario tests for rapid onward transfer rule. |
+| `backend/tests/test_detection_cycle.py` | Test Suite | Unit and ground-truth scenario tests for transaction cycle rule. |
+| `backend/tests/test_detection_fan_in.py` | Test Suite | Unit and ground-truth scenario tests for multiple-source fan-in rule. |
 | `backend/scripts/import_dataset.py` | CLI Script | Command-line utility to run dataset migrations and imports. |
 | `backend/scripts/check_turso_connection.py` | CLI Script | Command-line utility to test live Turso database connectivity. |
+

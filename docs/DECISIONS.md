@@ -132,3 +132,21 @@ Format per entry:
 - **Consequences & Trade-offs:** DFS exploration is bounded by `max_cycle_length` (default 5 hops) to ensure linear/polynomial time complexity over high-volume transaction sets.
 - **Affected Files / Components:** `backend/app/detection/rules/transaction_cycle.py`, `backend/app/detection/rules/__init__.py`, `backend/app/detection/registry.py`, `backend/app/detection/scoring.py`, `backend/tests/test_detection_cycle.py`.
 - **Verification Method / Test Result:** Verified with ground truth: $S05\_CYCLE$ detected with exact accounts `['ACC0101', 'ACC0102', 'ACC0103']` and transactions `['TXN002702', 'TXN002703', 'TXN002705']`; $S06\_ROOMMATE\_SETTLEUP$ is completely unflagged. 10/10 tests passing in `backend/tests/test_detection_cycle.py`.
+
+---
+
+### DEC-010: Rule 3 Implementation — Multiple-Source Fan-In Detection (multiple_incoming_sources)
+- **Date/Time (UTC):** 2026-10-16 05:05:00Z
+- **Decision:** Implement `MultipleIncomingSourcesRule` (canonical ID: `multiple_incoming_sources`, alias: `multiple_source_fan_in`) using sliding-window aggregation and overlapping-window burst merging over chronologically ordered `SUCCESS` transactions, enforcing configurable time window duration (default 3.0h) and minimum distinct sender count (default 10).
+- **Status:** accepted (verified)
+- **Context / Problem:** Fraud rings consolidate illicit proceeds from numerous victim accounts or mule recruits into a central collector account in a rapid surge. Legitimate multi-source collections (such as community fundraisers, charity campaigns, or temple donations spread over several days with varied amounts) must NOT be flagged.
+- **Reason & Rationale:**
+  - High-velocity aggregation ($S03\_MANY\_SOURCES$, 30 distinct senders in 2.81 hours, ~10.7 txns/hour, uniform ~Rs 2,000 amounts) exhibits extreme velocity and sender diversity within a narrow temporal window.
+  - Multi-day legitimate collections ($S04\_CHARITY\_COLLECTION$, 30 donors spread over 96.55 hours / > 4 days, ~0.31 txns/hour, max 5 senders in any 3-hour window) naturally fall well below the 10 distinct senders per 3-hour window threshold.
+  - Merging overlapping candidate windows into maximal contiguous bursts prevents redundant duplicate alerts for the same convergence surge.
+  - Excludes failed transactions and repeated payments from the same sender to avoid false alarms.
+- **Alternatives Considered:** Fixed bucket time windowing (e.g. hourly cron; rejected: splits bursts that cross hour boundaries); counting total transactions without distinct sender deduplication (rejected: allows a single sender making 10 rapid transfers to trigger a fan-in alert).
+- **Consequences & Trade-offs:** Sliding window requires per-receiver transaction sorting ($O(N \log N)$ where $N$ is incoming transactions per receiver), which is computationally lightweight for real-time and batch investigation.
+- **Affected Files / Components:** `backend/app/detection/rules/multi_source_fan_in.py`, `backend/app/detection/rules/__init__.py`, `backend/app/detection/registry.py`, `backend/app/detection/scoring.py`, `backend/tests/test_detection_fan_in.py`.
+- **Verification Method / Test Result:** Verified against ground truth: $S03\_MANY\_SOURCES$ triggers alert with exact accounts (`ACC0030` collector + 30 senders) and 30 transaction IDs (`TXN002489` - `TXN002543`); $S04\_CHARITY\_COLLECTION$ generates zero alerts. 11/11 tests passing in `backend/tests/test_detection_fan_in.py`.
+

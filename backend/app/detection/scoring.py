@@ -47,4 +47,18 @@ def calculate_alert_score(
         base = 75.0 + min(10.0, (cycle_len - 3) * 5.0) + speed_bonus + retention_bonus
         return round(max(0.0, min(100.0, base)), 2)
 
+    elif rule_key in ("MULTIPLE_INCOMING_SOURCES", "MULTIPLE_SOURCE_FAN_IN"):
+        # Heuristic prioritization based on sender count, velocity, and volume
+        senders = evidence.get("distinct_sender_count", 10)
+        duration_mins = evidence.get("duration_minutes", 180.0)
+        total_amt = evidence.get("total_amount_inr", 10000.0)
+        # Senders factor (up to 15 points)
+        sender_bonus = min(15.0, max(0.0, (senders - 10) * 0.75))
+        # Velocity factor (faster influx yields higher urgency, up to 10 points)
+        velocity_bonus = max(0.0, min(10.0, (180.0 - duration_mins) / 18.0))
+        # Volume factor (higher total volume yields up to 5 points)
+        volume_bonus = min(5.0, total_amt / 20000.0)
+        base = 70.0 + sender_bonus + velocity_bonus + volume_bonus
+        return round(max(0.0, min(100.0, base)), 2)
+
     return 50.0
