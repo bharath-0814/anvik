@@ -59,8 +59,10 @@ def get_default_registry() -> RuleRegistry:
     """Build and return a RuleRegistry populated with standard detection rules."""
     reg = RuleRegistry()
     from app.detection.rules.rapid_transfer import RapidOnwardTransferRule
+    from app.detection.rules.transaction_cycle import TransactionCycleRule
 
     reg.register(RapidOnwardTransferRule())
+    reg.register(TransactionCycleRule())
     return reg
 
 

@@ -36,5 +36,15 @@ def calculate_alert_score(
         # Multi-hop rapid transfers receive higher triage urgency
         base = 70.0 + min(20.0, (hops - 1) * 10.0) + (ratio * 10.0)
         return round(max(0.0, min(100.0, base)), 2)
+    elif rule_key == "TRANSACTION_CYCLE":
+        # Heuristic prioritization based on cycle length, velocity and retention
+        cycle_len = evidence.get("cycle_length", 3)
+        duration_mins = evidence.get("duration_minutes", 60.0)
+        retention = evidence.get("amount_retention_ratio", 0.95)
+        # Fast cycles with tight loops receive higher triage urgency
+        speed_bonus = max(0.0, min(10.0, (240.0 - duration_mins) / 24.0))
+        retention_bonus = max(0.0, min(10.0, retention * 10.0))
+        base = 75.0 + min(10.0, (cycle_len - 3) * 5.0) + speed_bonus + retention_bonus
+        return round(max(0.0, min(100.0, base)), 2)
 
     return 50.0
