@@ -511,9 +511,6 @@ function DashboardContent() {
         alertCount={SYNTHETIC_ALERTS.length}
         onDownloadReport={handleDownloadReport}
         onLogout={handleLogout}
-        isLiveConnected={isLiveConnected}
-        dataSourceMode={dataSourceMode}
-        onSelectDemoScenario={handleSelectDemoScenario}
       />
 
       {/* 2. Main Investigation Workspace */}

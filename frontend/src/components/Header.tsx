@@ -2,10 +2,10 @@ import React from 'react';
 import { 
   ChevronRight, 
   Search, 
-  Network,
-  Download,
-  Plus,
-  ShieldAlert
+  Network, 
+  Download, 
+  Plus, 
+  ShieldAlert 
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -17,9 +17,6 @@ interface HeaderProps {
   onReturnToIntake?: () => void;
   isGraphLoaded?: boolean;
   onLogout?: () => void;
-  isLiveConnected?: boolean;
-  dataSourceMode?: 'live' | 'mock';
-  onSelectDemoScenario?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -31,69 +28,9 @@ export const Header: React.FC<HeaderProps> = ({
   onReturnToIntake,
   isGraphLoaded = false,
   onLogout,
-  isLiveConnected = false,
-  dataSourceMode = 'live',
-  onSelectDemoScenario,
 }) => {
   return (
-    <div className="w-full flex flex-col select-none z-20 shrink-0">
-      {/* High-Contrast Top Bar Section */}
-      <div className="bg-slate-900 text-slate-100 border-b border-slate-800 px-4 sm:px-6 py-1.5 flex flex-wrap items-center justify-between gap-2.5 text-xs">
-        {/* Left: Synthetic Data Notice */}
-        <div className="flex items-center gap-2 min-w-0">
-          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold font-mono tracking-wider uppercase bg-amber-400/20 text-amber-300 border border-amber-400/30 shrink-0">
-            NOTICE
-          </span>
-          <span className="font-semibold text-slate-200 tracking-tight text-[11px] truncate">
-            SYNTHETIC DATASET • Investigative Decision Support Prototype{' '}
-            <span className="text-slate-400 font-normal hidden lg:inline">
-              (Leads for verification, not proof of guilt)
-            </span>
-          </span>
-        </div>
-
-        {/* Center / Right: Demo Scenario Quick-Pill & Live Backend Indicator */}
-        <div className="flex items-center gap-2.5 flex-wrap">
-          {/* Demo Scenario Quick-Pill */}
-          <button
-            type="button"
-            onClick={onSelectDemoScenario}
-            title="Focus on verified demo case: Complaint CMP0004 / Txn TXN002804 / Victim ACC0125 → Beneficiary ACC0135"
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 hover:bg-emerald-900 active:scale-[0.98] text-emerald-200 border border-emerald-500/40 text-[11px] font-medium transition-all cursor-pointer shadow-xs group"
-          >
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <span className="font-semibold text-emerald-100 group-hover:text-white transition-colors">Demo Focus:</span>
-            <span className="truncate max-w-[280px] sm:max-w-none text-emerald-200/90">
-              Complaint CMP0004 / Txn TXN002804 / Victim ACC0125 → Beneficiary ACC0135 (Rapid Onward Transfer)
-            </span>
-          </button>
-
-          {/* Live Backend Indicator Badge */}
-          {isLiveConnected && dataSourceMode === 'live' ? (
-            <div
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 font-bold text-[11px] tracking-tight shadow-2xs"
-              title="Connected to live FastAPI & NetworkX backend API"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)] shrink-0" />
-              <span>● Live Backend</span>
-            </div>
-          ) : (
-            <div
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-950/80 border border-amber-500/50 text-amber-300 font-bold text-[11px] tracking-tight shadow-2xs"
-              title="Running in local synthetic demo mode"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-              <span>Offline Demo</span>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Main Investigation Header */}
-      <header className="h-14 px-5 flex items-center justify-between border-b border-slate-200/90 bg-white shadow-2xs select-none">
+    <header className="w-full h-14 px-5 flex items-center justify-between border-b border-slate-200/90 bg-white shadow-2xs select-none z-20 shrink-0">
       {/* Left: Brand Logo + Breadcrumbs */}
       <div className="flex items-center gap-4">
         {/* Brand Icon & Logo */}
@@ -202,6 +139,5 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
       </div>
     </header>
-  </div>
-);
+  );
 };
