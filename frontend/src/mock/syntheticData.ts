@@ -314,6 +314,22 @@ export const SYNTHETIC_EDGES: GraphEdgeData[] = [
 // Demo previous complaints with realistic status indicators (DEMO DATA)
 export const DEMO_COMPLAINTS: ComplaintRecord[] = [
   {
+    id: 'CMP0004',
+    complaintRef: 'NCRP-CMP0004',
+    date: '15 Oct 2026, 10:14 IST',
+    shortDescription: 'Rapid onward transfer scam; victim funds routed via beneficiary ACC0135 within seconds.',
+    category: 'Rapid Onward Transfer',
+    disputeAmount: 5594.16,
+    relatedAccountId: 'ACC0125',
+    relatedAccountUpi: 'victim.acc0125@synaxis',
+    relatedBeneficiaryUpi: 'vikram.reddy135@synicici',
+    relatedBeneficiaryAccountId: 'ACC0135',
+    relatedTxnUtr: 'TXN002804',
+    riskLevel: 'HIGH',
+    status: 'under_investigation',
+    analystNotes: 'Complaint CMP0004: Victim ACC0125 -> Beneficiary ACC0135. High-velocity onward dispersion detected.',
+  },
+  {
     id: 'CMP-2026-8812',
     complaintRef: 'NCRP-2026-8812',
     date: '15 Oct 2026, 10:14 IST',

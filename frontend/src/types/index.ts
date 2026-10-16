@@ -45,6 +45,7 @@ export interface ComplaintRecord {
   relatedAccountId: string;
   relatedAccountUpi: string;
   relatedBeneficiaryUpi?: string;
+  relatedBeneficiaryAccountId?: string;
   relatedTxnUtr?: string;
   riskLevel: 'CRITICAL' | 'HIGH' | 'MEDIUM';
   status: ComplaintStatus;

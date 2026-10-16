@@ -2,18 +2,49 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 // Test the pure adapter logic identical to src/services/api.ts
-function adaptBackendGraphToFrontend(backendData) {
+function adaptBackendGraphToFrontend(backendData, alertsData) {
+  const summaryMap = new Map();
+  if (alertsData?.account_summaries?.length) {
+    for (const summary of alertsData.account_summaries) {
+      if (summary.account_id) {
+        const rawId = summary.account_id;
+        summaryMap.set(rawId, summary);
+        summaryMap.set(`acc:${rawId}`, summary);
+        if (rawId.startsWith('acc:')) {
+          summaryMap.set(rawId.replace(/^acc:/i, ''), summary);
+        }
+      }
+    }
+  }
+
   const nodes = (backendData.nodes || []).map((gn) => {
     const d = gn.data;
     const isDevice = d.node_type === 'device';
+    const acctKey = d.account_id || d.id;
+    const summary = summaryMap.get(acctKey) || summaryMap.get(d.id);
+
+    let riskScore = 0;
+    let role = isDevice ? 'device_farm' : 'verified_control';
+    let status = 'active';
+
+    if (summary) {
+      riskScore = Math.round((summary.highest_score || 0) * 100);
+      if (summary.highest_priority === 'high' || riskScore >= 70) {
+        role = 'aggregator_mule';
+        status = 'flagged';
+      } else if (summary.highest_priority === 'medium' || riskScore >= 40) {
+        role = 'secondary_mule';
+        status = 'flagged';
+      }
+    }
 
     return {
       id: d.id,
       label: d.label || d.id,
       type: isDevice ? 'device' : 'account',
-      role: isDevice ? 'device_farm' : 'verified_control',
-      riskScore: 0,
-      status: 'active',
+      role,
+      riskScore,
+      status,
       subText: isDevice ? (d.device_id || d.label) : (d.bank ? `${d.bank} · ${d.holder_name || ''}` : (d.vpa || '')),
       upiId: d.vpa || undefined,
       bankName: d.bank || undefined,
@@ -271,4 +302,93 @@ test('buildAlertsUrl formats query parameters correctly', () => {
   );
   assert.equal(buildAlertsUrl('http://127.0.0.1:8000/'), 'http://127.0.0.1:8000/api/alerts');
 });
+
+function buildTransactionUrl(baseUrl, txnId) {
+  const cleanTxnId = (txnId || '').trim();
+  return `${baseUrl.replace(/\/+$/, '')}/api/transactions/${encodeURIComponent(cleanTxnId)}`;
+}
+
+test('buildTransactionUrl formats transaction path correctly', () => {
+  assert.equal(
+    buildTransactionUrl('https://anvik-backend.vercel.app', 'TXN002804'),
+    'https://anvik-backend.vercel.app/api/transactions/TXN002804'
+  );
+  assert.equal(
+    buildTransactionUrl('http://127.0.0.1:8000/', 'TXN 998'),
+    'http://127.0.0.1:8000/api/transactions/TXN%20998'
+  );
+});
+
+test('adaptBackendGraphToFrontend enriches nodes with risk scores from alerts', () => {
+  const backendGraph = {
+    nodes: [
+      {
+        data: {
+          id: 'acc:ACC0135',
+          label: 'ACC0135',
+          node_type: 'account',
+          account_id: 'ACC0135',
+          holder_name: 'Vikram Reddy',
+          vpa: 'vikram.reddy135@synicici',
+          bank: 'ICICI',
+        },
+      },
+      {
+        data: {
+          id: 'acc:ACC0125',
+          label: 'ACC0125',
+          node_type: 'account',
+          account_id: 'ACC0125',
+          holder_name: 'Victim User',
+          vpa: 'victim.user125@synaxis',
+          bank: 'AXIS',
+        },
+      },
+    ],
+    edges: [],
+    metadata: {
+      dataset_id: 'test',
+      node_count: 2,
+      edge_count: 0,
+      account_node_count: 2,
+      device_node_count: 0,
+      transaction_edge_count: 0,
+      device_edge_count: 0,
+      generated_at_utc: '2026-10-16T00:00:00Z',
+    },
+  };
+
+  const alertsData = {
+    dataset_id: 'test',
+    generated_at: '2026-10-16T00:00:00Z',
+    amount_unit: 'INR',
+    count: 1,
+    meta: {},
+    alerts: [],
+    rings: [],
+    account_summaries: [
+      {
+        account_id: 'ACC0135',
+        alert_ids: ['ALR-0001'],
+        highest_priority: 'high',
+        highest_score: 0.9,
+      },
+    ],
+  };
+
+  const adapted = adaptBackendGraphToFrontend(backendGraph, alertsData);
+
+  const acc135 = adapted.nodes.find((n) => n.id === 'acc:ACC0135');
+  assert.ok(acc135);
+  assert.equal(acc135.riskScore, 90);
+  assert.equal(acc135.role, 'aggregator_mule');
+  assert.equal(acc135.status, 'flagged');
+
+  const acc125 = adapted.nodes.find((n) => n.id === 'acc:ACC0125');
+  assert.ok(acc125);
+  assert.equal(acc125.riskScore, 0);
+  assert.equal(acc125.role, 'verified_control');
+  assert.equal(acc125.status, 'active');
+});
+
 

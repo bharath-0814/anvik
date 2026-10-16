@@ -3,7 +3,7 @@
  * Connects frontend to the Anvik FastAPI / NetworkX backend.
  */
 
-import { GraphNodeData, GraphEdgeData, ComplaintRecord } from '../types';
+import { GraphNodeData, GraphEdgeData, ComplaintRecord, NodeRole } from '../types';
 
 // Resolve base URL from Vite environment variable or default to production Vercel backend
 export const API_BASE_URL: string = (
@@ -239,6 +239,20 @@ export async function getAlerts(filters?: AlertFilters): Promise<BackendAlertsRe
 }
 
 /**
+ * Fetch a specific transaction by transaction ID
+ */
+export async function getTransaction(txnId: string): Promise<any> {
+  const cleanTxnId = (txnId || '').trim();
+  const url = `${API_BASE_URL}/api/transactions/${encodeURIComponent(cleanTxnId)}`;
+  const res = await fetch(url);
+  if (!res.ok) {
+    const errorText = await res.text().catch(() => '');
+    throw new Error(`Failed to fetch transaction ${txnId} (HTTP ${res.status}): ${errorText || res.statusText}`);
+  }
+  return res.json();
+}
+
+/**
  * Adapt backend complaint record to frontend ComplaintRecord
  */
 export function adaptBackendComplaintToRecord(item: BackendComplaintItem): ComplaintRecord {
@@ -262,6 +276,7 @@ export function adaptBackendComplaintToRecord(item: BackendComplaintItem): Compl
     relatedAccountId: item.victim_account_id,
     relatedAccountUpi: item.victim_vpa,
     relatedBeneficiaryUpi: item.beneficiary_vpa || undefined,
+    relatedBeneficiaryAccountId: item.beneficiary_account_id || undefined,
     relatedTxnUtr: item.txn_id,
     riskLevel: 'HIGH',
     status: 'under_investigation',
@@ -272,25 +287,132 @@ export function adaptBackendComplaintToRecord(item: BackendComplaintItem): Compl
 }
 
 /**
+ * Enrich an array of GraphNodeData with risk scores and roles from account summaries
+ */
+export function enrichNodesWithAlertSummaries(
+  nodes: GraphNodeData[],
+  accountSummaries?: BackendAlertsResponse['account_summaries']
+): GraphNodeData[] {
+  if (!accountSummaries || !accountSummaries.length) return nodes;
+
+  const summaryMap = new Map<string, (typeof accountSummaries)[0]>();
+  for (const s of accountSummaries) {
+    if (s.account_id) {
+      const rawId = s.account_id;
+      summaryMap.set(rawId, s);
+      summaryMap.set(rawId.toUpperCase(), s);
+      summaryMap.set(rawId.toLowerCase(), s);
+
+      if (!rawId.startsWith('acc:')) {
+        summaryMap.set(`acc:${rawId}`, s);
+        summaryMap.set(`acc:${rawId.toUpperCase()}`, s);
+      } else {
+        const stripped = rawId.replace(/^acc:/i, '');
+        summaryMap.set(stripped, s);
+        summaryMap.set(stripped.toUpperCase(), s);
+      }
+    }
+  }
+
+  return nodes.map((node) => {
+    const acctKey = node.accountNo || node.id;
+    const summary = summaryMap.get(acctKey) || summaryMap.get(node.id);
+    if (!summary) return node;
+
+    const riskScore = Math.round((summary.highest_score || 0) * 100);
+    let role = node.role;
+    let status = node.status;
+    if (summary.highest_priority === 'high' || riskScore >= 70) {
+      role = 'aggregator_mule';
+      status = 'flagged';
+    } else if (summary.highest_priority === 'medium' || riskScore >= 40) {
+      role = 'secondary_mule';
+      status = 'flagged';
+    }
+
+    return {
+      ...node,
+      riskScore,
+      role,
+      status,
+    };
+  });
+}
+
+/**
  * Cleanly adapt backend Cytoscape elements to frontend UI types.
  * Preserves exact backend IDs (acc:..., dev:..., txn:..., link:...) without fabricated identifiers.
+ * Enriches nodes with risk scores and mule roles from account summaries if provided.
  */
-export function adaptBackendGraphToFrontend(backendData: BackendGraphResponse): {
+export function adaptBackendGraphToFrontend(
+  backendData: BackendGraphResponse,
+  alertsData?: BackendAlertsResponse | null
+): {
   nodes: GraphNodeData[];
   edges: GraphEdgeData[];
   metadata: BackendGraphMetadata;
 } {
+  // Build lookup index from alerts account_summaries if available
+  const summaryMap = new Map<
+    string,
+    {
+      account_id: string;
+      alert_ids: string[];
+      highest_priority: 'high' | 'medium' | 'low';
+      highest_score?: number | null;
+    }
+  >();
+
+  if (alertsData?.account_summaries?.length) {
+    for (const summary of alertsData.account_summaries) {
+      if (summary.account_id) {
+        const rawId = summary.account_id;
+        summaryMap.set(rawId, summary);
+        summaryMap.set(rawId.toUpperCase(), summary);
+        summaryMap.set(rawId.toLowerCase(), summary);
+
+        if (!rawId.startsWith('acc:')) {
+          summaryMap.set(`acc:${rawId}`, summary);
+          summaryMap.set(`acc:${rawId.toUpperCase()}`, summary);
+        } else {
+          const stripped = rawId.replace(/^acc:/i, '');
+          summaryMap.set(stripped, summary);
+          summaryMap.set(stripped.toUpperCase(), summary);
+        }
+      }
+    }
+  }
+
   const nodes: GraphNodeData[] = (backendData.nodes || []).map((gn) => {
     const d = gn.data;
     const isDevice = d.node_type === 'device';
+
+    // Check account summary for risk score enrichment
+    const acctKey = d.account_id || d.id;
+    const summary = summaryMap.get(acctKey) || summaryMap.get(d.id);
+
+    let riskScore = 0;
+    let role: NodeRole = isDevice ? 'device_farm' : 'verified_control';
+    let status: 'active' | 'frozen' | 'flagged' | 'verified' = 'active';
+
+    if (summary) {
+      riskScore = Math.round((summary.highest_score || 0) * 100);
+      if (summary.highest_priority === 'high' || riskScore >= 70) {
+        role = 'aggregator_mule';
+        status = 'flagged';
+      } else if (summary.highest_priority === 'medium' || riskScore >= 40) {
+        role = 'secondary_mule';
+        status = 'flagged';
+      }
+    }
 
     return {
       id: d.id,
       label: d.label || d.id,
       type: isDevice ? 'device' : 'account',
-      role: isDevice ? 'device_farm' : 'verified_control',
-      riskScore: 0, // Baseline heuristic score pending Aryan's final scoring formula
-      status: 'active',
+      role,
+      riskScore,
+      status,
       subText: isDevice ? (d.device_id || d.label) : (d.bank ? `${d.bank} · ${d.holder_name || ''}` : (d.vpa || '')),
       upiId: d.vpa || undefined,
       bankName: d.bank || undefined,

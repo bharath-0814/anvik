@@ -129,6 +129,11 @@ function DashboardContent() {
   const [selectedEntity, setSelectedEntity] = useState<GraphNodeData | null>(null);
   const [liveAlerts, setLiveAlerts] = useState<BackendAlertItem[]>([]);
 
+  // Highlight states for Cytoscape fraud ring cross-highlighting
+  const [highlightedNodeIds, setHighlightedNodeIds] = useState<string[]>([]);
+  const [highlightedEdgeId, setHighlightedEdgeId] = useState<string | null>(null);
+  const [highlightedRingActive, setHighlightedRingActive] = useState<boolean>(false);
+
   // Fetch graph from real FastAPI backend (GET /api/graph)
   const fetchLiveGraph = async (statusParam?: string, limitParam?: number) => {
     setIsLoadingLiveGraph(true);
@@ -140,34 +145,35 @@ function DashboardContent() {
       if (s && s !== 'ALL') filters.status = s;
       if (l && l > 0) filters.limit = l;
 
-      const res = await getGraph(filters);
-      const adapted = adaptBackendGraphToFrontend(res);
+      // Fetch graph, alerts, and complaints concurrently
+      const [graphRes, alertsRes, complaintsRes] = await Promise.all([
+        getGraph(filters),
+        getAlerts().catch((err) => {
+          console.warn('Backend alerts fetch failed:', err);
+          return null;
+        }),
+        getComplaints().catch((err) => {
+          console.warn('Backend complaints fetch failed:', err);
+          return null;
+        }),
+      ]);
+
+      if (alertsRes?.alerts?.length) {
+        setLiveAlerts(alertsRes.alerts);
+      }
+
+      if (complaintsRes?.complaints?.length) {
+        const adaptedComplaints = complaintsRes.complaints.map(adaptBackendComplaintToRecord);
+        setComplaints(adaptedComplaints);
+      }
+
+      // adaptBackendGraphToFrontend enriches nodes with risk scores from alertsRes
+      const adapted = adaptBackendGraphToFrontend(graphRes, alertsRes);
       setLiveNodes(adapted.nodes);
       setLiveEdges(adapted.edges);
       setLiveMetadata(adapted.metadata);
       setIsLiveConnected(true);
       setDataSourceMode('live');
-
-      // Fetch preloaded synthetic complaints from live backend
-      try {
-        const cRes = await getComplaints();
-        if (cRes?.complaints?.length) {
-          const adaptedComplaints = cRes.complaints.map(adaptBackendComplaintToRecord);
-          setComplaints(adaptedComplaints);
-        }
-      } catch (cErr) {
-        console.warn('Backend complaints fetch failed, retaining current records:', cErr);
-      }
-
-      // Fetch fraud-pattern alerts from live backend (Aryan scoring v2.0 contract)
-      try {
-        const aRes = await getAlerts();
-        if (aRes?.alerts?.length) {
-          setLiveAlerts(aRes.alerts);
-        }
-      } catch (aErr) {
-        console.warn('Backend alerts fetch failed:', aErr);
-      }
     } catch (err: any) {
       console.warn('Backend API connection check failed:', err);
       setLiveGraphError(err?.message || 'Failed to connect to Anvik backend API');
@@ -202,15 +208,18 @@ function DashboardContent() {
 
   // Adapted complaint items for Intake screen
   const complaintItemsForIntake: IntakeComplaintItem[] = useMemo(() => {
-    return complaints.map((c) => ({
-      id: c.complaintRef || c.id,
-      dateReceived: c.date,
-      transactionReference: c.relatedTxnUtr || activeTxnId,
-      deviceId: activeDevId,
-      status: (c.status === 'resolved' ? 'Resolved' : c.status === 'pending_review' ? 'In review' : 'Open') as 'Open' | 'In review' | 'Resolved',
-      riskScore: c.riskLevel === 'CRITICAL' ? '96' : c.riskLevel === 'HIGH' ? '88' : '—',
-      amount: c.disputeAmount,
-    }));
+    return complaints.map((c) => {
+      const isCmp4 = c.id === 'CMP0004' || c.complaintRef?.includes('CMP0004');
+      return {
+        id: c.complaintRef || c.id,
+        dateReceived: c.date,
+        transactionReference: c.relatedTxnUtr || activeTxnId,
+        deviceId: isCmp4 ? 'DEV0163' : activeDevId,
+        status: (c.status === 'resolved' ? 'Resolved' : c.status === 'pending_review' ? 'In review' : 'Open') as 'Open' | 'In review' | 'Resolved',
+        riskScore: isCmp4 ? '90' : c.riskLevel === 'CRITICAL' ? '96' : c.riskLevel === 'HIGH' ? '88' : '—',
+        amount: c.disputeAmount,
+      };
+    });
   }, [complaints, activeTxnId, activeDevId]);
 
   // Selection & Freezing state
@@ -261,7 +270,11 @@ function DashboardContent() {
     setActiveTxnId(txnId);
     setActiveDevId(devId);
     setActiveCaseId(cId);
-    setWorkspaceStage('trace');
+    if (cId === 'CMP0004' || cId.includes('CMP0004') || txnId === 'TXN002804') {
+      handleSelectDemoScenario();
+    } else {
+      setWorkspaceStage('trace');
+    }
   };
 
   // Step B: When user clicks "Open investigation" on TraceConnectionsScreen
@@ -273,9 +286,81 @@ function DashboardContent() {
     setTimeout(() => {
       setIsLoadingGraph(false);
       setWorkspaceStage('investigation');
-      // Per user instruction: "when the main interface open graph should not be open automatically graph only appear after the we click on analysis"
-      setIsGraphVisible(false);
+      setIsGraphVisible(true);
+      if (cId === 'CMP0004' || cId.includes('CMP0004') || txnId === 'TXN002804') {
+        handleSelectDemoScenario();
+      }
     }, 200);
+  };
+
+  // Focus on verified demo scenario: Complaint CMP0004 / Txn TXN002804 / Victim ACC0125 -> Beneficiary ACC0135
+  const handleSelectDemoScenario = () => {
+    setActiveCaseId('CMP0004');
+    setActiveTxnId('TXN002804');
+    setActiveDevId('DEV0163');
+    setWorkspaceStage('investigation');
+    setIsGraphVisible(true);
+    setIsTextPanelOpen(true);
+
+    const fraudRingNodeIds = [
+      'acc:ACC0135',
+      'acc:ACC0140',
+      'acc:ACC0131',
+      'acc:ACC0132',
+      'acc:ACC0133',
+      'acc:ACC0134',
+      'acc:ACC0125',
+      'ACC_PRIMARY_MULE',
+      'ACC_MULE_2',
+      'ACC_MULE_3',
+      'ACC_MULE_4',
+      'ACC_VICTIM_1',
+      'DEV_FARM_1',
+      'MERCH_CASHOUT',
+    ];
+
+    setHighlightedNodeIds(fraudRingNodeIds);
+    setHighlightedEdgeId('txn:TXN002804');
+    setHighlightedRingActive(true);
+
+    const currentNodes = dataSourceMode === 'live' && liveNodes.length > 0 ? liveNodes : nodes;
+    const foundNode = currentNodes.find(
+      (n) =>
+        n.id === 'acc:ACC0135' ||
+        n.id === 'ACC0135' ||
+        n.accountNo === 'ACC0135' ||
+        n.label?.includes('ACC0135')
+    );
+
+    const targetNode: GraphNodeData = foundNode || {
+      id: 'acc:ACC0135',
+      label: 'ACC0135',
+      type: 'account',
+      role: 'aggregator_mule',
+      riskScore: 90,
+      status: 'flagged',
+      subText: 'ICICI Bank · Vikram Reddy',
+      upiId: 'vikram.reddy135@synicici',
+      bankName: 'ICICI Bank',
+      accountNo: 'ACC0135',
+      disputeAmount: 5594.16,
+    };
+
+    setSelectedEntity(targetNode);
+    setSelectedNetworkNode({
+      id: targetNode.id,
+      name: 'ACC0135 (Vikram Reddy)',
+      handle: targetNode.upiId || 'vikram.reddy135@synicici',
+      role: 'Aggregator Mule / Rapid Onward Transfer',
+      type: 'mule',
+      bank: targetNode.bankName || 'ICICI Bank',
+      riskScore: targetNode.riskScore || 90,
+      status: 'flagged',
+      timestamp: '2026-10-15 10:14 IST',
+      x: 0,
+      y: 0,
+      disputeAmount: 5594.16,
+    });
   };
 
   // Step C: When user clicks "Analysis" in the main interface
@@ -318,11 +403,33 @@ function DashboardContent() {
   const handleSelectComplaint = (cmp: ComplaintRecord | null) => {
     setSelectedComplaint(cmp);
     setSelectedTimelineEvent(null);
-    if (cmp) {
-      const target = networkNodes.find((n) => n.id === cmp.relatedAccountId || n.handle === cmp.relatedAccountUpi);
-      if (target) {
-        setSelectedNetworkNode(target);
-      }
+    if (!cmp) return;
+
+    if (
+      cmp.id === 'CMP0004' ||
+      cmp.complaintRef?.includes('CMP0004') ||
+      cmp.relatedTxnUtr === 'TXN002804' ||
+      cmp.relatedBeneficiaryAccountId === 'ACC0135'
+    ) {
+      handleSelectDemoScenario();
+      return;
+    }
+
+    const currentNodes = dataSourceMode === 'live' && liveNodes.length > 0 ? liveNodes : nodes;
+    const targetEntity = currentNodes.find(
+      (n) =>
+        n.id === cmp.relatedAccountId ||
+        n.accountNo === cmp.relatedAccountId ||
+        n.upiId === cmp.relatedAccountUpi ||
+        n.id === `acc:${cmp.relatedAccountId}`
+    );
+    if (targetEntity) {
+      setSelectedEntity(targetEntity);
+    }
+
+    const target = networkNodes.find((n) => n.id === cmp.relatedAccountId || n.handle === cmp.relatedAccountUpi);
+    if (target) {
+      setSelectedNetworkNode(target);
     }
   };
 
@@ -383,6 +490,9 @@ function DashboardContent() {
         alertCount={dataSourceMode === 'live' && liveAlerts.length > 0 ? liveAlerts.length : 3}
         onDownloadReport={handleDownloadReport}
         onLogout={handleLogout}
+        isLiveConnected={isLiveConnected}
+        dataSourceMode={dataSourceMode}
+        onSelectDemoScenario={handleSelectDemoScenario}
       />
 
       {/* 2. Main Investigation Workspace */}
@@ -715,8 +825,10 @@ function DashboardContent() {
                                 }
                               }}
                               frozenNodeIds={frozenNodeIds}
-                              highlightedRingActive={false}
-                              setHighlightedRingActive={() => {}}
+                              highlightedRingActive={highlightedRingActive}
+                              setHighlightedRingActive={setHighlightedRingActive}
+                              highlightedNodeIds={highlightedNodeIds}
+                              highlightedEdgeId={highlightedEdgeId}
                               searchFilter={searchQuery}
                               setSearchFilter={setSearchQuery}
                               minRiskScore={minRiskScore}
@@ -758,8 +870,10 @@ function DashboardContent() {
                               }
                             }}
                             frozenNodeIds={frozenNodeIds}
-                            highlightedRingActive={false}
-                            setHighlightedRingActive={() => {}}
+                            highlightedRingActive={highlightedRingActive}
+                            setHighlightedRingActive={setHighlightedRingActive}
+                            highlightedNodeIds={highlightedNodeIds}
+                            highlightedEdgeId={highlightedEdgeId}
                             searchFilter={searchQuery}
                             setSearchFilter={setSearchQuery}
                             minRiskScore={minRiskScore}

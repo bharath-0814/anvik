@@ -26,6 +26,15 @@ export interface ComplaintItem {
 
 const DEFAULT_COMPLAINTS: ComplaintItem[] = [
   {
+    id: 'CMP0004',
+    dateReceived: '15 Oct 2026',
+    transactionReference: 'TXN002804',
+    deviceId: 'DEV0163',
+    status: 'Open',
+    riskScore: '90',
+    amount: 5594,
+  },
+  {
     id: 'NCRP-2026-0841',
     dateReceived: '15 Oct 2026',
     transactionReference: 'UPI260915084127',

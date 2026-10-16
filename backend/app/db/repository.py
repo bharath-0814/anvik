@@ -91,6 +91,35 @@ def get_transactions(
     ]
 
 
+def get_transaction_by_id(conn: Any, txn_id: str) -> Optional[dict[str, Any]]:
+    """Fetch a single transaction by txn_id."""
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT txn_id, sender_account_id, receiver_account_id, sender_vpa, receiver_vpa, "
+        "amount_paise, amount_inr, raw_timestamp, timestamp_utc, txn_type, status, device_id "
+        "FROM transactions WHERE txn_id = ?;",
+        (txn_id,),
+    )
+    row = cursor.fetchone()
+    cursor.close()
+    if not row:
+        return None
+    return {
+        "txn_id": row[0],
+        "sender_account_id": row[1],
+        "receiver_account_id": row[2],
+        "sender_vpa": row[3],
+        "receiver_vpa": row[4],
+        "amount_paise": row[5],
+        "amount_inr": row[6],
+        "raw_timestamp": row[7],
+        "timestamp_utc": row[8],
+        "txn_type": row[9],
+        "status": row[10],
+        "device_id": row[11],
+    }
+
+
 def get_complaints(conn: Any) -> list[dict[str, Any]]:
     """Fetch all complaints."""
     cursor = conn.cursor()

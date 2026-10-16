@@ -8,6 +8,7 @@ from app.api.routes.complaints import router as complaints_router
 from app.api.routes.graph import router as graph_router
 from app.api.routes.health import router as health_router
 from app.api.routes.ready import router as ready_router
+from app.api.routes.transactions import router as transactions_router
 
 app = FastAPI(
     title="Anvik Backend API",
@@ -46,6 +47,7 @@ app.include_router(ready_router, prefix="/api")
 app.include_router(graph_router, prefix="/api")
 app.include_router(complaints_router, prefix="/api")
 app.include_router(alerts_router, prefix="/api")
+app.include_router(transactions_router, prefix="/api")
 
 # Also mount without /api prefix for routing flexibility under serverless rewrites
 app.include_router(health_router)
@@ -53,3 +55,5 @@ app.include_router(ready_router)
 app.include_router(graph_router)
 app.include_router(complaints_router)
 app.include_router(alerts_router)
+app.include_router(transactions_router)
+
