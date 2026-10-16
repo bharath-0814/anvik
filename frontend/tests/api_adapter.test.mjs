@@ -391,4 +391,93 @@ test('adaptBackendGraphToFrontend enriches nodes with risk scores from alerts', 
   assert.equal(acc125.status, 'active');
 });
 
+test('adaptBackendComplaintToItem maps backend complaints to dynamic intake items', () => {
+  function adaptBackendComplaintToItem(item) {
+    const dateFormatted = item.complaint_date
+      ? new Date(item.complaint_date).toLocaleDateString('en-IN', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        })
+      : '29 Sep 2026';
+
+    const score = item.risk_score !== undefined && item.risk_score !== null ? item.risk_score : 20;
+    const riskScoreStr = score > 20 ? String(score) : '—';
+
+    let status = 'Open';
+    if (item.triage_status === 'In review' || (!item.triage_status && score >= 45 && score < 75)) {
+      status = 'In review';
+    } else if (item.triage_status === 'Resolved' || (!item.triage_status && score < 45)) {
+      status = 'Resolved';
+    }
+
+    return {
+      id: item.complaint_id,
+      dateReceived: dateFormatted,
+      transactionReference: item.txn_id,
+      deviceId: item.device_id || 'DEV0127',
+      status,
+      riskScore: riskScoreStr,
+      amount: Math.round(item.amount_inr || 0),
+    };
+  }
+
+  // 1. High-risk complaint with 90 score
+  const highItem = adaptBackendComplaintToItem({
+    complaint_id: 'CMP0004',
+    victim_account_id: 'ACC0125',
+    victim_vpa: 'vikram.das125@synhdfc',
+    txn_id: 'TXN002804',
+    amount_inr: 10732.62,
+    device_id: 'DEV0127',
+    risk_score: 90,
+    priority: 'HIGH',
+    triage_status: 'Open',
+    complaint_date: '2026-09-29',
+    status: 'UNDER_INVESTIGATION',
+  });
+  assert.equal(highItem.id, 'CMP0004');
+  assert.equal(highItem.riskScore, '90');
+  assert.equal(highItem.status, 'Open');
+  assert.equal(highItem.deviceId, 'DEV0127');
+  assert.equal(highItem.amount, 10733);
+
+  // 2. Medium-risk complaint with 56 score
+  const medItem = adaptBackendComplaintToItem({
+    complaint_id: 'CMP0002',
+    victim_account_id: 'ACC0155',
+    victim_vpa: 'meera.das155@synaxis',
+    txn_id: 'TXN002648',
+    amount_inr: 2243.2,
+    device_id: 'DEV0060',
+    risk_score: 56,
+    priority: 'MEDIUM',
+    triage_status: 'In review',
+    complaint_date: '2026-09-27',
+    status: 'UNDER_INVESTIGATION',
+  });
+  assert.equal(medItem.id, 'CMP0002');
+  assert.equal(medItem.riskScore, '56');
+  assert.equal(medItem.status, 'In review');
+  assert.equal(medItem.deviceId, 'DEV0060');
+
+  // 3. Low-risk baseline complaint with no alert
+  const lowItem = adaptBackendComplaintToItem({
+    complaint_id: 'CMP0001',
+    victim_account_id: 'ACC0152',
+    victim_vpa: 'kabir.sharma152@synhdfc',
+    txn_id: 'TXN002420',
+    amount_inr: 578.11,
+    device_id: 'DEV0027',
+    risk_score: 20,
+    priority: 'LOW',
+    triage_status: 'Resolved',
+    complaint_date: '2026-09-27',
+    status: 'UNDER_INVESTIGATION',
+  });
+  assert.equal(lowItem.id, 'CMP0001');
+  assert.equal(lowItem.riskScore, '—');
+  assert.equal(lowItem.status, 'Resolved');
+});
+
 

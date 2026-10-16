@@ -48,6 +48,8 @@ export interface ComplaintRecord {
   relatedBeneficiaryAccountId?: string;
   relatedTxnUtr?: string;
   riskLevel: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  riskScore?: number;
+  deviceId?: string;
   status: ComplaintStatus;
   analystNotes?: string;
 }

@@ -90,6 +90,11 @@ export interface BackendComplaintItem {
   beneficiary_vpa?: string | null;
   complaint_date?: string | null;
   status: string;
+  device_id?: string | null;
+  risk_score?: number | null;
+  priority?: string | null;
+  triage_status?: string | null;
+  rule_triggers?: string[] | null;
 }
 
 export interface BackendComplaintsResponse {
@@ -262,7 +267,15 @@ export function adaptBackendComplaintToRecord(item: BackendComplaintItem): Compl
         month: 'short',
         year: 'numeric',
       })
-    : '15 Oct 2026';
+    : '29 Sep 2026';
+
+  const score = item.risk_score !== undefined && item.risk_score !== null ? item.risk_score : 20;
+  const riskLevel =
+    item.priority === 'HIGH' || score >= 75
+      ? 'CRITICAL'
+      : item.priority === 'MEDIUM' || score >= 45
+      ? 'HIGH'
+      : 'LOW';
 
   return {
     id: item.complaint_id,
@@ -271,18 +284,61 @@ export function adaptBackendComplaintToRecord(item: BackendComplaintItem): Compl
     shortDescription: `Disputed transfer of ₹${(item.amount_inr || 0).toLocaleString('en-IN')} to ${
       item.beneficiary_vpa || item.beneficiary_account_id || 'unlinked beneficiary'
     }`,
-    category: 'UPI Dispute',
+    category: item.rule_triggers?.length ? item.rule_triggers.join(', ') : 'UPI Dispute',
     disputeAmount: item.amount_inr || 0,
     relatedAccountId: item.victim_account_id,
     relatedAccountUpi: item.victim_vpa,
     relatedBeneficiaryUpi: item.beneficiary_vpa || undefined,
     relatedBeneficiaryAccountId: item.beneficiary_account_id || undefined,
     relatedTxnUtr: item.txn_id,
-    riskLevel: 'HIGH',
-    status: 'under_investigation',
+    riskLevel,
+    riskScore: score,
+    deviceId: item.device_id || undefined,
+    status: item.status === 'UNDER_INVESTIGATION' ? 'under_investigation' : 'resolved',
     analystNotes: `Reported synthetic complaint against transaction ${item.txn_id}. Beneficiary: ${
       item.beneficiary_account_id || 'unknown'
     }.`,
+  };
+}
+
+/**
+ * Adapt backend complaint record to InvestigationIntakeScreen ComplaintItem format
+ */
+export function adaptBackendComplaintToItem(item: BackendComplaintItem): {
+  id: string;
+  dateReceived: string;
+  transactionReference: string;
+  deviceId: string;
+  status: 'Open' | 'In review' | 'Resolved';
+  riskScore: string;
+  amount: number;
+} {
+  const dateFormatted = item.complaint_date
+    ? new Date(item.complaint_date).toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      })
+    : '29 Sep 2026';
+
+  const score = item.risk_score !== undefined && item.risk_score !== null ? item.risk_score : 20;
+  const riskScoreStr = score > 20 ? String(score) : '—';
+
+  let status: 'Open' | 'In review' | 'Resolved' = 'Open';
+  if (item.triage_status === 'In review' || (!item.triage_status && score >= 45 && score < 75)) {
+    status = 'In review';
+  } else if (item.triage_status === 'Resolved' || (!item.triage_status && score < 45)) {
+    status = 'Resolved';
+  }
+
+  return {
+    id: item.complaint_id,
+    dateReceived: dateFormatted,
+    transactionReference: item.txn_id,
+    deviceId: item.device_id || 'DEV0127',
+    status,
+    riskScore: riskScoreStr,
+    amount: Math.round(item.amount_inr || 0),
   };
 }
 

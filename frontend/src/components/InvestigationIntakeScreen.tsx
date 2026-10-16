@@ -24,8 +24,8 @@ export interface ComplaintItem {
   amount: number;
 }
 
-const DEFAULT_COMPLAINTS: ComplaintItem[] = [
-  // Teammate Convergence Syndicate Complaints (S07 Ground Truth)
+export const DEFAULT_COMPLAINTS: ComplaintItem[] = [
+  // Teammate Convergence Syndicate Complaints (S07 Ground Truth - ALR-0001 Score: 0.90)
   {
     id: 'CMP0004',
     dateReceived: '29 Sep 2026',
@@ -41,7 +41,7 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'TXN002811',
     deviceId: 'DEV0108',
     status: 'In review',
-    riskScore: '92',
+    riskScore: '90',
     amount: 12339,
   },
   {
@@ -50,7 +50,7 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'TXN002858',
     deviceId: 'DEV0107',
     status: 'Open',
-    riskScore: '91',
+    riskScore: '89',
     amount: 12354,
   },
   {
@@ -59,7 +59,7 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'TXN002821',
     deviceId: 'DEV0129',
     status: 'Open',
-    riskScore: '94',
+    riskScore: '90',
     amount: 14066,
   },
   {
@@ -68,46 +68,46 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'TXN002841',
     deviceId: 'DEV0006',
     status: 'In review',
-    riskScore: '89',
+    riskScore: '90',
     amount: 10890,
   },
 
-  // Baseline Individual Disputes (S08 Negative Controls)
-  {
-    id: 'CMP0001',
-    dateReceived: '27 Sep 2026',
-    transactionReference: 'TXN002420',
-    deviceId: 'DEV0027',
-    status: 'Resolved',
-    riskScore: '24',
-    amount: 578,
-  },
+  // Moderate & Baseline Individual Disputes (Realscore Engine findings)
   {
     id: 'CMP0002',
     dateReceived: '27 Sep 2026',
     transactionReference: 'TXN002648',
     deviceId: 'DEV0060',
-    status: 'Resolved',
-    riskScore: '32',
-    amount: 2243,
-  },
-  {
-    id: 'CMP0003',
-    dateReceived: '28 Sep 2026',
-    transactionReference: 'TXN002759',
-    deviceId: 'DEV0076',
     status: 'In review',
-    riskScore: '45',
-    amount: 1573,
+    riskScore: '56',
+    amount: 2243,
   },
   {
     id: 'CMP0005',
     dateReceived: '29 Sep 2026',
     transactionReference: 'TXN002868',
     deviceId: 'DEV0112',
-    status: 'Open',
-    riskScore: '38',
+    status: 'In review',
+    riskScore: '56',
     amount: 1037,
+  },
+  {
+    id: 'CMP0001',
+    dateReceived: '27 Sep 2026',
+    transactionReference: 'TXN002420',
+    deviceId: 'DEV0027',
+    status: 'Resolved',
+    riskScore: '—',
+    amount: 578,
+  },
+  {
+    id: 'CMP0003',
+    dateReceived: '28 Sep 2026',
+    transactionReference: 'TXN002759',
+    deviceId: 'DEV0076',
+    status: 'Resolved',
+    riskScore: '—',
+    amount: 1573,
   },
   {
     id: 'CMP0008',
@@ -115,18 +115,18 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'TXN002768',
     deviceId: 'DEV0024',
     status: 'Resolved',
-    riskScore: '28',
+    riskScore: '—',
     amount: 1792,
   },
 
-  // Teammate Fraud Benchmark Scenarios
+  // Benchmark Scenarios (Deterministic Rulebook Detection Scores)
   {
     id: 'S01_RAPID_CHAIN',
     dateReceived: '15 Oct 2026',
     transactionReference: 'TXN001945',
     deviceId: 'DEV0081',
-    status: 'In review',
-    riskScore: '89',
+    status: 'Open',
+    riskScore: '82',
     amount: 35000,
   },
   {
@@ -144,26 +144,17 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'TXN002702',
     deviceId: 'DEV0101',
     status: 'In review',
-    riskScore: '85',
+    riskScore: '51',
     amount: 25000,
   },
   {
     id: 'S09_SHARED_DEVICE',
     dateReceived: '15 Oct 2026',
     transactionReference: 'TXN002895',
-    deviceId: 'DEV9001',
-    status: 'In review',
-    riskScore: '82',
+    deviceId: 'DEV0006',
+    status: 'Resolved',
+    riskScore: '20',
     amount: 34200,
-  },
-  {
-    id: 'NCRP-2026-0839',
-    dateReceived: '15 Oct 2026',
-    transactionReference: 'UPI260915083902',
-    deviceId: 'ANDR_09F2',
-    status: 'In review',
-    riskScore: '94',
-    amount: 16000,
   },
 ];
 
@@ -418,8 +409,22 @@ export const InvestigationIntakeScreen: React.FC<InvestigationIntakeScreenProps>
                   </div>
 
                   {/* Risk Score */}
-                  <div className="col-span-1 font-mono font-semibold text-slate-600">
-                    {c.riskScore}
+                  <div className="col-span-1 font-mono font-semibold">
+                    {c.riskScore === '—' || c.riskScore === '-' ? (
+                      <span className="text-slate-400 font-normal">—</span>
+                    ) : Number(c.riskScore) >= 75 ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                        {c.riskScore}
+                      </span>
+                    ) : Number(c.riskScore) >= 45 ? (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                        {c.riskScore}
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-50 text-slate-600 border border-slate-200">
+                        {c.riskScore}
+                      </span>
+                    )}
                   </div>
 
                   {/* Action Link: Investigate -> */}

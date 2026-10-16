@@ -6,7 +6,7 @@ import { Sidebar, LeftNavDrawer } from './components/Sidebar';
 import { NetworkGraphCanvas } from './components/NetworkGraphCanvas';
 import { TransactionTimelineBar } from './components/TransactionTimelineBar';
 import { InvestigationInsightsRail } from './components/InvestigationInsightsRail';
-import { InvestigationIntakeScreen } from './components/InvestigationIntakeScreen';
+import { InvestigationIntakeScreen, ComplaintItem } from './components/InvestigationIntakeScreen';
 import { TraceConnectionsScreen } from './components/TraceConnectionsScreen';
 import { ComplaintsPanel } from './components/ComplaintsPanel';
 import { FraudTimelinePanel } from './components/FraudTimelinePanel';
@@ -21,6 +21,7 @@ import {
   getAlerts,
   adaptBackendGraphToFrontend, 
   adaptBackendComplaintToRecord,
+  adaptBackendComplaintToItem,
   BackendGraphMetadata, 
   BackendAlertItem,
   API_BASE_URL 
@@ -126,6 +127,7 @@ function DashboardContent() {
   const [limitFilter, setLimitFilter] = useState<number>(200);
   const [selectedEntity, setSelectedEntity] = useState<GraphNodeData | null>(null);
   const [liveAlerts, setLiveAlerts] = useState<BackendAlertItem[]>([]);
+  const [intakeComplaintItems, setIntakeComplaintItems] = useState<ComplaintItem[]>([]);
 
   // Fetch graph from real FastAPI backend (GET /api/graph)
   const fetchLiveGraph = async (statusParam?: string, limitParam?: number) => {
@@ -158,6 +160,9 @@ function DashboardContent() {
       if (complaintsRes?.complaints?.length) {
         const adaptedComplaints = complaintsRes.complaints.map(adaptBackendComplaintToRecord);
         setComplaints(adaptedComplaints);
+
+        const intakeItems = complaintsRes.complaints.map(adaptBackendComplaintToItem);
+        setIntakeComplaintItems(intakeItems);
       }
 
       // adaptBackendGraphToFrontend enriches nodes with risk scores from alertsRes
@@ -482,6 +487,7 @@ function DashboardContent() {
             <InvestigationIntakeScreen
               onLoadGraph={handleStartTrace}
               isLoading={isLoadingGraph}
+              complaintItems={intakeComplaintItems.length > 0 ? intakeComplaintItems : undefined}
             />
           </div>
         )}
