@@ -189,8 +189,8 @@ function DashboardContent() {
     fetchLiveGraph();
   }, []);
 
-  // Case Investigation Dossier & Dynamic Network Data derived from activeCaseId
-  const activeCaseData = useMemo(() => getCaseInvestigationData(activeCaseId), [activeCaseId]);
+  // Case Investigation Dossier & Dynamic Network Data derived from activeTxnId and activeCaseId
+  const activeCaseData = useMemo(() => getCaseInvestigationData(activeTxnId, activeCaseId), [activeTxnId, activeCaseId]);
   const networkNodes = useMemo(() => activeCaseData.nodes || NETWORK_9_NODES, [activeCaseData]);
   const networkEdges = useMemo(() => activeCaseData.edges || NETWORK_9_EDGES, [activeCaseData]);
 
@@ -676,6 +676,7 @@ function DashboardContent() {
                       onRunAnalysis={handleRunAnalysis}
                       isGraphVisible={isGraphVisible}
                       caseId={activeCaseId}
+                      txnId={activeTxnId}
                     />
                   </div>
                 </div>
@@ -705,6 +706,7 @@ function DashboardContent() {
                         onRunAnalysis={handleRunAnalysis}
                         isGraphVisible={isGraphVisible}
                         caseId={activeCaseId}
+                        txnId={activeTxnId}
                       />
                     </div>
                   </div>

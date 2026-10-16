@@ -33,6 +33,7 @@ interface InvestigationInsightsRailProps {
   onRunAnalysis?: () => void;
   isGraphVisible?: boolean;
   caseId?: string;
+  txnId?: string;
 }
 
 export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps> = ({
@@ -48,50 +49,18 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
   onShowGraph,
   onRunAnalysis,
   isGraphVisible = false,
-  caseId = 'NCRP-2026-0841',
+  caseId = 'CMP0004',
+  txnId = 'TXN002804',
 }) => {
-  // Connected edges for the selected node (dynamically resolving direct and demo focus links)
+  // Connected edges for the selected node (dynamically resolving direct links from active graph)
   const connectedEdges = useMemo(() => {
     if (!selectedNode) return [];
-    const direct = edges.filter((e) => e.source === selectedNode.id || e.target === selectedNode.id);
-    if (direct.length > 0) return direct;
-
-    if (
-      selectedNode.id.includes('ACC0135') ||
-      selectedNode.handle.includes('ACC0135') ||
-      selectedNode.name.includes('ACC0135')
-    ) {
-      return [
-        {
-          id: 'TXN002804',
-          source: 'acc:ACC0125',
-          target: selectedNode.id,
-          type: 'transaction' as const,
-          amount: 5594.16,
-          amountFormatted: '₹5,594.16',
-          timestamp: '2026-10-15 10:14 IST',
-          timelineIndex: 1,
-          ruleTriggered: 'RAPID_ONWARD_TRANSFER',
-        },
-        {
-          id: 'TXN002806',
-          source: selectedNode.id,
-          target: 'acc:ACC0140',
-          type: 'transaction' as const,
-          amount: 5594.16,
-          amountFormatted: '₹5,594.16',
-          timestamp: '2026-10-15 10:15 IST',
-          timelineIndex: 2,
-          ruleTriggered: 'COMPLAINT_CONVERGENCE',
-        },
-      ];
-    }
-    return [];
+    return edges.filter((e) => e.source === selectedNode.id || e.target === selectedNode.id);
   }, [selectedNode, edges]);
 
   const caseData = useMemo(() => {
-    return getCaseInvestigationData(caseId);
-  }, [caseId]);
+    return getCaseInvestigationData(txnId, caseId);
+  }, [txnId, caseId]);
 
   const handleTriggerAnalysis = onRunAnalysis || onShowGraph;
 
