@@ -47,9 +47,9 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 90,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Verified syndicate convergence: ACC0125 transferred \u20b910,732.62 to aggregator Vikram Reddy (ACC0135), which forwarded \u20b910,088.66 to central collector Meera Das (ACC0140) via TXN002806.",
+  "summaryNote": "Verified syndicate convergence: ACC0125 transferred ₹10,732.62 to aggregator Vikram Reddy (ACC0135), which forwarded ₹10,088.66 to central collector Meera Das (ACC0140) via TXN002806.",
   "totalDisputedFlowPaise": 1073262,
-  "totalDisputedFlowFormatted": "\u20b910,732.62",
+  "totalDisputedFlowFormatted": "₹10,732.62",
   "layeringPercentage": "94% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -62,21 +62,21 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid Onward Dispersion (\u20b910,088.66)",
+      "title": "⚡ Rapid Onward Dispersion (₹10,088.66)",
       "severity": "HIGH",
       "description": "Vikram Reddy (ACC0135) forwarded 94.0% of victim funds to central collector ACC0140 within 58 seconds of credit.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Syndicate Convergence on ACC0140",
+      "title": "⚡ Syndicate Convergence on ACC0140",
       "severity": "CRIT",
-      "description": "5 distinct victim complaints converge to common collector ACC0140 totalling \u20b955,242.46.",
+      "description": "5 distinct victim complaints converge to common collector ACC0140 totalling ₹55,242.46.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Hardware Farm Binding (DEV0091)",
+      "title": "⚡ Hardware Farm Binding (DEV0091)",
       "severity": "MED",
       "description": "Device DEV0091 simultaneously authorized multiple high-velocity outgoing transfers.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -87,7 +87,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
     {
       "time": "10:54:00",
       "label": "Victim Inflow (TXN002804)",
-      "description": "Vikram Das sends \u20b910,732.62 to Vikram Reddy (ACC0135)"
+      "description": "Vikram Das sends ₹10,732.62 to Vikram Reddy (ACC0135)"
     },
     {
       "time": "10:54:40",
@@ -97,7 +97,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
     {
       "time": "11:12:00",
       "label": "Onward Hub Transfer (TXN002806)",
-      "description": "Vikram Reddy forwards \u20b910,088.66 to central collector Meera Das (ACC0140)"
+      "description": "Vikram Reddy forwards ₹10,088.66 to central collector Meera Das (ACC0140)"
     },
     {
       "time": "11:13:00",
@@ -143,7 +143,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002804",
-      "name": "Disputed Transfer \u20b910,732.62",
+      "name": "Disputed Transfer ₹10,732.62",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -224,7 +224,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 10732.62,
-      "amountFormatted": "\u20b910,732.62",
+      "amountFormatted": "₹10,732.62",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -236,7 +236,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 10732.62,
-      "amountFormatted": "\u20b910,732.62",
+      "amountFormatted": "₹10,732.62",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -258,7 +258,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 10088.66,
-      "amountFormatted": "\u20b910,088.66",
+      "amountFormatted": "₹10,088.66",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -280,7 +280,7 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 10088.66,
-      "amountFormatted": "\u20b910,088.66",
+      "amountFormatted": "₹10,088.66",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -298,9 +298,9 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 90,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Victim Ananya Singh (ACC0123) sent \u20b912,339.28 to Aarav Nair (ACC0133, SBI), who forwarded \u20b911,598.92 onward to central collector Meera Das (ACC0140) via TXN002813.",
+  "summaryNote": "Victim Ananya Singh (ACC0123) sent ₹12,339.28 to Aarav Nair (ACC0133, SBI), who forwarded ₹11,598.92 onward to central collector Meera Das (ACC0140) via TXN002813.",
   "totalDisputedFlowPaise": 1233928,
-  "totalDisputedFlowFormatted": "\u20b912,339.28",
+  "totalDisputedFlowFormatted": "₹12,339.28",
   "layeringPercentage": "94% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -313,21 +313,21 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid Onward Dispersion (\u20b911,598.92)",
+      "title": "⚡ Rapid Onward Dispersion (₹11,598.92)",
       "severity": "HIGH",
-      "description": "Aarav Nair (ACC0133) forwarded \u20b911,598.92 to syndicate collector ACC0140 via TXN002813.",
+      "description": "Aarav Nair (ACC0133) forwarded ₹11,598.92 to syndicate collector ACC0140 via TXN002813.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Syndicate Convergence on ACC0140",
+      "title": "⚡ Syndicate Convergence on ACC0140",
       "severity": "CRIT",
       "description": "Corroborated by parallel dispute CMP0004 converging to the same SBI collector node.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Shared Hardware Signature (DEV0158)",
+      "title": "⚡ Shared Hardware Signature (DEV0158)",
       "severity": "MED",
       "description": "Device DEV0158 active across multiple fast-hopping transfer requests in this syndicate.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -338,7 +338,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
     {
       "time": "11:47:00",
       "label": "Victim Debit (TXN002811)",
-      "description": "Ananya Singh transfers \u20b912,339.28 to Aarav Nair (ACC0133)"
+      "description": "Ananya Singh transfers ₹12,339.28 to Aarav Nair (ACC0133)"
     },
     {
       "time": "11:47:35",
@@ -348,7 +348,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
     {
       "time": "12:05:00",
       "label": "Forwarding Hop (TXN002813)",
-      "description": "Aarav Nair transfers \u20b911,598.92 to Meera Das (ACC0140)"
+      "description": "Aarav Nair transfers ₹11,598.92 to Meera Das (ACC0140)"
     },
     {
       "time": "12:06:15",
@@ -394,7 +394,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002811",
-      "name": "Disputed Transfer \u20b912,339.28",
+      "name": "Disputed Transfer ₹12,339.28",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -475,7 +475,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 12339.28,
-      "amountFormatted": "\u20b912,339.28",
+      "amountFormatted": "₹12,339.28",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -487,7 +487,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 12339.28,
-      "amountFormatted": "\u20b912,339.28",
+      "amountFormatted": "₹12,339.28",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -509,7 +509,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 11598.92,
-      "amountFormatted": "\u20b911,598.92",
+      "amountFormatted": "₹11,598.92",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -531,7 +531,7 @@ const CASE_CMP_2026_0006: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 11598.92,
-      "amountFormatted": "\u20b911,598.92",
+      "amountFormatted": "₹11,598.92",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -549,9 +549,9 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 89,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Victim Ananya Sharma (ACC0122) sent \u20b912,353.66 to Rohan Nair (ACC0132, SBI), who forwarded \u20b911,612.44 onward to central collector Meera Das (ACC0140) via TXN002861.",
+  "summaryNote": "Victim Ananya Sharma (ACC0122) sent ₹12,353.66 to Rohan Nair (ACC0132, SBI), who forwarded ₹11,612.44 onward to central collector Meera Das (ACC0140) via TXN002861.",
   "totalDisputedFlowPaise": 1235366,
-  "totalDisputedFlowFormatted": "\u20b912,353.66",
+  "totalDisputedFlowFormatted": "₹12,353.66",
   "layeringPercentage": "94% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -564,21 +564,21 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid Onward Dispersion (\u20b911,612.44)",
+      "title": "⚡ Rapid Onward Dispersion (₹11,612.44)",
       "severity": "HIGH",
       "description": "Rohan Nair (ACC0132) forwarded 94.0% of funds to syndicate hub ACC0140 via TXN002861 within 6 minutes.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Syndicate Convergence on ACC0140",
+      "title": "⚡ Syndicate Convergence on ACC0140",
       "severity": "CRIT",
       "description": "Parallel victim flow converging to common collector Meera Das (ACC0140).",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Hardware Farm Coordination (DEV0080)",
+      "title": "⚡ Hardware Farm Coordination (DEV0080)",
       "severity": "MED",
       "description": "Device DEV0080 authorized rapid dispersion with zero geofence latency.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -589,7 +589,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
     {
       "time": "17:57:00",
       "label": "Victim Inflow (TXN002858)",
-      "description": "Ananya Sharma sends \u20b912,353.66 to Rohan Nair (ACC0132)"
+      "description": "Ananya Sharma sends ₹12,353.66 to Rohan Nair (ACC0132)"
     },
     {
       "time": "17:57:45",
@@ -599,7 +599,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
     {
       "time": "18:03:00",
       "label": "Forwarding Hop (TXN002861)",
-      "description": "Rohan Nair forwards \u20b911,612.44 to Meera Das (ACC0140)"
+      "description": "Rohan Nair forwards ₹11,612.44 to Meera Das (ACC0140)"
     },
     {
       "time": "18:04:10",
@@ -645,7 +645,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002858",
-      "name": "Disputed Transfer \u20b912,353.66",
+      "name": "Disputed Transfer ₹12,353.66",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -726,7 +726,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 12353.66,
-      "amountFormatted": "\u20b912,353.66",
+      "amountFormatted": "₹12,353.66",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -738,7 +738,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 12353.66,
-      "amountFormatted": "\u20b912,353.66",
+      "amountFormatted": "₹12,353.66",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -760,7 +760,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 11612.44,
-      "amountFormatted": "\u20b911,612.44",
+      "amountFormatted": "₹11,612.44",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -782,7 +782,7 @@ const CASE_CMP_2026_0007: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 11612.44,
-      "amountFormatted": "\u20b911,612.44",
+      "amountFormatted": "₹11,612.44",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -800,9 +800,9 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 90,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Victim Meera Nair (ACC0121) sent \u20b914,065.59 to Rohan Singh (ACC0131, ICICI), who forwarded \u20b913,221.65 onward to central collector Meera Das (ACC0140) via TXN002825.",
+  "summaryNote": "Victim Meera Nair (ACC0121) sent ₹14,065.59 to Rohan Singh (ACC0131, ICICI), who forwarded ₹13,221.65 onward to central collector Meera Das (ACC0140) via TXN002825.",
   "totalDisputedFlowPaise": 1406559,
-  "totalDisputedFlowFormatted": "\u20b914,065.59",
+  "totalDisputedFlowFormatted": "₹14,065.59",
   "layeringPercentage": "94% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -815,21 +815,21 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid Onward Dispersion (\u20b913,221.65)",
+      "title": "⚡ Rapid Onward Dispersion (₹13,221.65)",
       "severity": "HIGH",
       "description": "Rohan Singh (ACC0131) forwarded 94.0% of funds to syndicate hub ACC0140 via TXN002825 within 12 minutes.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Syndicate Convergence on ACC0140",
+      "title": "⚡ Syndicate Convergence on ACC0140",
       "severity": "CRIT",
       "description": "Parallel victim flow converging to common collector Meera Das (ACC0140).",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Hardware Farm Coordination (DEV0137)",
+      "title": "⚡ Hardware Farm Coordination (DEV0137)",
       "severity": "MED",
       "description": "Device DEV0137 authorized rapid dispersion with zero geofence latency.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -840,7 +840,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
     {
       "time": "13:47:00",
       "label": "Victim Inflow (TXN002821)",
-      "description": "Meera Nair sends \u20b914,065.59 to Rohan Singh (ACC0131)"
+      "description": "Meera Nair sends ₹14,065.59 to Rohan Singh (ACC0131)"
     },
     {
       "time": "13:47:50",
@@ -850,7 +850,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
     {
       "time": "13:59:00",
       "label": "Forwarding Hop (TXN002825)",
-      "description": "Rohan Singh forwards \u20b913,221.65 to Meera Das (ACC0140)"
+      "description": "Rohan Singh forwards ₹13,221.65 to Meera Das (ACC0140)"
     },
     {
       "time": "14:00:15",
@@ -896,7 +896,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002821",
-      "name": "Disputed Transfer \u20b914,065.59",
+      "name": "Disputed Transfer ₹14,065.59",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -977,7 +977,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 14065.59,
-      "amountFormatted": "\u20b914,065.59",
+      "amountFormatted": "₹14,065.59",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -989,7 +989,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 14065.59,
-      "amountFormatted": "\u20b914,065.59",
+      "amountFormatted": "₹14,065.59",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -1011,7 +1011,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 13221.65,
-      "amountFormatted": "\u20b913,221.65",
+      "amountFormatted": "₹13,221.65",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -1033,7 +1033,7 @@ const CASE_CMP_2026_0009: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 13221.65,
-      "amountFormatted": "\u20b913,221.65",
+      "amountFormatted": "₹13,221.65",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -1051,9 +1051,9 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 90,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Victim Meera Das (ACC0124) sent \u20b910,889.77 to Rohan Gupta (ACC0134, HDFC), who forwarded \u20b910,236.38 onward to central collector Meera Das (ACC0140) via TXN002842.",
+  "summaryNote": "Victim Meera Das (ACC0124) sent ₹10,889.77 to Rohan Gupta (ACC0134, HDFC), who forwarded ₹10,236.38 onward to central collector Meera Das (ACC0140) via TXN002842.",
   "totalDisputedFlowPaise": 1088977,
-  "totalDisputedFlowFormatted": "\u20b910,889.77",
+  "totalDisputedFlowFormatted": "₹10,889.77",
   "layeringPercentage": "94% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -1066,21 +1066,21 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid Onward Dispersion (\u20b910,236.38)",
+      "title": "⚡ Rapid Onward Dispersion (₹10,236.38)",
       "severity": "HIGH",
       "description": "Rohan Gupta (ACC0134) forwarded 94.0% of funds to syndicate hub ACC0140 via TXN002842 within 15 minutes.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Syndicate Convergence on ACC0140",
+      "title": "⚡ Syndicate Convergence on ACC0140",
       "severity": "CRIT",
       "description": "Parallel victim flow converging to common collector Meera Das (ACC0140).",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Hardware Farm Coordination (DEV0114)",
+      "title": "⚡ Hardware Farm Coordination (DEV0114)",
       "severity": "MED",
       "description": "Device DEV0114 authorized rapid dispersion with zero geofence latency.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -1091,7 +1091,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
     {
       "time": "16:11:00",
       "label": "Victim Inflow (TXN002841)",
-      "description": "Meera Das sends \u20b910,889.77 to Rohan Gupta (ACC0134)"
+      "description": "Meera Das sends ₹10,889.77 to Rohan Gupta (ACC0134)"
     },
     {
       "time": "16:11:45",
@@ -1101,7 +1101,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
     {
       "time": "16:26:00",
       "label": "Forwarding Hop (TXN002842)",
-      "description": "Rohan Gupta forwards \u20b910,236.38 to Meera Das (ACC0140)"
+      "description": "Rohan Gupta forwards ₹10,236.38 to Meera Das (ACC0140)"
     },
     {
       "time": "16:27:10",
@@ -1147,7 +1147,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002841",
-      "name": "Disputed Transfer \u20b910,889.77",
+      "name": "Disputed Transfer ₹10,889.77",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -1228,7 +1228,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 10889.77,
-      "amountFormatted": "\u20b910,889.77",
+      "amountFormatted": "₹10,889.77",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -1240,7 +1240,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 10889.77,
-      "amountFormatted": "\u20b910,889.77",
+      "amountFormatted": "₹10,889.77",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -1262,7 +1262,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 10236.38,
-      "amountFormatted": "\u20b910,236.38",
+      "amountFormatted": "₹10,236.38",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -1284,7 +1284,7 @@ const CASE_CMP_2026_0010: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 10236.38,
-      "amountFormatted": "\u20b910,236.38",
+      "amountFormatted": "₹10,236.38",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -1302,9 +1302,9 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
   "status": "Resolved",
   "riskScore": 20,
   "riskLevel": "LOW",
-  "summaryNote": "Dispute for \u20b9578.11 between Kabir Sharma (ACC0152, HDFC) and Ananya Das (ACC0162, SBI). Non-syndicate transfer.",
+  "summaryNote": "Dispute for ₹578.11 between Kabir Sharma (ACC0152, HDFC) and Ananya Das (ACC0162, SBI). Non-syndicate transfer.",
   "totalDisputedFlowPaise": 57811,
-  "totalDisputedFlowFormatted": "\u20b9578.11",
+  "totalDisputedFlowFormatted": "₹578.11",
   "layeringPercentage": "79% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -1317,14 +1317,14 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Low-Velocity Retail Debit",
+      "title": "⚡ Low-Velocity Retail Debit",
       "severity": "LOW",
-      "description": "Small P2P charge of \u20b9578.11 with no secondary mule dispersion chain.",
+      "description": "Small P2P charge of ₹578.11 with no secondary mule dispersion chain.",
       "severityBg": "bg-emerald-50/70 border-emerald-200",
       "severityText": "text-emerald-800"
     },
     {
-      "title": "\u26a1 Solitary Device Context",
+      "title": "⚡ Solitary Device Context",
       "severity": "LOW",
       "description": "Single-device binding on DEV0027 with normal geofence patterns.",
       "severityBg": "bg-emerald-50/70 border-emerald-200",
@@ -1335,7 +1335,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
     {
       "time": "19:51:00",
       "label": "P2P Payment (TXN002420)",
-      "description": "Kabir Sharma sends \u20b9578.11 to Ananya Das (ACC0162)"
+      "description": "Kabir Sharma sends ₹578.11 to Ananya Das (ACC0162)"
     },
     {
       "time": "19:52:00",
@@ -1345,7 +1345,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
     {
       "time": "20:15:00",
       "label": "Onward Utility Payment",
-      "description": "Normal utility bill payment of \u20b9455.26 to ACC0008"
+      "description": "Normal utility bill payment of ₹455.26 to ACC0008"
     }
   ],
   "nodes": [
@@ -1381,7 +1381,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002420",
-      "name": "Disputed Transfer \u20b9578.11",
+      "name": "Disputed Transfer ₹578.11",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -1462,7 +1462,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 578.11,
-      "amountFormatted": "\u20b9578.11",
+      "amountFormatted": "₹578.11",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -1474,7 +1474,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 578.11,
-      "amountFormatted": "\u20b9578.11",
+      "amountFormatted": "₹578.11",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -1496,7 +1496,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 455.26,
-      "amountFormatted": "\u20b9455.26",
+      "amountFormatted": "₹455.26",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -1518,7 +1518,7 @@ const CASE_CMP_2026_0001: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 455.26,
-      "amountFormatted": "\u20b9455.26",
+      "amountFormatted": "₹455.26",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -1536,9 +1536,9 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 56,
   "riskLevel": "MEDIUM",
-  "summaryNote": "Dispute for \u20b92,243.20 between Meera Das (ACC0155, AXIS) and Meera Sharma (ACC0165, AXIS). Retail merchant charge.",
+  "summaryNote": "Dispute for ₹2,243.20 between Meera Das (ACC0155, AXIS) and Meera Sharma (ACC0165, AXIS). Retail merchant charge.",
   "totalDisputedFlowPaise": 224320,
-  "totalDisputedFlowFormatted": "\u20b92,243.20",
+  "totalDisputedFlowFormatted": "₹2,243.20",
   "layeringPercentage": "26% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -1551,14 +1551,14 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Sub-Threshold Commercial Charge",
+      "title": "⚡ Sub-Threshold Commercial Charge",
       "severity": "MED",
-      "description": "Disputed transaction of \u20b92,243.20 executed via verified Axis Bank gateway.",
+      "description": "Disputed transaction of ₹2,243.20 executed via verified Axis Bank gateway.",
       "severityBg": "bg-amber-50/70 border-amber-200",
       "severityText": "text-amber-900"
     },
     {
-      "title": "\u26a1 Retail Settlement Pattern",
+      "title": "⚡ Retail Settlement Pattern",
       "severity": "LOW",
       "description": "Recipient maintains commercial account with recurring consumer transactions.",
       "severityBg": "bg-emerald-50/70 border-emerald-200",
@@ -1569,7 +1569,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
     {
       "time": "18:59:00",
       "label": "Commercial Charge (TXN002648)",
-      "description": "Meera Das pays \u20b92,243.20 to Meera Sharma (ACC0165)"
+      "description": "Meera Das pays ₹2,243.20 to Meera Sharma (ACC0165)"
     },
     {
       "time": "19:00:15",
@@ -1579,7 +1579,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
     {
       "time": "19:30:00",
       "label": "Inventory Settlement",
-      "description": "Retail disbursement of \u20b9576.68 to ACC0043"
+      "description": "Retail disbursement of ₹576.68 to ACC0043"
     }
   ],
   "nodes": [
@@ -1615,7 +1615,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002648",
-      "name": "Disputed Transfer \u20b92,243.20",
+      "name": "Disputed Transfer ₹2,243.20",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -1696,7 +1696,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 2243.2,
-      "amountFormatted": "\u20b92,243.20",
+      "amountFormatted": "₹2,243.20",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -1708,7 +1708,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 2243.2,
-      "amountFormatted": "\u20b92,243.20",
+      "amountFormatted": "₹2,243.20",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -1730,7 +1730,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 576.68,
-      "amountFormatted": "\u20b9576.68",
+      "amountFormatted": "₹576.68",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -1752,7 +1752,7 @@ const CASE_CMP_2026_0002: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 576.68,
-      "amountFormatted": "\u20b9576.68",
+      "amountFormatted": "₹576.68",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -1770,9 +1770,9 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
   "status": "Resolved",
   "riskScore": 20,
   "riskLevel": "LOW",
-  "summaryNote": "Dispute for \u20b91,573.11 between Kabir Reddy (ACC0154, HDFC) and Meera Das (ACC0164, SBI). Settled personal loan transfer.",
+  "summaryNote": "Dispute for ₹1,573.11 between Kabir Reddy (ACC0154, HDFC) and Meera Das (ACC0164, SBI). Settled personal loan transfer.",
   "totalDisputedFlowPaise": 157311,
-  "totalDisputedFlowFormatted": "\u20b91,573.11",
+  "totalDisputedFlowFormatted": "₹1,573.11",
   "layeringPercentage": "92% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -1785,9 +1785,9 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Resolved Personal Transfer",
+      "title": "⚡ Resolved Personal Transfer",
       "severity": "LOW",
-      "description": "Single debit of \u20b91,573.11 marked resolved with no syndication markers.",
+      "description": "Single debit of ₹1,573.11 marked resolved with no syndication markers.",
       "severityBg": "bg-emerald-50/70 border-emerald-200",
       "severityText": "text-emerald-800"
     }
@@ -1796,7 +1796,7 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
     {
       "time": "19:50:00",
       "label": "Direct Payment (TXN002759)",
-      "description": "Kabir Reddy sends \u20b91,573.11 to Meera Das (ACC0164)"
+      "description": "Kabir Reddy sends ₹1,573.11 to Meera Das (ACC0164)"
     },
     {
       "time": "19:51:00",
@@ -1837,7 +1837,7 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002759",
-      "name": "Disputed Transfer \u20b91,573.11",
+      "name": "Disputed Transfer ₹1,573.11",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -1918,7 +1918,7 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 1573.11,
-      "amountFormatted": "\u20b91,573.11",
+      "amountFormatted": "₹1,573.11",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -1930,7 +1930,7 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 1573.11,
-      "amountFormatted": "\u20b91,573.11",
+      "amountFormatted": "₹1,573.11",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -1952,7 +1952,7 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 1450.0,
-      "amountFormatted": "\u20b91,450.00",
+      "amountFormatted": "₹1,450.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -1974,7 +1974,7 @@ const CASE_CMP_2026_0003: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 1450.0,
-      "amountFormatted": "\u20b91,450.00",
+      "amountFormatted": "₹1,450.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -1992,9 +1992,9 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
   "status": "Resolved",
   "riskScore": 20,
   "riskLevel": "LOW",
-  "summaryNote": "Dispute for \u20b91,792.02 between Vikram Singh (ACC0151, AXIS) and Isha Gupta (ACC0161, ICICI). Verified consumer purchase.",
+  "summaryNote": "Dispute for ₹1,792.02 between Vikram Singh (ACC0151, AXIS) and Isha Gupta (ACC0161, ICICI). Verified consumer purchase.",
   "totalDisputedFlowPaise": 179202,
-  "totalDisputedFlowFormatted": "\u20b91,792.02",
+  "totalDisputedFlowFormatted": "₹1,792.02",
   "layeringPercentage": "69% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -2007,9 +2007,9 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Verified Commercial Charge",
+      "title": "⚡ Verified Commercial Charge",
       "severity": "LOW",
-      "description": "Verified point-of-sale consumer charge of \u20b91,792.02.",
+      "description": "Verified point-of-sale consumer charge of ₹1,792.02.",
       "severityBg": "bg-emerald-50/70 border-emerald-200",
       "severityText": "text-emerald-800"
     }
@@ -2018,7 +2018,7 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
     {
       "time": "21:17:00",
       "label": "Purchase Charge (TXN002768)",
-      "description": "Vikram Singh pays \u20b91,792.02 to Isha Gupta (ACC0161)"
+      "description": "Vikram Singh pays ₹1,792.02 to Isha Gupta (ACC0161)"
     },
     {
       "time": "21:18:00",
@@ -2059,7 +2059,7 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002768",
-      "name": "Disputed Transfer \u20b91,792.02",
+      "name": "Disputed Transfer ₹1,792.02",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -2140,7 +2140,7 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 1792.02,
-      "amountFormatted": "\u20b91,792.02",
+      "amountFormatted": "₹1,792.02",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -2152,7 +2152,7 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 1792.02,
-      "amountFormatted": "\u20b91,792.02",
+      "amountFormatted": "₹1,792.02",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -2174,7 +2174,7 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 1237.45,
-      "amountFormatted": "\u20b91,237.45",
+      "amountFormatted": "₹1,237.45",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -2196,7 +2196,7 @@ const CASE_CMP_2026_0008: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 1237.45,
-      "amountFormatted": "\u20b91,237.45",
+      "amountFormatted": "₹1,237.45",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -2214,9 +2214,9 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 56,
   "riskLevel": "MEDIUM",
-  "summaryNote": "Dispute for \u20b91,037.38 between Isha Nair (ACC0153, AXIS) and Meera Verma (ACC0163, HDFC). Retail merchant charge.",
+  "summaryNote": "Dispute for ₹1,037.38 between Isha Nair (ACC0153, AXIS) and Meera Verma (ACC0163, HDFC). Retail merchant charge.",
   "totalDisputedFlowPaise": 103738,
-  "totalDisputedFlowFormatted": "\u20b91,037.38",
+  "totalDisputedFlowFormatted": "₹1,037.38",
   "layeringPercentage": "87% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -2229,9 +2229,9 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Moderate Dispersion Latency",
+      "title": "⚡ Moderate Dispersion Latency",
       "severity": "MED",
-      "description": "Merchant disbursement of \u20b9907.13 executed via HDFC gateway.",
+      "description": "Merchant disbursement of ₹907.13 executed via HDFC gateway.",
       "severityBg": "bg-amber-50/70 border-amber-200",
       "severityText": "text-amber-900"
     }
@@ -2240,7 +2240,7 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
     {
       "time": "18:59:00",
       "label": "Retail Charge (TXN002868)",
-      "description": "Isha Nair pays \u20b91,037.38 to Meera Verma (ACC0163)"
+      "description": "Isha Nair pays ₹1,037.38 to Meera Verma (ACC0163)"
     },
     {
       "time": "19:00:10",
@@ -2281,7 +2281,7 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002868",
-      "name": "Disputed Transfer \u20b91,037.38",
+      "name": "Disputed Transfer ₹1,037.38",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -2362,7 +2362,7 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 1037.38,
-      "amountFormatted": "\u20b91,037.38",
+      "amountFormatted": "₹1,037.38",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -2374,7 +2374,7 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 1037.38,
-      "amountFormatted": "\u20b91,037.38",
+      "amountFormatted": "₹1,037.38",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -2396,7 +2396,7 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 907.13,
-      "amountFormatted": "\u20b9907.13",
+      "amountFormatted": "₹907.13",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -2418,7 +2418,7 @@ const CASE_CMP_2026_0005: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 907.13,
-      "amountFormatted": "\u20b9907.13",
+      "amountFormatted": "₹907.13",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -2436,9 +2436,9 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 89,
   "riskLevel": "HIGH",
-  "summaryNote": "Victim inflow of \u20b935,000 from Kabir Verma (ACC0011) hopped through 3 accounts within minutes: ACC0012 forwarded \u20b933,250 (95%) to ACC0013 via TXN001946.",
+  "summaryNote": "Victim inflow of ₹35,000 from Kabir Verma (ACC0011) hopped through 3 accounts within minutes: ACC0012 forwarded ₹33,250 (95%) to ACC0013 via TXN001946.",
   "totalDisputedFlowPaise": 3500000,
-  "totalDisputedFlowFormatted": "\u20b935,000.00",
+  "totalDisputedFlowFormatted": "₹35,000.00",
   "layeringPercentage": "95% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -2451,14 +2451,14 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Multi-Hop Rapid Onward Transfer (95%)",
+      "title": "⚡ Multi-Hop Rapid Onward Transfer (95%)",
       "severity": "HIGH",
-      "description": "Aarav Sharma (ACC0012) forwarded \u20b933,250 (95%) to Diya Singh (ACC0013) within 134 seconds of receipt.",
+      "description": "Aarav Sharma (ACC0012) forwarded ₹33,250 (95%) to Diya Singh (ACC0013) within 134 seconds of receipt.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Low Commission Pass-Through",
+      "title": "⚡ Low Commission Pass-Through",
       "severity": "HIGH",
       "description": "Mules retained only 5% handling cut, indicating professional laundering pass-through architecture.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -2469,17 +2469,17 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
     {
       "time": "10:10:00",
       "label": "Victim Inflow (TXN001945)",
-      "description": "Kabir Verma sends \u20b935,000 to Aarav Sharma (ACC0012)"
+      "description": "Kabir Verma sends ₹35,000 to Aarav Sharma (ACC0012)"
     },
     {
       "time": "10:12:14",
       "label": "Hop 1 Forwarding (TXN001946)",
-      "description": "Aarav Sharma forwards \u20b933,250 (95%) to Diya Singh (ACC0013)"
+      "description": "Aarav Sharma forwards ₹33,250 (95%) to Diya Singh (ACC0013)"
     },
     {
       "time": "10:14:00",
       "label": "Hop 2 Forwarding (TXN001948)",
-      "description": "Diya Singh forwards \u20b931,587.50 to Vikram Nair (ACC0014)"
+      "description": "Diya Singh forwards ₹31,587.50 to Vikram Nair (ACC0014)"
     }
   ],
   "nodes": [
@@ -2515,7 +2515,7 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN001945",
-      "name": "Disputed Transfer \u20b935,000.00",
+      "name": "Disputed Transfer ₹35,000.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -2596,7 +2596,7 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 35000.0,
-      "amountFormatted": "\u20b935,000.00",
+      "amountFormatted": "₹35,000.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -2608,7 +2608,7 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 35000.0,
-      "amountFormatted": "\u20b935,000.00",
+      "amountFormatted": "₹35,000.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -2630,7 +2630,7 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 33250.0,
-      "amountFormatted": "\u20b933,250.00",
+      "amountFormatted": "₹33,250.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -2652,7 +2652,7 @@ const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 33250.0,
-      "amountFormatted": "\u20b933,250.00",
+      "amountFormatted": "₹33,250.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -2670,9 +2670,9 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 92,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Central aggregator Meera Verma (ACC0030) received \u20b960,000 pooled from 30 disparate low-value senders (~\u20b92,000 each) and forwarded \u20b958,500 to ACC0031.",
+  "summaryNote": "Central aggregator Meera Verma (ACC0030) received ₹60,000 pooled from 30 disparate low-value senders (~₹2,000 each) and forwarded ₹58,500 to ACC0031.",
   "totalDisputedFlowPaise": 6000000,
-  "totalDisputedFlowFormatted": "\u20b960,000.00",
+  "totalDisputedFlowFormatted": "₹60,000.00",
   "layeringPercentage": "98% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -2685,14 +2685,14 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 30-to-1 High Fan-In Aggregation",
+      "title": "⚡ 30-to-1 High Fan-In Aggregation",
       "severity": "CRIT",
       "description": "30 unique accounts deposited small sub-threshold sums into ACC0030 within a 2-hour window.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Rapid Funnel Sweep (\u20b958,500)",
+      "title": "⚡ Rapid Funnel Sweep (₹58,500)",
       "severity": "HIGH",
       "description": "Aggregator swept 97.5% of accumulated capital into secondary mule ACC0031.",
       "severityBg": "bg-rose-50/70 border-rose-200",
@@ -2703,12 +2703,12 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
     {
       "time": "12:00:00",
       "label": "Multi-Source Fan-In",
-      "description": "30 micro-deposits accumulate \u20b960,000 into Meera Verma (ACC0030)"
+      "description": "30 micro-deposits accumulate ₹60,000 into Meera Verma (ACC0030)"
     },
     {
       "time": "13:45:00",
       "label": "Lump-Sum Sweep (TXN002492)",
-      "description": "Meera Verma transfers \u20b958,500 to Rohan Das (ACC0031)"
+      "description": "Meera Verma transfers ₹58,500 to Rohan Das (ACC0031)"
     }
   ],
   "nodes": [
@@ -2744,7 +2744,7 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002489",
-      "name": "Disputed Transfer \u20b960,000.00",
+      "name": "Disputed Transfer ₹60,000.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -2825,7 +2825,7 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 60000.0,
-      "amountFormatted": "\u20b960,000.00",
+      "amountFormatted": "₹60,000.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -2837,7 +2837,7 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 60000.0,
-      "amountFormatted": "\u20b960,000.00",
+      "amountFormatted": "₹60,000.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -2859,7 +2859,7 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 58500.0,
-      "amountFormatted": "\u20b958,500.00",
+      "amountFormatted": "₹58,500.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -2881,7 +2881,7 @@ const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 58500.0,
-      "amountFormatted": "\u20b958,500.00",
+      "amountFormatted": "₹58,500.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -2899,9 +2899,9 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 85,
   "riskLevel": "HIGH",
-  "summaryNote": "Directed cycle identified: ACC0101 (Vikram Nair) transferred \u20b925,000 to ACC0102 via TXN002702, which forwarded \u20b924,750 to ACC0103, returning \u20b924,502.50 back to ACC0101.",
+  "summaryNote": "Directed cycle identified: ACC0101 (Vikram Nair) transferred ₹25,000 to ACC0102 via TXN002702, which forwarded ₹24,750 to ACC0103, returning ₹24,502.50 back to ACC0101.",
   "totalDisputedFlowPaise": 2500000,
-  "totalDisputedFlowFormatted": "\u20b925,000.00",
+  "totalDisputedFlowFormatted": "₹25,000.00",
   "layeringPercentage": "99% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -2914,14 +2914,14 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Graph Triangular Cycle Detected",
+      "title": "⚡ Graph Triangular Cycle Detected",
       "severity": "HIGH",
       "description": "Cycle ACC0101 -> ACC0102 -> ACC0103 -> ACC0101 closed within 41 minutes with 98% capital returned.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Artificial Turnover Inflation",
+      "title": "⚡ Artificial Turnover Inflation",
       "severity": "HIGH",
       "description": "Funds circulated with uniform 1% loss per hop to fake volume or launder trail.",
       "severityBg": "bg-amber-50/70 border-amber-200",
@@ -2932,17 +2932,17 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
     {
       "time": "11:15:00",
       "label": "Loop Hop 1 (TXN002702)",
-      "description": "Vikram Nair transfers \u20b925,000 to Riya Gupta (ACC0102)"
+      "description": "Vikram Nair transfers ₹25,000 to Riya Gupta (ACC0102)"
     },
     {
       "time": "11:28:00",
       "label": "Loop Hop 2 (TXN002703)",
-      "description": "Riya Gupta forwards \u20b924,750 to Vikram Sharma (ACC0103)"
+      "description": "Riya Gupta forwards ₹24,750 to Vikram Sharma (ACC0103)"
     },
     {
       "time": "11:56:00",
       "label": "Loop Closure (TXN002705)",
-      "description": "Vikram Sharma returns \u20b924,502.50 back to Vikram Nair (ACC0101)"
+      "description": "Vikram Sharma returns ₹24,502.50 back to Vikram Nair (ACC0101)"
     }
   ],
   "nodes": [
@@ -2978,7 +2978,7 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002702",
-      "name": "Disputed Transfer \u20b925,000.00",
+      "name": "Disputed Transfer ₹25,000.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -3059,7 +3059,7 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 25000.0,
-      "amountFormatted": "\u20b925,000.00",
+      "amountFormatted": "₹25,000.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -3071,7 +3071,7 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 25000.0,
-      "amountFormatted": "\u20b925,000.00",
+      "amountFormatted": "₹25,000.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -3093,7 +3093,7 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 24750.0,
-      "amountFormatted": "\u20b924,750.00",
+      "amountFormatted": "₹24,750.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -3115,7 +3115,7 @@ const CASE_S05_CYCLE: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 24750.0,
-      "amountFormatted": "\u20b924,750.00",
+      "amountFormatted": "₹24,750.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -3133,9 +3133,9 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 95,
   "riskLevel": "CRITICAL",
-  "summaryNote": "8 accounts operating on shared hardware device DEV9001 concurrently transferred \u20b94,000 - \u20b94,500 each into central receiver Aarav Gupta (ACC0170) at night.",
+  "summaryNote": "8 accounts operating on shared hardware device DEV9001 concurrently transferred ₹4,000 - ₹4,500 each into central receiver Aarav Gupta (ACC0170) at night.",
   "totalDisputedFlowPaise": 428351,
-  "totalDisputedFlowFormatted": "\u20b94,283.51",
+  "totalDisputedFlowFormatted": "₹4,283.51",
   "layeringPercentage": "94% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -3148,16 +3148,16 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 8-Account Hardware Collusion (DEV9001)",
+      "title": "⚡ 8-Account Hardware Collusion (DEV9001)",
       "severity": "CRIT",
       "description": "Device DEV9001 authorized 8 consecutive transfers into ACC0170 within 34 minutes at 2 AM.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Night-Time High Velocity Cluster",
+      "title": "⚡ Night-Time High Velocity Cluster",
       "severity": "HIGH",
-      "description": "Total \u20b934,200 drained between 02:07 and 02:41 IST with identical IP and device fingerprints.",
+      "description": "Total ₹34,200 drained between 02:07 and 02:41 IST with identical IP and device fingerprints.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     }
@@ -3166,17 +3166,17 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
     {
       "time": "02:07:00",
       "label": "Farm Leg 1 (TXN002895)",
-      "description": "Ananya Das sends \u20b94,283.51 to Aarav Gupta (ACC0170)"
+      "description": "Ananya Das sends ₹4,283.51 to Aarav Gupta (ACC0170)"
     },
     {
       "time": "02:12:48",
       "label": "Farm Leg 2 (TXN002896)",
-      "description": "Meera Sharma sends \u20b94,044.15 to Aarav Gupta (ACC0170)"
+      "description": "Meera Sharma sends ₹4,044.15 to Aarav Gupta (ACC0170)"
     },
     {
       "time": "02:28:30",
       "label": "Farm Leg 3 (TXN002898)",
-      "description": "Ananya Iyer sends \u20b94,255.69 to Aarav Gupta (ACC0170)"
+      "description": "Ananya Iyer sends ₹4,255.69 to Aarav Gupta (ACC0170)"
     }
   ],
   "nodes": [
@@ -3212,7 +3212,7 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "TXN002895",
-      "name": "Disputed Transfer \u20b94,283.51",
+      "name": "Disputed Transfer ₹4,283.51",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -3293,7 +3293,7 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 4283.51,
-      "amountFormatted": "\u20b94,283.51",
+      "amountFormatted": "₹4,283.51",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -3305,7 +3305,7 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 4283.51,
-      "amountFormatted": "\u20b94,283.51",
+      "amountFormatted": "₹4,283.51",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -3327,7 +3327,7 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 4044.15,
-      "amountFormatted": "\u20b94,044.15",
+      "amountFormatted": "₹4,044.15",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -3349,7 +3349,7 @@ const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 4044.15,
-      "amountFormatted": "\u20b94,044.15",
+      "amountFormatted": "₹4,044.15",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -3367,9 +3367,9 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
   "status": "In review",
   "riskScore": 94,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Victim Ananya Sharma unknowingly approved remote collect COL-083902 for \u20b916,000. Aggregator Suresh Kumar received \u20b916,000 and dispersed \u20b99,500 to Priya Nair and \u20b96,500 to Deepak Verma within 48s.",
+  "summaryNote": "Victim Ananya Sharma unknowingly approved remote collect COL-083902 for ₹16,000. Aggregator Suresh Kumar received ₹16,000 and dispersed ₹9,500 to Priya Nair and ₹6,500 to Deepak Verma within 48s.",
   "totalDisputedFlowPaise": 1600000,
-  "totalDisputedFlowFormatted": "\u20b916,000.00",
+  "totalDisputedFlowFormatted": "₹16,000.00",
   "layeringPercentage": "59% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -3382,14 +3382,14 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid Dispersion Churn",
+      "title": "⚡ Rapid Dispersion Churn",
       "severity": "HIGH",
-      "description": "Aggregator Suresh Kumar (suresh.k92@paytm) received \u20b916,000 and dispersed \u20b99,500 to Priya Nair within 48 seconds.",
+      "description": "Aggregator Suresh Kumar (suresh.k92@paytm) received ₹16,000 and dispersed ₹9,500 to Priya Nair within 48 seconds.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Hardware Collusion Farm (ANDR_09F2)",
+      "title": "⚡ Hardware Collusion Farm (ANDR_09F2)",
       "severity": "CRIT",
       "description": "Device ANDR_09F2 is simultaneously bound to both receiving mules across distinct banks.",
       "severityBg": "bg-rose-50/70 border-rose-200",
@@ -3400,7 +3400,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
     {
       "time": "09:31:45",
       "label": "Collect Mandate Trigger",
-      "description": "Victim Ananya Sharma approves collect COL-083902 for \u20b916,000"
+      "description": "Victim Ananya Sharma approves collect COL-083902 for ₹16,000"
     },
     {
       "time": "09:32:15",
@@ -3410,7 +3410,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
     {
       "time": "09:32:50",
       "label": "Dispersion Hop",
-      "description": "Suresh Kumar transfers \u20b99,500 to Priya Nair (priya.nair@ybl)"
+      "description": "Suresh Kumar transfers ₹9,500 to Priya Nair (priya.nair@ybl)"
     }
   ],
   "nodes": [
@@ -3446,7 +3446,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "UPI260915083902",
-      "name": "Disputed Transfer \u20b916,000.00",
+      "name": "Disputed Transfer ₹16,000.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -3527,7 +3527,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 16000.0,
-      "amountFormatted": "\u20b916,000.00",
+      "amountFormatted": "₹16,000.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -3539,7 +3539,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 16000.0,
-      "amountFormatted": "\u20b916,000.00",
+      "amountFormatted": "₹16,000.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -3561,7 +3561,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 9500.0,
-      "amountFormatted": "\u20b99,500.00",
+      "amountFormatted": "₹9,500.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -3583,7 +3583,7 @@ const CASE_NCRP_2026_0839: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 9500.0,
-      "amountFormatted": "\u20b99,500.00",
+      "amountFormatted": "₹9,500.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -3601,9 +3601,9 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 96,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Rohan Mehta was debited \u20b924,500 via deceptive collect request COL-008412 into Ravi Kumar (Yes Bank), structured out to Kiran Patel (\u20b914,500) and Vikram Singh (\u20b910,000).",
+  "summaryNote": "Rohan Mehta was debited ₹24,500 via deceptive collect request COL-008412 into Ravi Kumar (Yes Bank), structured out to Kiran Patel (₹14,500) and Vikram Singh (₹10,000).",
   "totalDisputedFlowPaise": 2450000,
-  "totalDisputedFlowFormatted": "\u20b924,500.00",
+  "totalDisputedFlowFormatted": "₹24,500.00",
   "layeringPercentage": "59% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -3616,14 +3616,14 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Rapid 2-Leg Mule Dispersion",
+      "title": "⚡ Rapid 2-Leg Mule Dispersion",
       "severity": "HIGH",
-      "description": "Ravi Kumar dispersed \u20b914,500 to Kiran Patel and \u20b910,000 to Vikram Singh within 60 seconds.",
+      "description": "Ravi Kumar dispersed ₹14,500 to Kiran Patel and ₹10,000 to Vikram Singh within 60 seconds.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Multi-Account Hardware Collusion",
+      "title": "⚡ Multi-Account Hardware Collusion",
       "severity": "CRIT",
       "description": "Hardware fingerprint DEV-7F3A9C bound across multiple receiving accounts.",
       "severityBg": "bg-rose-50/70 border-rose-200",
@@ -3634,7 +3634,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
     {
       "time": "09:32:00",
       "label": "Collect Request Pull",
-      "description": "Collect COL-008412 triggers \u20b924,500 debit from Rohan Mehta"
+      "description": "Collect COL-008412 triggers ₹24,500 debit from Rohan Mehta"
     },
     {
       "time": "09:32:41",
@@ -3644,7 +3644,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
     {
       "time": "09:33:22",
       "label": "Dispersion Hop",
-      "description": "Ravi Kumar disperses \u20b914,500 to Kiran Patel (kiran.p@paytm)"
+      "description": "Ravi Kumar disperses ₹14,500 to Kiran Patel (kiran.p@paytm)"
     }
   ],
   "nodes": [
@@ -3680,7 +3680,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "UPI260915084127",
-      "name": "Disputed Transfer \u20b924,500.00",
+      "name": "Disputed Transfer ₹24,500.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -3761,7 +3761,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 24500.0,
-      "amountFormatted": "\u20b924,500.00",
+      "amountFormatted": "₹24,500.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -3773,7 +3773,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 24500.0,
-      "amountFormatted": "\u20b924,500.00",
+      "amountFormatted": "₹24,500.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -3795,7 +3795,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 14500.0,
-      "amountFormatted": "\u20b914,500.00",
+      "amountFormatted": "₹14,500.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -3817,7 +3817,7 @@ const CASE_NCRP_2026_0841: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 14500.0,
-      "amountFormatted": "\u20b914,500.00",
+      "amountFormatted": "₹14,500.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -3835,9 +3835,9 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 88,
   "riskLevel": "HIGH",
-  "summaryNote": "Sunita Rao paid \u20b97,800 via spoofed link into Rajesh Malhotra (Kotak), structured within 52s to Amit Patel (\u20b95,000) and Neha Joshi (\u20b92,800).",
+  "summaryNote": "Sunita Rao paid ₹7,800 via spoofed link into Rajesh Malhotra (Kotak), structured within 52s to Amit Patel (₹5,000) and Neha Joshi (₹2,800).",
   "totalDisputedFlowPaise": 780000,
-  "totalDisputedFlowFormatted": "\u20b97,800.00",
+  "totalDisputedFlowFormatted": "₹7,800.00",
   "layeringPercentage": "64% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -3850,14 +3850,14 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Sub-Minute 2-Hop Layering",
+      "title": "⚡ Sub-Minute 2-Hop Layering",
       "severity": "HIGH",
       "description": "Funds structured within 52 seconds from Kotak mule to Paytm and ICICI endpoints.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Recurring Device Fingerprint",
+      "title": "⚡ Recurring Device Fingerprint",
       "severity": "HIGH",
       "description": "Device DEV-7F3A9C matches fingerprint from morning syndicate activity.",
       "severityBg": "bg-rose-50/70 border-rose-200",
@@ -3868,17 +3868,17 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
     {
       "time": "11:14:02",
       "label": "Fee Prompt",
-      "description": "Sunita Rao pays \u20b97,800 processing fee"
+      "description": "Sunita Rao pays ₹7,800 processing fee"
     },
     {
       "time": "11:14:38",
       "label": "Kotak Inflow",
-      "description": "Rajesh Malhotra receives \u20b97,800"
+      "description": "Rajesh Malhotra receives ₹7,800"
     },
     {
       "time": "11:15:10",
       "label": "Split Hop",
-      "description": "Rajesh transfers \u20b95,000 to Amit Patel (amit.p88@paytm)"
+      "description": "Rajesh transfers ₹5,000 to Amit Patel (amit.p88@paytm)"
     }
   ],
   "nodes": [
@@ -3914,7 +3914,7 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "UPI260914092611",
-      "name": "Disputed Transfer \u20b97,800.00",
+      "name": "Disputed Transfer ₹7,800.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -3995,7 +3995,7 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 7800.0,
-      "amountFormatted": "\u20b97,800.00",
+      "amountFormatted": "₹7,800.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -4007,7 +4007,7 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 7800.0,
-      "amountFormatted": "\u20b97,800.00",
+      "amountFormatted": "₹7,800.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -4029,7 +4029,7 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 5000.0,
-      "amountFormatted": "\u20b95,000.00",
+      "amountFormatted": "₹5,000.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -4051,7 +4051,7 @@ const CASE_NCRP_2026_0836: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 5000.0,
-      "amountFormatted": "\u20b95,000.00",
+      "amountFormatted": "₹5,000.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -4069,9 +4069,9 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
   "status": "Open",
   "riskScore": 92,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Rajesh Khanna victimized for \u20b952,000 into Sunil Shetty (Paytm), structured to Priya Sharma (\u20b918,000), Vikram Malhotra (\u20b917,000), and Deepak Joshi (\u20b915,000).",
+  "summaryNote": "Rajesh Khanna victimized for ₹52,000 into Sunil Shetty (Paytm), structured to Priya Sharma (₹18,000), Vikram Malhotra (₹17,000), and Deepak Joshi (₹15,000).",
   "totalDisputedFlowPaise": 5200000,
-  "totalDisputedFlowFormatted": "\u20b952,000.00",
+  "totalDisputedFlowFormatted": "₹52,000.00",
   "layeringPercentage": "35% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -4084,14 +4084,14 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 High-Volume Multi-Mule Structuring",
+      "title": "⚡ High-Volume Multi-Mule Structuring",
       "severity": "CRIT",
-      "description": "\u20b952,000 split across 3 accounts under the \u20b920,000 threshold within 3 minutes.",
+      "description": "₹52,000 split across 3 accounts under the ₹20,000 threshold within 3 minutes.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Emulated Android Farm",
+      "title": "⚡ Emulated Android Farm",
       "severity": "HIGH",
       "description": "Device DEV-33019A identified as multi-instance virtualization container.",
       "severityBg": "bg-rose-50/70 border-rose-200",
@@ -4102,17 +4102,17 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
     {
       "time": "14:02:00",
       "label": "Victim Inflow",
-      "description": "Rajesh Khanna debited \u20b952,000 to Sunil Shetty"
+      "description": "Rajesh Khanna debited ₹52,000 to Sunil Shetty"
     },
     {
       "time": "14:02:40",
       "label": "Aggregator Clearance",
-      "description": "Sunil Shetty receives \u20b952,000 at Paytm"
+      "description": "Sunil Shetty receives ₹52,000 at Paytm"
     },
     {
       "time": "14:03:30",
       "label": "Mule Split 1",
-      "description": "Sunil Shetty transfers \u20b918,000 to Priya Sharma"
+      "description": "Sunil Shetty transfers ₹18,000 to Priya Sharma"
     }
   ],
   "nodes": [
@@ -4148,7 +4148,7 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "UPI260913140288",
-      "name": "Disputed Transfer \u20b952,000.00",
+      "name": "Disputed Transfer ₹52,000.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -4229,7 +4229,7 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 52000.0,
-      "amountFormatted": "\u20b952,000.00",
+      "amountFormatted": "₹52,000.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -4241,7 +4241,7 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 52000.0,
-      "amountFormatted": "\u20b952,000.00",
+      "amountFormatted": "₹52,000.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -4263,7 +4263,7 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 18000.0,
-      "amountFormatted": "\u20b918,000.00",
+      "amountFormatted": "₹18,000.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -4285,7 +4285,7 @@ const CASE_NCRP_2026_0824: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 18000.0,
-      "amountFormatted": "\u20b918,000.00",
+      "amountFormatted": "₹18,000.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
@@ -4303,9 +4303,9 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
   "status": "Resolved",
   "riskScore": 90,
   "riskLevel": "CRITICAL",
-  "summaryNote": "Anand Verma unauthorized debit of \u20b931,000 routed through Rohit Sharma (Paytm) and structured to Karan Singh (\u20b915,000) and Amit Patel (\u20b915,500).",
+  "summaryNote": "Anand Verma unauthorized debit of ₹31,000 routed through Rohit Sharma (Paytm) and structured to Karan Singh (₹15,000) and Amit Patel (₹15,500).",
   "totalDisputedFlowPaise": 3100000,
-  "totalDisputedFlowFormatted": "\u20b931,000.00",
+  "totalDisputedFlowFormatted": "₹31,000.00",
   "layeringPercentage": "48% Forwarded",
   "speedOfExtraction": "1m 15s",
   "hopSummary": "3 Rapid Hops",
@@ -4318,14 +4318,14 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
   "relationshipsCount": 7,
   "signals": [
     {
-      "title": "\u26a1 Off-Hours Merchant Cashout",
+      "title": "⚡ Off-Hours Merchant Cashout",
       "severity": "HIGH",
       "description": "Funds settled at Kishan Electronics QR between 23:45 and 23:49 IST.",
       "severityBg": "bg-rose-50/70 border-rose-200",
       "severityText": "text-rose-800"
     },
     {
-      "title": "\u26a1 Emulated Root Signature",
+      "title": "⚡ Emulated Root Signature",
       "severity": "CRIT",
       "description": "Device DEV-889021 flagged with Magisk root cloaking.",
       "severityBg": "bg-rose-50/70 border-rose-200",
@@ -4336,17 +4336,17 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
     {
       "time": "23:45:10",
       "label": "Malicious Debit",
-      "description": "Anand Verma debited \u20b931,000 to Rohit Sharma"
+      "description": "Anand Verma debited ₹31,000 to Rohit Sharma"
     },
     {
       "time": "23:45:50",
       "label": "Paytm Inflow",
-      "description": "Rohit Sharma receives \u20b931,000"
+      "description": "Rohit Sharma receives ₹31,000"
     },
     {
       "time": "23:46:42",
       "label": "Dispersion Hop",
-      "description": "Rohit transfers \u20b915,000 to Karan Singh"
+      "description": "Rohit transfers ₹15,000 to Karan Singh"
     }
   ],
   "nodes": [
@@ -4382,7 +4382,7 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
       "type": "collect",
       "role": "Disputed transfer",
       "handle": "UPI260912110543",
-      "name": "Disputed Transfer \u20b931,000.00",
+      "name": "Disputed Transfer ₹31,000.00",
       "riskScore": 88,
       "status": "flagged",
       "timestamp": "10:14:02",
@@ -4463,7 +4463,7 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
       "target": "col_req",
       "type": "transaction",
       "amount": 31000.0,
-      "amountFormatted": "\u20b931,000.00",
+      "amountFormatted": "₹31,000.00",
       "timestamp": "10:14:02",
       "timelineIndex": 0,
       "ruleTriggered": "DISPUTED_TRANSACTION_ORIGIN",
@@ -4475,7 +4475,7 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
       "target": "acc_receiving",
       "type": "transaction",
       "amount": 31000.0,
-      "amountFormatted": "\u20b931,000.00",
+      "amountFormatted": "₹31,000.00",
       "timestamp": "10:14:35",
       "timelineIndex": 1,
       "ruleTriggered": "AGGREGATOR_INFLOW_CREDIT",
@@ -4497,7 +4497,7 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
       "target": "acc_mule_1",
       "type": "transaction",
       "amount": 15000.0,
-      "amountFormatted": "\u20b915,000.00",
+      "amountFormatted": "₹15,000.00",
       "timestamp": "10:15:33",
       "timelineIndex": 2,
       "ruleTriggered": "RAPID_ONWARD_TRANSFER",
@@ -4519,7 +4519,7 @@ const CASE_NCRP_2026_0812: CaseInvestigationData = {
       "target": "acc_linked",
       "type": "transaction",
       "amount": 15000.0,
-      "amountFormatted": "\u20b915,000.00",
+      "amountFormatted": "₹15,000.00",
       "timestamp": "10:16:15",
       "timelineIndex": 4,
       "ruleTriggered": "FINAL_CASHOUT_TRANSFER",
