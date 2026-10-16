@@ -515,7 +515,7 @@ export function generateInvestigationReportHtml(data: ReportData): string {
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">1. Graph Topology Snapshot & Network Structure</h2>
-        <span style="font-size: 11px; color: var(--text-muted);">Cytoscape 2D Geometric Clustering</span>
+        <span style="font-size: 11px; color: var(--text-muted);">Network Topology Layout</span>
       </div>
 
       <div class="graph-snapshot-box">

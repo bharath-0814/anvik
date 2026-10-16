@@ -17,6 +17,7 @@ import {
   Maximize2
 } from 'lucide-react';
 import { NetworkNode, NetworkEdge } from '../mock/network9Data';
+import { getCaseInvestigationData } from '../mock/caseData';
 
 interface InvestigationInsightsRailProps {
   selectedNode: NetworkNode | null;
@@ -88,12 +89,11 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
     return [];
   }, [selectedNode, edges]);
 
+  const caseData = useMemo(() => {
+    return getCaseInvestigationData(caseId);
+  }, [caseId]);
+
   const handleTriggerAnalysis = onRunAnalysis || onShowGraph;
-  const isDemoFocus =
-    caseId?.includes('CMP0004') ||
-    selectedNode?.id?.includes('ACC0135') ||
-    selectedNode?.handle?.includes('ACC0135') ||
-    selectedNode?.name?.includes('ACC0135');
 
   return (
     <aside className="w-full h-full bg-[#FFFFFF] border-r md:border-r-0 border-[#E8E4D8] flex flex-col justify-between overflow-hidden select-none">
@@ -103,7 +103,7 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 block truncate">
             INVESTIGATION INSIGHTS
           </span>
-          <span className="text-[10px] text-slate-400 font-mono">Case #{caseId}</span>
+          <span className="text-[10px] text-slate-400 font-mono">Case #{caseData.caseId}</span>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
@@ -119,8 +119,16 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
             </button>
           )}
 
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
-            Critical · 94/100
+          <span
+            className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+              (caseData.riskLevel as string) === 'CRITICAL' || (caseData.riskLevel as string) === 'Critical'
+                ? 'bg-rose-50 text-rose-700 border-rose-200'
+                : (caseData.riskLevel as string) === 'HIGH' || (caseData.riskLevel as string) === 'High'
+                ? 'bg-amber-50 text-amber-700 border-amber-200'
+                : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+            }`}
+          >
+            {caseData.riskLevel} · {caseData.riskScore}/100
           </span>
         </div>
       </div>
@@ -140,7 +148,7 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
                     Network Crime Analysis
                   </h4>
                   <span className="text-[10px] text-slate-500 font-mono">
-                    9 entities · 9 relationships
+                    {caseData.entitiesCount} entities · {caseData.relationshipsCount} relationships
                   </span>
                 </div>
               </div>
@@ -307,217 +315,119 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
         ) : (
           /* ================= DEFAULT OVERVIEW DOSSIER ================= */
           <div className="space-y-4">
-            {isDemoFocus ? (
-              <>
-                {/* Demo Scenario Highlight Badge */}
-                <div className="p-3 rounded-xl border border-emerald-500/40 bg-emerald-50/80 shadow-2xs space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-[11px] text-emerald-900 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      Active Fraud Ring Case: CMP0004
-                    </span>
-                    <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded bg-emerald-200 text-emerald-950">
-                      SCORE 90 / 100
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-700 leading-relaxed">
-                    Syndicate convergence across <strong>6 accounts</strong> (ACC0131–ACC0140) with rapid onward transfer from victim <strong>ACC0125</strong> to beneficiary <strong>ACC0135</strong>.
-                  </p>
-                </div>
-
-                {/* Quick Metrics Grid */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Disputed Txn Flow
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-rose-700 block">
-                      ₹5,594.16
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">Traced Ring: ₹55,242</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Extraction Speed
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-slate-900 block">
-                      &lt; 60 secs
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">2 Rapid Hops</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Syndicate Ring
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-amber-700 block">
-                      6 Accounts
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">ACC0131 – ACC0140</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Beneficiary Mule
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-slate-900 block truncate">
-                      ACC0135
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">vikram.reddy135</span>
-                  </div>
-                </div>
-
-                {/* High-Priority Explainable Detection Signals */}
-                <div className="space-y-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 block">
-                    Explainable Detection Signals (3)
+            {/* Case Dossier Highlight Note */}
+            {caseData.summaryNote && (
+              <div className="p-3 rounded-xl border border-emerald-500/40 bg-emerald-50/80 shadow-2xs space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-[11px] text-emerald-900 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    Active Case Dossier: {caseData.caseId}
                   </span>
-
-                  {/* Signal 1 */}
-                  <div className="p-3 rounded-xl border border-rose-200 bg-rose-50/70 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[11px] text-rose-800">
-                        ⚡ Rapid Onward Transfer Churn
-                      </span>
-                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-rose-200 text-rose-900">
-                        HIGH · 0.90
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
-                      Beneficiary <strong>ACC0135</strong> received ₹5,594.16 from victim <strong>ACC0125</strong> via <strong>TXN002804</strong> and immediately dispersed funds to <strong>ACC0140</strong> via <strong>TXN002806</strong>.
-                    </p>
-                  </div>
-
-                  {/* Signal 2 */}
-                  <div className="p-3 rounded-xl border border-amber-200 bg-amber-50/70 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[11px] text-amber-900">
-                        ⚡ Syndicate Complaint Convergence (ALR-0001)
-                      </span>
-                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">
-                        HIGH
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
-                      5 separate complaints (CMP0004, CMP0006, CMP0007, CMP0009, CMP0010) converged onto the same multi-hop mule ring with ₹55,242.46 total traced flow.
-                    </p>
-                  </div>
-
-                  {/* Signal 3 */}
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA] space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[11px] text-slate-800">
-                        ⚡ Decision Support Counterfactuals
-                      </span>
-                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800">
-                        INFO
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
-                      Signal would clear if beneficiary ACC0135 had &gt;= 90 days established transaction history or retained funds &gt; 24h before onward settlement.
-                    </p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                {/* Quick Metrics Grid (Adjusts evenly based on left panel width) */}
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Total Disputed Flow
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-rose-700 block">
-                      ₹24,500
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">100% Layered</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Speed of Extraction
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-slate-900 block">
-                      3m 15s
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">4 Rapid Hops</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Identified Mules
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-amber-700 block">
-                      3 accounts
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">Active Layering</span>
-                  </div>
-
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                      Shared Device
-                    </span>
-                    <span className="font-mono font-extrabold text-base text-slate-900 block">
-                      1 farm
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-medium">DEV-7F3A9C</span>
-                  </div>
-                </div>
-
-                {/* High-Priority Explainable Detection Signals (Adjusts evenly across widths) */}
-                <div className="space-y-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 block">
-                    Explainable Detection Signals (3)
+                  <span className="text-[9px] font-bold font-mono px-1.5 py-0.5 rounded bg-emerald-200 text-emerald-950">
+                    SCORE {caseData.riskScore} / 100
                   </span>
-
-                  {/* Signal 1 */}
-                  <div className="p-3 rounded-xl border border-rose-200 bg-rose-50/50 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[11px] text-rose-800">
-                        ⚡ Rapid Dispersion Churn
-                      </span>
-                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-rose-200 text-rose-900">
-                        HIGH
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
-                      Aggregator <strong>ravi-18@ybl</strong> split ₹23,800 across 2 secondary mules within 41 seconds of receipt.
-                    </p>
-                  </div>
-
-                  {/* Signal 2 */}
-                  <div className="p-3 rounded-xl border border-amber-200 bg-amber-50/50 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[11px] text-amber-900">
-                        ⚡ Hardware Collusion Farm
-                      </span>
-                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">
-                        MED
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
-                      Physical device <strong>DEV-7F3A9C</strong> bound and authorized across 3 distinct mule bank accounts.
-                    </p>
-                  </div>
-
-                  {/* Signal 3 */}
-                  <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA] space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-[11px] text-slate-800">
-                        ⚡ Collect Pull Without Latency
-                      </span>
-                      <span className="text-[9px] font-bold font-mono px-1.5 py-0.2 rounded bg-slate-200 text-slate-800">
-                        CRIT
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
-                      Collect request <strong>COL-008412</strong> drained origin account without standard 2FA approval pause.
-                    </p>
-                  </div>
                 </div>
-              </>
+                <p className="text-[11px] text-slate-700 leading-relaxed">
+                  {caseData.summaryNote}
+                </p>
+              </div>
             )}
+
+            {/* Quick Metrics Grid (Adjusts evenly based on left panel width) */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                  Total Disputed Flow
+                </span>
+                <span className="font-mono font-extrabold text-base text-rose-700 block">
+                  {caseData.totalDisputedFlowFormatted}
+                </span>
+                <span className="text-[10px] text-slate-500 font-medium">{caseData.layeringPercentage}</span>
+              </div>
+
+              <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                  Speed of Extraction
+                </span>
+                <span className="font-mono font-extrabold text-base text-slate-900 block">
+                  {caseData.speedOfExtraction}
+                </span>
+                <span className="text-[10px] text-slate-500 font-medium">{caseData.hopSummary}</span>
+              </div>
+
+              <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                  Identified Mules
+                </span>
+                <span className="font-mono font-extrabold text-base text-amber-700 block">
+                  {caseData.identifiedMulesFormatted}
+                </span>
+                <span className="text-[10px] text-slate-500 font-medium">{caseData.muleStatus}</span>
+              </div>
+
+              <div className="p-3 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
+                  Shared Device
+                </span>
+                <span className="font-mono font-extrabold text-base text-slate-900 block truncate">
+                  {caseData.sharedDeviceCount}
+                </span>
+                <span className="text-[10px] text-slate-500 font-medium truncate block">{caseData.sharedDeviceId}</span>
+              </div>
+            </div>
+
+            {/* High-Priority Explainable Detection Signals */}
+            <div className="space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 block">
+                Explainable Detection Signals ({caseData.signals.length})
+              </span>
+
+              {caseData.signals.map((sig, idx) => {
+                const isCritOrHigh = sig.severity === 'CRIT' || sig.severity === 'HIGH';
+                const isMed = sig.severity === 'MED';
+
+                return (
+                  <div
+                    key={sig.id || sig.title || idx}
+                    className={`p-3 rounded-xl border space-y-1 ${
+                      isCritOrHigh
+                        ? 'border-rose-200 bg-rose-50/70'
+                        : isMed
+                        ? 'border-amber-200 bg-amber-50/70'
+                        : 'border-[#E2DFD7] bg-[#FAFAFA]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`font-bold text-[11px] ${
+                          isCritOrHigh
+                            ? 'text-rose-800'
+                            : isMed
+                            ? 'text-amber-900'
+                            : 'text-slate-800'
+                        }`}
+                      >
+                        {sig.title}
+                      </span>
+                      <span
+                        className={`text-[9px] font-bold font-mono px-1.5 py-0.2 rounded border ${
+                          isCritOrHigh
+                            ? 'bg-rose-200 text-rose-900 border-rose-300'
+                            : isMed
+                            ? 'bg-amber-200 text-amber-900 border-amber-300'
+                            : 'bg-emerald-100 text-emerald-800 border-emerald-200'
+                        }`}
+                      >
+                        {sig.badgeLabel || sig.severity}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-600 leading-relaxed text-balance">
+                      {sig.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

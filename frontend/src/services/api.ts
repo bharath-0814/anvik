@@ -175,7 +175,7 @@ export async function getReady(): Promise<ReadyResponse> {
 }
 
 /**
- * Fetch Cytoscape graph topology from backend
+ * Fetch network graph topology from backend
  */
 export async function getGraph(filters?: GraphFilters): Promise<BackendGraphResponse> {
   const params = new URLSearchParams();
@@ -340,7 +340,7 @@ export function enrichNodesWithAlertSummaries(
 }
 
 /**
- * Cleanly adapt backend Cytoscape elements to frontend UI types.
+ * Cleanly adapt backend graph elements to frontend UI types.
  * Preserves exact backend IDs (acc:..., dev:..., txn:..., link:...) without fabricated identifiers.
  * Enriches nodes with risk scores and mule roles from account summaries if provided.
  */

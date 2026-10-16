@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { RotateCcw, Play, Pause, Shield } from 'lucide-react';
-import { TIMELINE_STEPS } from '../mock/network9Data';
+import { TIMELINE_STEPS, TimelineStep } from '../mock/network9Data';
 
 interface TransactionTimelineBarProps {
   timelineIndex: number;
   setTimelineIndex: React.Dispatch<React.SetStateAction<number>>;
   isPlaying: boolean;
   setIsPlaying: (playing: boolean) => void;
+  steps?: TimelineStep[];
 }
 
 export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
@@ -14,8 +15,10 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
   setTimelineIndex,
   isPlaying,
   setIsPlaying,
+  steps,
 }) => {
-  const activeStep = TIMELINE_STEPS[timelineIndex] || TIMELINE_STEPS[0];
+  const currentSteps = steps && steps.length > 0 ? steps : TIMELINE_STEPS;
+  const activeStep = currentSteps[timelineIndex] || currentSteps[0];
 
   // Auto-play interval ticker
   useEffect(() => {
@@ -23,7 +26,7 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
 
     const timer = setInterval(() => {
       setTimelineIndex((prev) => {
-        if (prev >= TIMELINE_STEPS.length - 1) {
+        if (prev >= currentSteps.length - 1) {
           setIsPlaying(false);
           return prev;
         }
@@ -32,7 +35,7 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
     }, 2200);
 
     return () => clearInterval(timer);
-  }, [isPlaying, setIsPlaying, setTimelineIndex]);
+  }, [isPlaying, setIsPlaying, setTimelineIndex, currentSteps.length]);
 
   const handleReset = () => {
     setIsPlaying(false);
@@ -40,14 +43,14 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
   };
 
   const handleTogglePlay = () => {
-    if (timelineIndex >= TIMELINE_STEPS.length - 1) {
+    if (timelineIndex >= currentSteps.length - 1) {
       setTimelineIndex(0);
     }
     setIsPlaying(!isPlaying);
   };
 
-  // Percentage played along the 5 step markers
-  const playedPercent = (timelineIndex / (TIMELINE_STEPS.length - 1)) * 100;
+  // Percentage played along the step markers
+  const playedPercent = currentSteps.length > 1 ? (timelineIndex / (currentSteps.length - 1)) * 100 : 0;
 
   return (
     <div className="w-full bg-white border-t border-[#E8E4D8] px-6 py-3.5 flex flex-col justify-between shadow-2xs select-none">
@@ -72,7 +75,7 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
           {/* Reset (↺) icon button */}
           <button
             onClick={handleReset}
-            title="Reset to 09:32:00"
+            title={`Reset to ${currentSteps[0]?.time || '00:00:00'}`}
             className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -119,7 +122,7 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
         <input
           type="range"
           min={0}
-          max={TIMELINE_STEPS.length - 1}
+          max={currentSteps.length - 1}
           step={1}
           value={timelineIndex}
           onChange={(e) => {
@@ -131,7 +134,7 @@ export const TransactionTimelineBar: React.FC<TransactionTimelineBarProps> = ({
 
         {/* Timestamp Scale Markers Beneath Track */}
         <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 mt-2 px-1">
-          {TIMELINE_STEPS.map((step, idx) => (
+          {currentSteps.map((step, idx) => (
             <button
               key={step.time}
               onClick={() => {

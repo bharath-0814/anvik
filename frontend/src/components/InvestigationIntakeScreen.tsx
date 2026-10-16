@@ -26,13 +26,13 @@ export interface ComplaintItem {
 
 const DEFAULT_COMPLAINTS: ComplaintItem[] = [
   {
-    id: 'CMP0004',
+    id: 'CMP-2026-0004',
     dateReceived: '15 Oct 2026',
     transactionReference: 'TXN002804',
     deviceId: 'DEV0163',
     status: 'Open',
     riskScore: '90',
-    amount: 5594,
+    amount: 10733,
   },
   {
     id: 'NCRP-2026-0841',
@@ -40,7 +40,7 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'UPI260915084127',
     deviceId: 'DEV-208101',
     status: 'Open',
-    riskScore: '—',
+    riskScore: '96',
     amount: 24500,
   },
   {
@@ -49,7 +49,7 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'UPI260915083902',
     deviceId: 'ANDR_09F2',
     status: 'In review',
-    riskScore: '—',
+    riskScore: '94',
     amount: 16000,
   },
   {
@@ -58,7 +58,7 @@ const DEFAULT_COMPLAINTS: ComplaintItem[] = [
     transactionReference: 'UPI260914092611',
     deviceId: 'DEV-7F3A9C',
     status: 'Open',
-    riskScore: '—',
+    riskScore: '88',
     amount: 7800,
   },
   {

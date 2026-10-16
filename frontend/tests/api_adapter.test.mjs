@@ -85,7 +85,7 @@ function buildGraphUrl(baseUrl, filters) {
   return `${baseUrl.replace(/\/+$/, '')}/api/graph${qs ? `?${qs}` : ''}`;
 }
 
-test('adaptBackendGraphToFrontend preserves Cytoscape IDs without fabrication', () => {
+test('adaptBackendGraphToFrontend preserves node IDs without fabrication', () => {
   const sampleBackendData = {
     nodes: [
       {

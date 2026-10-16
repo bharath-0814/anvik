@@ -290,3 +290,10 @@ export const NETWORK_9_EDGES: NetworkEdge[] = [
     curvature: 25,
   },
 ];
+
+export {
+  type ExplainableSignal,
+  type CaseInvestigationData,
+  ALL_CASE_INVESTIGATION_DATA,
+  getCaseInvestigationData,
+} from './caseData';
