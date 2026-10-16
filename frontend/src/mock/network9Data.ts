@@ -16,6 +16,7 @@ export interface NetworkNode {
   x: number;
   y: number;
   disputeAmount?: number;
+  timelineIndex?: number;
 }
 
 export type NetworkEdgeType = 'transaction' | 'device_link';

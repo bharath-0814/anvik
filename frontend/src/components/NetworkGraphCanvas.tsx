@@ -108,21 +108,23 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
     const usableH = Math.max(260, h - 2 * padY);
 
     return nodes.map((node, idx) => {
+      // 1. If explicit x and y coordinates are given, preserve each graph's unique layout geometry!
+      if (typeof node.x === 'number' && typeof node.y === 'number' && (node.x > 0 || node.y > 0)) {
+        const nx = Math.min(Math.max((node.x - 60) / 880, 0.05), 0.95);
+        const ny = Math.min(Math.max((node.y - 60) / 400, 0.08), 0.92);
+        return {
+          ...node,
+          x: Math.round(padX + nx * usableW),
+          y: Math.round(padY + ny * usableH),
+        };
+      }
+      // 2. Fallback to base layout anchors if present
       const pos = BASE_LAYOUT[node.id];
       if (pos) {
         return {
           ...node,
           x: Math.round(padX + pos.nx * usableW),
           y: Math.round(padY + pos.ny * usableH),
-        };
-      }
-      if (typeof node.x === 'number' && typeof node.y === 'number' && (node.x > 0 || node.y > 0)) {
-        const nx = Math.min(Math.max((node.x - 60) / 830, 0.05), 0.95);
-        const ny = Math.min(Math.max((node.y - 70) / 380, 0.08), 0.92);
-        return {
-          ...node,
-          x: Math.round(padX + nx * usableW),
-          y: Math.round(padY + ny * usableH),
         };
       }
       // Dynamic non-overlapping topological distribution
@@ -164,11 +166,11 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
 
   // Determine node visibility based on current timeline index
   const isNodeActiveInTimeline = (node: NetworkNode) => {
-    // Origin account and its device are always visible from the start
-    if (node.id === 'acc_origin' || node.id === 'dev_origin' || node.id === 'acc_linked') return true;
+    if (node.timelineIndex !== undefined) {
+      return node.timelineIndex <= timelineIndex;
+    }
     const hasAnyEdge = edges.some((e) => e.source === node.id || e.target === node.id);
     if (!hasAnyEdge) return true;
-    // Check if any visible edge connects to it
     return edges.some(
       (e) => (e.source === node.id || e.target === node.id) && (e.timelineIndex === undefined || e.timelineIndex <= timelineIndex)
     );
