@@ -199,10 +199,9 @@ function DashboardContent() {
 
   const displayNodes = useMemo(() => {
     if (subgraphMode === 'focus_demo' && networkNodes.length > 5) {
-      const accounts = networkNodes.filter((n) => n.type === 'upi' || n.type === 'mule');
-      if (accounts.length >= 4) {
-        return accounts.slice(0, 5);
-      }
+      const focusIds = new Set(['acc_origin', 'col_req', 'acc_receiving', 'dev_shared', 'acc_mule_1']);
+      const filtered = networkNodes.filter((n) => focusIds.has(n.id));
+      if (filtered.length >= 4) return filtered;
       return networkNodes.slice(0, 5);
     }
     return networkNodes;
