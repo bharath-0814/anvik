@@ -18,6 +18,24 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({
   onInvestigateInGraph,
 }) => {
   const { theme } = useTheme();
+  const [selectedPattern, setSelectedPattern] = React.useState<string>('ALL');
+
+  const activeRingsCount = React.useMemo(() => {
+    return new Set(alerts.map((a) => a.clusterId)).size;
+  }, [alerts]);
+
+  const totalVolume = React.useMemo(() => {
+    return alerts.reduce((acc, a) => acc + (a.totalVolume || 0), 0);
+  }, [alerts]);
+
+  const formattedVolume = totalVolume >= 100000
+    ? `₹${(totalVolume / 100000).toFixed(2)}L`
+    : `₹${totalVolume.toLocaleString('en-IN')}`;
+
+  const filteredAlerts = React.useMemo(() => {
+    if (selectedPattern === 'ALL') return alerts;
+    return alerts.filter((a) => a.patternType === selectedPattern || a.id.includes(selectedPattern));
+  }, [alerts, selectedPattern]);
 
   return (
     <div className="space-y-5">
@@ -64,7 +82,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({
             }`}
           >
             <span className="text-[10px] text-slate-400 uppercase font-semibold">Active Rings</span>
-            <p className="text-xl font-bold font-mono text-rose-600 dark:text-rose-400">3</p>
+            <p className="text-xl font-bold font-mono text-rose-600 dark:text-rose-400">{activeRingsCount}</p>
           </div>
           <div
             className={`px-4 py-2 rounded-xl border text-center ${
@@ -77,15 +95,37 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({
                 theme === 'dark' ? 'text-white' : 'text-slate-900'
               }`}
             >
-              ₹8.45L
+              {formattedVolume}
             </p>
           </div>
         </div>
       </div>
 
+      {/* Filter Tabs Bar (Clutter-Free Navigation) */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 select-none">
+        {[
+          { label: 'All Patterns', value: 'ALL' },
+          { label: 'Mule Syndicates', value: 'MULE_RING' },
+          { label: 'Rapid Dispersion', value: 'RAPID_DISPERSION' },
+          { label: 'Circular Routing', value: 'CIRCULAR_ROUTING' },
+        ].map((tab) => (
+          <button
+            key={tab.value}
+            onClick={() => setSelectedPattern(tab.value)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer border ${
+              selectedPattern === tab.value
+                ? 'bg-[#007065] text-white border-[#007065] shadow-xs'
+                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       {/* Alerts Grid */}
       <div className="space-y-4">
-        {alerts.map((alert) => (
+        {filteredAlerts.map((alert) => (
           <div
             key={alert.id}
             className={`rounded-2xl border p-5 space-y-4 transition-all duration-200 ${
