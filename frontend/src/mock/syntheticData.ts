@@ -316,18 +316,162 @@ export const DEMO_COMPLAINTS: ComplaintRecord[] = [
   {
     id: 'CMP0004',
     complaintRef: 'NCRP-CMP0004',
-    date: '15 Oct 2026, 10:14 IST',
-    shortDescription: 'Rapid onward transfer scam; victim funds routed via beneficiary ACC0135 within seconds.',
-    category: 'Rapid Onward Transfer',
-    disputeAmount: 5594.16,
+    date: '29 Sep 2026, 10:54 IST',
+    shortDescription: 'Syndicate convergence victim; ₹10,732 routed via mule ACC0135 to collector ACC0140 within 58 seconds.',
+    category: 'Rapid Onward Transfer / Convergence',
+    disputeAmount: 10732.62,
     relatedAccountId: 'ACC0125',
-    relatedAccountUpi: 'victim.acc0125@synaxis',
+    relatedAccountUpi: 'vikram.das125@synhdfc',
     relatedBeneficiaryUpi: 'vikram.reddy135@synicici',
     relatedBeneficiaryAccountId: 'ACC0135',
     relatedTxnUtr: 'TXN002804',
-    riskLevel: 'HIGH',
+    riskLevel: 'CRITICAL',
     status: 'under_investigation',
-    analystNotes: 'Complaint CMP0004: Victim ACC0125 -> Beneficiary ACC0135. High-velocity onward dispersion detected.',
+    analystNotes: 'Complaint CMP0004: Victim ACC0125 -> Mule ACC0135 -> Collector ACC0140. High-velocity onward dispersion detected.',
+  },
+  {
+    id: 'CMP0001',
+    complaintRef: 'NCRP-CMP0001',
+    date: '27 Sep 2026, 19:51 IST',
+    shortDescription: 'Disputed UPI payment reported by HDFC account holder to unverified receiver.',
+    category: 'Unauthorized UPI Debit',
+    disputeAmount: 578.11,
+    relatedAccountId: 'ACC0152',
+    relatedAccountUpi: 'kabir.sharma152@synhdfc',
+    relatedBeneficiaryUpi: 'ananya.das162@synsbi',
+    relatedBeneficiaryAccountId: 'ACC0162',
+    relatedTxnUtr: 'TXN002420',
+    riskLevel: 'LOW',
+    status: 'resolved',
+    analystNotes: 'Complaint CMP0001: Baseline individual dispute with no syndicate links. Settled by originating bank.',
+  },
+  {
+    id: 'CMP0002',
+    complaintRef: 'NCRP-CMP0002',
+    date: '27 Sep 2026, 18:59 IST',
+    shortDescription: 'Suspicious peer-to-peer fund transfer reported by Axis Bank complainant.',
+    category: 'UPI Impersonation',
+    disputeAmount: 2243.20,
+    relatedAccountId: 'ACC0155',
+    relatedAccountUpi: 'meera.das155@synaxis',
+    relatedBeneficiaryUpi: 'meera.sharma165@synaxis',
+    relatedBeneficiaryAccountId: 'ACC0165',
+    relatedTxnUtr: 'TXN002648',
+    riskLevel: 'MEDIUM',
+    status: 'resolved',
+    analystNotes: 'Complaint CMP0002: Standalone dispute. Chargeback processed; no mule ring topology found.',
+  },
+  {
+    id: 'CMP0003',
+    complaintRef: 'NCRP-CMP0003',
+    date: '28 Sep 2026, 19:50 IST',
+    shortDescription: 'Unrecognized debit from HDFC savings via QR collect mandate.',
+    category: 'Collect Request Abuse',
+    disputeAmount: 1573.11,
+    relatedAccountId: 'ACC0154',
+    relatedAccountUpi: 'kabir.reddy154@synhdfc',
+    relatedBeneficiaryUpi: 'meera.das164@synsbi',
+    relatedBeneficiaryAccountId: 'ACC0164',
+    relatedTxnUtr: 'TXN002759',
+    riskLevel: 'MEDIUM',
+    status: 'pending_review',
+    analystNotes: 'Complaint CMP0003: Collect request executed without user PIN confirmation. Audit requested.',
+  },
+  {
+    id: 'CMP0005',
+    complaintRef: 'NCRP-CMP0005',
+    date: '29 Sep 2026, 18:59 IST',
+    shortDescription: 'Disputed online payment transaction across synthetic Axis-to-HDFC corridor.',
+    category: 'Phishing Reward Link',
+    disputeAmount: 1037.38,
+    relatedAccountId: 'ACC0153',
+    relatedAccountUpi: 'isha.nair153@synaxis',
+    relatedBeneficiaryUpi: 'meera.verma163@synhdfc',
+    relatedBeneficiaryAccountId: 'ACC0163',
+    relatedTxnUtr: 'TXN002868',
+    riskLevel: 'LOW',
+    status: 'under_investigation',
+    analystNotes: 'Complaint CMP0005: Suspected phishing link clicked via SMS notification.',
+  },
+  {
+    id: 'CMP0006',
+    complaintRef: 'NCRP-CMP0006',
+    date: '30 Sep 2026, 11:47 IST',
+    shortDescription: 'Syndicate convergence victim; ₹12,339 routed to mule ACC0133 forwarding to hub ACC0140.',
+    category: 'Complaint Convergence / Syndicate',
+    disputeAmount: 12339.28,
+    relatedAccountId: 'ACC0123',
+    relatedAccountUpi: 'ananya.singh123@synsbi',
+    relatedBeneficiaryUpi: 'aarav.nair133@synsbi',
+    relatedBeneficiaryAccountId: 'ACC0133',
+    relatedTxnUtr: 'TXN002811',
+    riskLevel: 'CRITICAL',
+    status: 'under_investigation',
+    analystNotes: 'Complaint CMP0006: Feeder mule ACC0133 forwarded 94% of victim funds to ACC0140 in 43 seconds.',
+  },
+  {
+    id: 'CMP0007',
+    complaintRef: 'NCRP-CMP0007',
+    date: '30 Sep 2026, 17:57 IST',
+    shortDescription: 'Syndicate convergence victim; ₹12,353 routed to mule ACC0132 forwarding to hub ACC0140.',
+    category: 'Complaint Convergence / Syndicate',
+    disputeAmount: 12353.66,
+    relatedAccountId: 'ACC0122',
+    relatedAccountUpi: 'ananya.sharma122@synsbi',
+    relatedBeneficiaryUpi: 'rohan.nair132@synsbi',
+    relatedBeneficiaryAccountId: 'ACC0132',
+    relatedTxnUtr: 'TXN002858',
+    riskLevel: 'CRITICAL',
+    status: 'under_investigation',
+    analystNotes: 'Complaint CMP0007: Part of S07 Complaint Convergence ring. Same day forward to Diya Das (ACC0140).',
+  },
+  {
+    id: 'CMP0008',
+    complaintRef: 'NCRP-CMP0008',
+    date: '30 Sep 2026, 21:17 IST',
+    shortDescription: 'Disputed Axis-to-ICICI transfer reported by cardholder.',
+    category: 'Unauthorized UPI Debit',
+    disputeAmount: 1792.02,
+    relatedAccountId: 'ACC0151',
+    relatedAccountUpi: 'vikram.singh151@synaxis',
+    relatedBeneficiaryUpi: 'isha.gupta161@synicici',
+    relatedBeneficiaryAccountId: 'ACC0161',
+    relatedTxnUtr: 'TXN002768',
+    riskLevel: 'LOW',
+    status: 'resolved',
+    analystNotes: 'Complaint CMP0008: Transaction verified with merchant gateway logs. Dispute resolved.',
+  },
+  {
+    id: 'CMP0009',
+    complaintRef: 'NCRP-CMP0009',
+    date: '01 Oct 2026, 13:47 IST',
+    shortDescription: 'Syndicate convergence victim; ₹14,065 routed to mule ACC0131 forwarding to hub ACC0140.',
+    category: 'Complaint Convergence / Syndicate',
+    disputeAmount: 14065.59,
+    relatedAccountId: 'ACC0121',
+    relatedAccountUpi: 'meera.nair121@synhdfc',
+    relatedBeneficiaryUpi: 'rohan.singh131@synicici',
+    relatedBeneficiaryAccountId: 'ACC0131',
+    relatedTxnUtr: 'TXN002821',
+    riskLevel: 'CRITICAL',
+    status: 'under_investigation',
+    analystNotes: 'Complaint CMP0009: Inflow from HDFC victim forwarded to aggregator spine within 52 seconds.',
+  },
+  {
+    id: 'CMP0010',
+    complaintRef: 'NCRP-CMP0010',
+    date: '01 Oct 2026, 16:11 IST',
+    shortDescription: 'Syndicate convergence victim; ₹10,889 routed to mule ACC0134 forwarding to hub ACC0140.',
+    category: 'Complaint Convergence / Syndicate',
+    disputeAmount: 10889.77,
+    relatedAccountId: 'ACC0124',
+    relatedAccountUpi: 'meera.das124@synaxis',
+    relatedBeneficiaryUpi: 'rohan.gupta134@synhdfc',
+    relatedBeneficiaryAccountId: 'ACC0134',
+    relatedTxnUtr: 'TXN002841',
+    riskLevel: 'CRITICAL',
+    status: 'under_investigation',
+    analystNotes: 'Complaint CMP0010: Fifth converging complaint identifying Diya Das (ACC0140) as syndicate cashout head.',
   },
   {
     id: 'CMP-2026-8812',
@@ -538,6 +682,117 @@ export const SYNTHETIC_TIMELINE: TimelineEvent[] = [
 
 export const SYNTHETIC_ALERTS: SuspiciousAlert[] = [
   {
+    id: 'ALR-0001',
+    title: 'Complaint Convergence: Multi-Hop Syndicate Funnel',
+    clusterId: 'CLUSTER_S07_CONVERGENCE',
+    severity: 'CRITICAL',
+    riskScore: 90,
+    patternType: 'MULE_RING',
+    totalVolume: 60380,
+    involvedEntitiesCount: 11,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: '5 independent victim complaints converged onto an interconnected mule cluster (ACC0131-ACC0135) with 94% onward forwarding into aggregator hub Diya Das (ACC0140).',
+    evidence: [
+      {
+        ruleId: 'COMPLAINT_CONVERGENCE',
+        ruleName: 'Syndicate Complaint Convergence',
+        description: '5 complaints (CMP0004, CMP0006, CMP0007, CMP0009, CMP0010) funnel funds to common recipient ACC0140 within 4 hours.',
+        metrics: { 'Converging Complaints': 5, 'Traced Volume (₹)': 60380, 'Collector Head': 'ACC0140' }
+      },
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Dispersion Churn',
+        description: 'Mule accounts split and forward received funds within 38-58 seconds of victim debit.',
+        metrics: { 'Avg Hop Latency': '48s', 'Forwarding Ratio': '94.2%' }
+      }
+    ],
+    suggestedAction: 'Enforce systemic lien freeze on collector ACC0140 and report network topology to NCRP portal.'
+  },
+  {
+    id: 'ALR-0002',
+    title: 'Rapid Onward Transfer: 3-Hop Low-Latency Chain',
+    clusterId: 'CLUSTER_S01_RAPID_CHAIN',
+    severity: 'HIGH',
+    riskScore: 89,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 35000,
+    involvedEntitiesCount: 4,
+    detectedAt: '2026-10-15 18:30:00 IST',
+    summary: '₹35,000 victim inflow hops through 3 bank accounts (ACC0011 -> ACC0012 -> ACC0013 -> ACC0014) in under 6 minutes with 95% retention at each hop.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Multi-Hop Rapid Pass-Through',
+        description: 'Hop 1 forwards 95% in 2m 14s; Hop 2 forwards 95% in 1m 45s.',
+        metrics: { 'Hops': 3, 'Total Latency': '5m 12s', 'Pass-Through Rate': '95.0%' }
+      }
+    ],
+    suggestedAction: 'Issue immediate automated hold on terminal endpoint ACC0014 and request KYC verification.'
+  },
+  {
+    id: 'ALR-0003',
+    title: 'Closed Transaction Loop / Cyclic Wash Ring',
+    clusterId: 'CLUSTER_S05_CYCLE',
+    severity: 'HIGH',
+    riskScore: 85,
+    patternType: 'CIRCULAR_ROUTING',
+    totalVolume: 25000,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 16:15:00 IST',
+    summary: 'Closed directed cycle detected (ACC0101 -> ACC0102 -> ACC0103 -> ACC0101) circulating ₹25,000 within 52 minutes with 1% leakage per hop.',
+    evidence: [
+      {
+        ruleId: 'TRANSACTION_CYCLE',
+        ruleName: 'Directed Cycle Loop Detection',
+        description: 'Cycle length 3: TXN002702, TXN002703, TXN002705 completed in 52 mins.',
+        metrics: { 'Cycle Length': 3, 'Cycle Retention': '98.0%', 'Duration': '52 mins' }
+      }
+    ],
+    suggestedAction: 'Flag participating accounts for AML circular structuring audit.'
+  },
+  {
+    id: 'ALR-0006',
+    title: 'High-Volume Multi-Source Fan-In (Smurfing)',
+    clusterId: 'CLUSTER_S03_FANIN',
+    severity: 'HIGH',
+    riskScore: 79,
+    patternType: 'MULE_RING',
+    totalVolume: 60000,
+    involvedEntitiesCount: 31,
+    detectedAt: '2026-10-15 14:00:00 IST',
+    summary: '30 unrelated accounts each transferred ~₹2,000 to single aggregator ACC0030 within 3 hours.',
+    evidence: [
+      {
+        ruleId: 'MULTI_SOURCE_FAN_IN',
+        ruleName: 'Micro-Deposit Inflow Funnel',
+        description: '30 distinct remitters credited account ACC0030 with identical micro-amounts.',
+        metrics: { 'Sender Count': 30, 'Average Amount (₹)': 2000, 'Time Window': '3 hours' }
+      }
+    ],
+    suggestedAction: 'Freeze inward transactions on aggregator ACC0030 pending legitimate commercial proof.'
+  },
+  {
+    id: 'ALR-0016',
+    title: 'Hardware Collusion: Rooted Device Farm',
+    clusterId: 'CLUSTER_S09_SHARED_DEVICE',
+    severity: 'HIGH',
+    riskScore: 82,
+    patternType: 'MULE_RING',
+    totalVolume: 34200,
+    involvedEntitiesCount: 9,
+    detectedAt: '2026-10-15 02:45:00 IST',
+    summary: '8 distinct account identities bound to single rooted handset DEV9001 executed synchronized nocturnal payments to ACC0170.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Multi-Account Hardware Collusion',
+        description: 'Device DEV9001 authorized payments across 8 distinct user identities in 45 minutes.',
+        metrics: { 'Device ID': 'DEV9001', 'Accounts Bound': 8, 'Window': '02:00 - 02:45 IST' }
+      }
+    ],
+    suggestedAction: 'Blacklist hardware identifier DEV9001 across member bank gateways.'
+  },
+  {
     id: 'ALT_2026_094',
     title: 'High-Velocity Structured Mule Ring & Shared Device Farm',
     clusterId: 'CLUSTER_ALPHA_CHAKRAVYUH',
@@ -615,6 +870,102 @@ export const SYNTHETIC_ALERTS: SuspiciousAlert[] = [
 ];
 
 export const SYNTHETIC_CASES: CaseFile[] = [
+  {
+    id: 'CASE-S07-CONVERGE',
+    title: 'Operation Chakravyuh: S07 Complaint Convergence Syndicate',
+    analyst: 'Bharath (Lead Backend & Detection Engine Owner)',
+    status: 'IN_REVIEW',
+    priority: 'CRITICAL',
+    createdAt: '2026-10-15 10:15 IST',
+    flaggedVolume: 60380,
+    primaryClusterId: 'CLUSTER_S07_CONVERGENCE',
+    notes: [
+      {
+        id: 'N-S07-1',
+        author: 'Investigator Priya',
+        timestamp: '10:20 IST',
+        text: '5 victim complaints (CMP0004, CMP0006, CMP0007, CMP0009, CMP0010) show identical onward transfer behavior converging at Collector Diya Das (ACC0140).'
+      },
+      {
+        id: 'N-S07-2',
+        author: 'Bharath',
+        timestamp: '10:35 IST',
+        text: 'Primary mule Vikram Reddy (ACC0135) received ₹10,732.62 from victim ACC0125 and forwarded 94% within 58 seconds. Full network exhibits 100% layering rate.'
+      }
+    ]
+  },
+  {
+    id: 'CASE-S01-RAPID',
+    title: 'S01 Rapid Transfer: 3-Hop Low-Latency Chain',
+    analyst: 'Bharath (Lead Backend & Detection Engine Owner)',
+    status: 'IN_REVIEW',
+    priority: 'HIGH',
+    createdAt: '2026-10-15 09:30 IST',
+    flaggedVolume: 35000,
+    primaryClusterId: 'CLUSTER_S01_RAPID_CHAIN',
+    notes: [
+      {
+        id: 'N-S01-1',
+        author: 'Bharath',
+        timestamp: '09:40 IST',
+        text: 'Funds transferred ACC0011 -> ACC0012 -> ACC0013 -> ACC0014 in under 6 minutes with 95% pass-through at each hop.'
+      }
+    ]
+  },
+  {
+    id: 'CASE-S03-FANIN',
+    title: 'S03 Fan-In: Multi-Source Micro-Deposit Smurfing',
+    analyst: 'Devika (Financial Crimes Desk)',
+    status: 'OPEN',
+    priority: 'HIGH',
+    createdAt: '2026-10-15 08:45 IST',
+    flaggedVolume: 60000,
+    primaryClusterId: 'CLUSTER_S03_FANIN',
+    notes: [
+      {
+        id: 'N-S03-1',
+        author: 'Devika',
+        timestamp: '09:00 IST',
+        text: '30 individual sender accounts credited ACC0030 with ~₹2,000 each in 3 hours. Suspected recruitment mule.'
+      }
+    ]
+  },
+  {
+    id: 'CASE-S05-CYCLE',
+    title: 'S05 Cycle: Closed Triangular Layering Ring',
+    analyst: 'Bharath (Lead Backend & Detection Engine Owner)',
+    status: 'IN_REVIEW',
+    priority: 'HIGH',
+    createdAt: '2026-10-15 07:15 IST',
+    flaggedVolume: 25000,
+    primaryClusterId: 'CLUSTER_S05_CYCLE',
+    notes: [
+      {
+        id: 'N-S05-1',
+        author: 'Bharath',
+        timestamp: '07:30 IST',
+        text: 'Directed loop ACC0101 -> ACC0102 -> ACC0103 -> ACC0101 detected by NetworkX simple_cycles algorithm with 98% principal retention.'
+      }
+    ]
+  },
+  {
+    id: 'CASE-S09-DEVICE',
+    title: 'S09 Hardware Collusion: Rooted Device Farm',
+    analyst: 'Investigator Priya',
+    status: 'OPEN',
+    priority: 'HIGH',
+    createdAt: '2026-10-15 03:00 IST',
+    flaggedVolume: 34200,
+    primaryClusterId: 'CLUSTER_S09_SHARED_DEVICE',
+    notes: [
+      {
+        id: 'N-S09-1',
+        author: 'Investigator Priya',
+        timestamp: '03:15 IST',
+        text: 'Device DEV9001 logged 8 distinct user identities sending nocturnal transfers to ACC0170.'
+      }
+    ]
+  },
   {
     id: 'CASE-2026-0041',
     title: 'Operation Chakravyuh: Structured UPI Mule Ring',
