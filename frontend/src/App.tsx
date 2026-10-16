@@ -12,7 +12,6 @@ import { ComplaintsPanel } from './components/ComplaintsPanel';
 import { FraudTimelinePanel } from './components/FraudTimelinePanel';
 import { InvestigationSummaryPanel } from './components/InvestigationSummaryPanel';
 import { AlertsPanel } from './components/AlertsPanel';
-import { CustomCursor } from './components/CustomCursor';
 import { FilterSlidebar } from './components/FilterSlidebar';
 import { ComplaintIntakeModal } from './components/ComplaintIntakeModal';
 import { downloadInvestigationReport } from './utils/reportGenerator';
@@ -859,7 +858,6 @@ function DashboardContent() {
 export function App() {
   return (
     <ThemeProvider>
-      <CustomCursor />
       <DashboardContent />
     </ThemeProvider>
   );
