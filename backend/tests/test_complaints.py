@@ -1,6 +1,8 @@
 """Unit tests for the preloaded complaints API endpoint and CORS headers."""
 
+import json
 import sqlite3
+import unittest.mock
 from unittest.mock import patch
 
 import pytest
@@ -146,3 +148,64 @@ def test_get_complaints_filter_by_account_id(test_client: TestClient) -> None:
         data = response.json()
         assert data["total_count"] == 1
         assert data["complaints"][0]["victim_account_id"] == "ACC001"
+
+
+def test_get_complaints_with_realscore_enrichment(test_client: TestClient) -> None:
+    """Verify that complaints are enriched dynamically with scores, priority, and devices."""
+    conn = sqlite3.connect(":memory:", check_same_thread=False)
+    cur = conn.cursor()
+    cur.execute(
+        "CREATE TABLE accounts ("
+        "account_id TEXT PRIMARY KEY, holder_name TEXT, vpa TEXT, bank TEXT, created_at TEXT)"
+    )
+    cur.execute(
+        "CREATE TABLE transactions ("
+        "txn_id TEXT PRIMARY KEY, sender_account_id TEXT, receiver_account_id TEXT, "
+        "sender_vpa TEXT, receiver_vpa TEXT, amount_paise INT, amount_inr REAL, "
+        "raw_timestamp TEXT, timestamp_utc TEXT, txn_type TEXT, status TEXT, device_id TEXT)"
+    )
+    cur.execute(
+        "CREATE TABLE complaints ("
+        "complaint_id TEXT PRIMARY KEY, victim_account_id TEXT, victim_vpa TEXT, "
+        "txn_id TEXT, raw_complaint_date TEXT, complaint_date_utc TEXT)"
+    )
+    cur.execute(
+        "INSERT INTO transactions VALUES ("
+        "'TXN_ALERT_1', 'ACC_VIC', 'ACC_REC', 'vic@bank', 'rec@bank', 1000000, 10000.0, "
+        "'2026-09-01 10:00:00', '2026-09-01T04:30:00Z', 'PAY', 'SUCCESS', 'DEV_MULE_99')"
+    )
+    cur.execute(
+        "INSERT INTO complaints VALUES ("
+        "'CMP_REAL_01', 'ACC_VIC', 'vic@bank', 'TXN_ALERT_1', '2026-09-02', '2026-09-02T00:00:00Z')"
+    )
+    conn.commit()
+
+    mock_alerts_data = {
+        "alerts": [
+            {
+                "alert_id": "ALR-TEST-01",
+                "rule_id": "RAPID_ONWARD_TRANSFER",
+                "score": 0.89,
+                "priority": "high",
+                "complaint_ids": ["CMP_REAL_01"],
+                "txn_ids": ["TXN_ALERT_1"],
+                "linked_txn_ids": [],
+                "account_ids": ["ACC_REC"],
+            }
+        ]
+    }
+
+    with patch("app.api.routes.complaints.get_turso_connection", return_value=conn), patch(
+        "pathlib.Path.exists", return_value=True
+    ), patch("builtins.open", unittest.mock.mock_open(read_data=json.dumps(mock_alerts_data))):
+        response = test_client.get("/api/complaints")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["total_count"] == 1
+        item = data["complaints"][0]
+        assert item["complaint_id"] == "CMP_REAL_01"
+        assert item["device_id"] == "DEV_MULE_99"
+        assert item["risk_score"] == 89
+        assert item["priority"] == "HIGH"
+        assert item["triage_status"] == "Open"
+        assert "RAPID_ONWARD_TRANSFER" in item["rule_triggers"]

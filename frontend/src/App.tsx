@@ -185,6 +185,26 @@ function DashboardContent() {
   const activeCaseData = useMemo(() => getCaseInvestigationData(activeCaseId), [activeCaseId]);
   const networkNodes = useMemo(() => activeCaseData.nodes || NETWORK_9_NODES, [activeCaseData]);
   const networkEdges = useMemo(() => activeCaseData.edges || NETWORK_9_EDGES, [activeCaseData]);
+
+  // Presentation Subgraph Mode: 5-Node Clutter-Free Focused View vs Full Syndicate Network
+  const [subgraphMode, setSubgraphMode] = useState<'focus_demo' | 'full_network'>('focus_demo');
+
+  const displayNodes = useMemo(() => {
+    if (subgraphMode === 'focus_demo' && networkNodes.length > 5) {
+      const accounts = networkNodes.filter((n) => n.type === 'upi' || n.type === 'mule');
+      if (accounts.length >= 4) {
+        return accounts.slice(0, 5);
+      }
+      return networkNodes.slice(0, 5);
+    }
+    return networkNodes;
+  }, [networkNodes, subgraphMode]);
+
+  const displayEdges = useMemo(() => {
+    const visibleNodeIds = new Set(displayNodes.map((n) => n.id));
+    return networkEdges.filter((e) => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target));
+  }, [networkEdges, displayNodes]);
+
   const [selectedNetworkNode, setSelectedNetworkNode] = useState<NetworkNode | null>(null);
   const [timelineIndex, setTimelineIndex] = useState<number>(4);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -506,6 +526,34 @@ function DashboardContent() {
 
               {/* Right: Interactive Slider Button & Analysis Trigger */}
               <div className="flex items-center gap-2.5 shrink-0">
+                {/* Subgraph Mode Toggle: Clean 5-Node Focus View vs Full Syndicate */}
+                {isGraphVisible && (
+                  <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 select-none">
+                    <button
+                      onClick={() => setSubgraphMode('focus_demo')}
+                      className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                        subgraphMode === 'focus_demo'
+                          ? 'bg-white text-[#007065] shadow-xs'
+                          : 'text-slate-500 hover:text-slate-800'
+                      }`}
+                      title="Clean, executive 5-node money flow view (Victim -> Aggregator -> Collector)"
+                    >
+                      Focused (5 Nodes)
+                    </button>
+                    <button
+                      onClick={() => setSubgraphMode('full_network')}
+                      className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                        subgraphMode === 'full_network'
+                          ? 'bg-white text-[#007065] shadow-xs'
+                          : 'text-slate-500 hover:text-slate-800'
+                      }`}
+                      title="Complete forensic syndicate network view"
+                    >
+                      Full Syndicate
+                    </button>
+                  </div>
+                )}
+
                 {/* Interactive Slider Button for Partial Text Side (Toggle Open/Hide) */}
                 {isGraphVisible && (
                   <button
@@ -624,8 +672,8 @@ function DashboardContent() {
                     {/* Main Graph Area: Pure SVG NetworkGraphCanvas */}
                     <div className="flex-1 min-h-0 relative rounded-t-2xl border border-[#E8E4D8] border-b-0 shadow-2xs overflow-hidden bg-white">
                       <NetworkGraphCanvas
-                        nodes={networkNodes}
-                        edges={networkEdges}
+                        nodes={displayNodes}
+                        edges={displayEdges}
                         selectedNodeId={selectedNetworkNode?.id || null}
                         onSelectNode={setSelectedNetworkNode}
                         timelineIndex={timelineIndex}

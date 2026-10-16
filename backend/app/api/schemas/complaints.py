@@ -21,6 +21,17 @@ class ComplaintItem(BaseModel):
     )
     complaint_date: str = Field(..., description="Recorded date of dispute filing")
     status: str = Field("UNDER_INVESTIGATION", description="Current complaint workflow status")
+    device_id: Optional[str] = Field(None, description="Associated device identifier from transaction")
+    risk_score: Optional[int] = Field(
+        None, description="Dynamic risk score (0-100) calculated from realscore engine"
+    )
+    priority: Optional[str] = Field(None, description="Triage priority: HIGH, MEDIUM, LOW")
+    triage_status: Optional[str] = Field(
+        "Open", description="Investigation triage status: Open, In review, Resolved"
+    )
+    rule_triggers: Optional[list[str]] = Field(
+        default_factory=list, description="Rules triggered in detection engine"
+    )
 
 
 class ComplaintsResponse(BaseModel):
