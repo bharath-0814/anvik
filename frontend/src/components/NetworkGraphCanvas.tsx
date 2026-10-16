@@ -105,7 +105,7 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
     const usableW = Math.max(300, w - 2 * padX);
     const usableH = Math.max(260, h - 2 * padY);
 
-    return nodes.map((node) => {
+    return nodes.map((node, idx) => {
       const pos = BASE_LAYOUT[node.id];
       if (pos) {
         return {
@@ -114,7 +114,28 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
           y: Math.round(padY + pos.ny * usableH),
         };
       }
-      return node;
+      if (typeof node.x === 'number' && typeof node.y === 'number' && (node.x > 0 || node.y > 0)) {
+        const nx = Math.min(Math.max((node.x - 60) / 830, 0.05), 0.95);
+        const ny = Math.min(Math.max((node.y - 70) / 380, 0.08), 0.92);
+        return {
+          ...node,
+          x: Math.round(padX + nx * usableW),
+          y: Math.round(padY + ny * usableH),
+        };
+      }
+      // Dynamic non-overlapping topological distribution
+      const total = nodes.length || 1;
+      const cols = Math.max(1, Math.ceil(Math.sqrt(total * 1.5)));
+      const col = idx % cols;
+      const row = Math.floor(idx / cols);
+      const rows = Math.ceil(total / cols);
+      const nx = (col + 0.5) / cols;
+      const ny = (row + 0.5) / Math.max(1, rows);
+      return {
+        ...node,
+        x: Math.round(padX + nx * usableW),
+        y: Math.round(padY + ny * usableH),
+      };
     });
   }, [nodes, dimensions]);
 
@@ -310,7 +331,7 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
         {/* Right: Entity counter badge */}
         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#E2DFD7] shadow-2xs text-[11px] font-medium text-slate-700">
           <span className="w-1.5 h-1.5 rounded-full bg-[#007065] animate-pulse" />
-          <span>• 9 entities · 9 relationships · Uniformly Distributed</span>
+          <span>• {nodes.length} entities · {edges.length} relationships · Clean Flow</span>
         </div>
       </div>
 

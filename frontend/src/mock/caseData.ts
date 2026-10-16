@@ -1744,18 +1744,725 @@ const CASE_CMP_2026_0004: CaseInvestigationData = {
 };
 
 // ============================================================================
+// CASE 7: S01_RAPID_CHAIN (Ground Truth Rapid Onward Transfer Chain)
+// Disputed Amount: ₹35,000.00 | Txn: TXN001945 | Hops: ACC0011 -> ACC0012 -> ACC0013 -> ACC0014
+// ============================================================================
+const CASE_S01_RAPID_CHAIN: CaseInvestigationData = {
+  caseId: 'S01_RAPID_CHAIN',
+  title: 'Multi-Hop Rapid Onward Dispersion Chain (S01)',
+  dateReceived: '15 Oct 2026',
+  transactionReference: 'TXN001945',
+  deviceId: 'DEV0081',
+  status: 'In review',
+  riskScore: 89,
+  riskLevel: 'HIGH',
+  totalDisputedFlowPaise: 3500000,
+  totalDisputedFlowFormatted: '₹35,000.00',
+  layeringPercentage: '95% Retained per Hop',
+  speedOfExtraction: '5m 12s',
+  hopSummary: '3 Rapid Hops',
+  identifiedMulesCount: 3,
+  identifiedMulesFormatted: '3 accounts',
+  muleStatus: 'Active Pass-Through',
+  sharedDeviceCount: '1 binding',
+  sharedDeviceId: 'DEV0081',
+  entitiesCount: 4,
+  relationshipsCount: 3,
+  signals: [
+    {
+      title: '⚡ Multi-Hop Rapid Onward Transfer (ALR-0002)',
+      severity: 'HIGH',
+      description:
+        'Victim inflow of ₹35,000 hopped through 3 accounts within 5m 12s, each mule retaining only 5% commission and forwarding 95% onwards.',
+      severityBg: 'bg-rose-50/70 border-rose-200',
+      severityText: 'text-rose-800',
+    },
+    {
+      title: '⚡ Ultra-Low Latency Forwarding',
+      severity: 'HIGH',
+      description:
+        'Mule ACC0012 forwarded ₹33,250 within 134 seconds; Mule ACC0013 forwarded ₹31,587.50 within 106 seconds.',
+      severityBg: 'bg-amber-50/70 border-amber-200',
+      severityText: 'text-amber-900',
+    },
+    {
+      title: '⚡ Counterfactual Decision Support',
+      severity: 'LOW',
+      description:
+        'Administrative lien placed on ACC0012 within 2 minutes of victim debit would have preserved ₹33,250 of victim capital.',
+      severityBg: 'bg-emerald-50/70 border-emerald-200',
+      severityText: 'text-emerald-800',
+    },
+  ],
+  timelineSteps: [
+    {
+      time: '10:10:00',
+      label: 'Victim Inflow (Hop 1)',
+      description: 'Victim Kabir Verma (ACC0011) sends ₹35,000 to primary mule ACC0012 via TXN001945',
+    },
+    {
+      time: '10:12:14',
+      label: 'Rapid Forwarding (Hop 2)',
+      description: 'Aarav Sharma (ACC0012) forwards ₹33,250 (95%) to Diya Singh (ACC0013) via TXN001946 in 134s',
+    },
+    {
+      time: '10:14:00',
+      label: 'Terminal Forwarding (Hop 3)',
+      description: 'Diya Singh (ACC0013) forwards ₹31,587.50 (95%) to Vikram Nair (ACC0014) via TXN001948 in 106s',
+    },
+  ],
+  nodes: [
+    {
+      id: 'acc_s01_victim',
+      type: 'upi',
+      role: 'Origin account',
+      handle: 'kabir.verma011@synhdfc',
+      name: 'Kabir Verma (ACC0011)',
+      bank: 'HDFC Bank',
+      riskScore: 12,
+      status: 'flagged',
+      timestamp: '10:10:00',
+      x: 140,
+      y: 260,
+      disputeAmount: 35000,
+    },
+    {
+      id: 'acc_s01_mule1',
+      type: 'mule',
+      role: 'Rapid mule',
+      handle: 'aarav.sharma012@synicici',
+      name: 'Aarav Sharma (ACC0012)',
+      bank: 'ICICI Bank',
+      riskScore: 89,
+      status: 'flagged',
+      timestamp: '10:12:14',
+      x: 380,
+      y: 260,
+      disputeAmount: 33250,
+    },
+    {
+      id: 'acc_s01_mule2',
+      type: 'mule',
+      role: 'Intermediate mule',
+      handle: 'diya.singh013@synaxis',
+      name: 'Diya Singh (ACC0013)',
+      bank: 'Axis Bank',
+      riskScore: 88,
+      status: 'flagged',
+      timestamp: '10:14:00',
+      x: 620,
+      y: 260,
+      disputeAmount: 31587.5,
+    },
+    {
+      id: 'acc_s01_mule3',
+      type: 'mule',
+      role: 'Terminal cashout mule',
+      handle: 'vikram.nair014@synsbi',
+      name: 'Vikram Nair (ACC0014)',
+      bank: 'State Bank of India',
+      riskScore: 92,
+      status: 'flagged',
+      timestamp: '10:15:30',
+      x: 860,
+      y: 260,
+      disputeAmount: 31587.5,
+    },
+  ],
+  edges: [
+    {
+      id: 'e_s01_1',
+      source: 'acc_s01_victim',
+      target: 'acc_s01_mule1',
+      type: 'transaction',
+      amount: 35000,
+      amountFormatted: '₹35,000.00',
+      timestamp: '10:10:00',
+      timelineIndex: 0,
+      ruleTriggered: 'VICTIM_INITIAL_INFLOW',
+      curvature: 0,
+    },
+    {
+      id: 'e_s01_2',
+      source: 'acc_s01_mule1',
+      target: 'acc_s01_mule2',
+      type: 'transaction',
+      amount: 33250,
+      amountFormatted: '₹33,250.00',
+      timestamp: '10:12:14',
+      timelineIndex: 1,
+      ruleTriggered: 'RAPID_ONWARD_TRANSFER',
+      curvature: 0,
+    },
+    {
+      id: 'e_s01_3',
+      source: 'acc_s01_mule2',
+      target: 'acc_s01_mule3',
+      type: 'transaction',
+      amount: 31587.5,
+      amountFormatted: '₹31,587.50',
+      timestamp: '10:14:00',
+      timelineIndex: 2,
+      ruleTriggered: 'RAPID_ONWARD_TRANSFER',
+      curvature: 0,
+    },
+  ],
+};
+
+// ============================================================================
+// CASE 8: S05_CYCLE (Ground Truth Circular Routing / Wash Ring)
+// Disputed Amount: ₹25,000.00 | Txn: TXN002702 | Ring: ACC0101 -> ACC0102 -> ACC0103 -> ACC0101
+// ============================================================================
+const CASE_S05_CYCLE: CaseInvestigationData = {
+  caseId: 'S05_CYCLE',
+  title: 'Circular Routing & Cyclic Wash Ring (S05)',
+  dateReceived: '15 Oct 2026',
+  transactionReference: 'TXN002702',
+  deviceId: 'DEV0101',
+  status: 'In review',
+  riskScore: 85,
+  riskLevel: 'HIGH',
+  totalDisputedFlowPaise: 2500000,
+  totalDisputedFlowFormatted: '₹25,000.00',
+  layeringPercentage: '98% Principal Returned',
+  speedOfExtraction: '52 mins',
+  hopSummary: '3 Loop Hops',
+  identifiedMulesCount: 3,
+  identifiedMulesFormatted: '3 ring accounts',
+  muleStatus: 'Circular Wash Loop',
+  sharedDeviceCount: '0',
+  sharedDeviceId: 'N/A',
+  entitiesCount: 3,
+  relationshipsCount: 3,
+  signals: [
+    {
+      title: '⚡ Directed Graph Cycle Detected (ALR-0003)',
+      severity: 'HIGH',
+      description:
+        'NetworkX simple_cycles algorithm identified closed triangular money routing loop: ACC0101 -> ACC0102 -> ACC0103 -> ACC0101.',
+      severityBg: 'bg-rose-50/70 border-rose-200',
+      severityText: 'text-rose-800',
+    },
+    {
+      title: '⚡ Artificial Turnover / Round-Tripping',
+      severity: 'HIGH',
+      description:
+        '₹25,000 circulated through 3 banking entities in under 1 hour with only 1% fee deduction per hop.',
+      severityBg: 'bg-amber-50/70 border-amber-200',
+      severityText: 'text-amber-900',
+    },
+    {
+      title: '⚡ Wash Trade Counterfactuals',
+      severity: 'LOW',
+      description:
+        'Pattern is distinguished from legitimate roommate expense settlement by uniform amounts, short latency, and absence of bidirectional merchant receipts.',
+      severityBg: 'bg-emerald-50/70 border-emerald-200',
+      severityText: 'text-emerald-800',
+    },
+  ],
+  timelineSteps: [
+    {
+      time: '14:10:00',
+      label: 'Cycle Hop 1',
+      description: 'Isha Sharma (ACC0101) transfers ₹25,000 to Aarav Reddy (ACC0102) via TXN002702',
+    },
+    {
+      time: '14:32:00',
+      label: 'Cycle Hop 2',
+      description: 'Aarav Reddy (ACC0102) transfers ₹24,750 (99%) to Meera Gupta (ACC0103) via TXN002703',
+    },
+    {
+      time: '15:02:00',
+      label: 'Cycle Loop Closure (Hop 3)',
+      description: 'Meera Gupta (ACC0103) returns ₹24,502.50 to Isha Sharma (ACC0101) via TXN002705',
+    },
+  ],
+  nodes: [
+    {
+      id: 'acc_cycle_1',
+      type: 'mule',
+      role: 'Cycle originator',
+      handle: 'isha.sharma101@synhdfc',
+      name: 'Isha Sharma (ACC0101)',
+      bank: 'HDFC Bank',
+      riskScore: 85,
+      status: 'flagged',
+      timestamp: '14:10:00',
+      x: 300,
+      y: 160,
+      disputeAmount: 25000,
+    },
+    {
+      id: 'acc_cycle_2',
+      type: 'mule',
+      role: 'Cycle intermediary',
+      handle: 'aarav.reddy102@synicici',
+      name: 'Aarav Reddy (ACC0102)',
+      bank: 'ICICI Bank',
+      riskScore: 84,
+      status: 'flagged',
+      timestamp: '14:32:00',
+      x: 650,
+      y: 160,
+      disputeAmount: 24750,
+    },
+    {
+      id: 'acc_cycle_3',
+      type: 'mule',
+      role: 'Cycle return node',
+      handle: 'meera.gupta103@synaxis',
+      name: 'Meera Gupta (ACC0103)',
+      bank: 'Axis Bank',
+      riskScore: 86,
+      status: 'flagged',
+      timestamp: '15:02:00',
+      x: 475,
+      y: 400,
+      disputeAmount: 24502.5,
+    },
+  ],
+  edges: [
+    {
+      id: 'e_cycle_1',
+      source: 'acc_cycle_1',
+      target: 'acc_cycle_2',
+      type: 'transaction',
+      amount: 25000,
+      amountFormatted: '₹25,000.00',
+      timestamp: '14:10:00',
+      timelineIndex: 0,
+      ruleTriggered: 'TRANSACTION_CYCLE',
+      curvature: 20,
+    },
+    {
+      id: 'e_cycle_2',
+      source: 'acc_cycle_2',
+      target: 'acc_cycle_3',
+      type: 'transaction',
+      amount: 24750,
+      amountFormatted: '₹24,750.00',
+      timestamp: '14:32:00',
+      timelineIndex: 1,
+      ruleTriggered: 'TRANSACTION_CYCLE',
+      curvature: 20,
+    },
+    {
+      id: 'e_cycle_3',
+      source: 'acc_cycle_3',
+      target: 'acc_cycle_1',
+      type: 'transaction',
+      amount: 24502.5,
+      amountFormatted: '₹24,502.50',
+      timestamp: '15:02:00',
+      timelineIndex: 2,
+      ruleTriggered: 'TRANSACTION_CYCLE',
+      curvature: 20,
+    },
+  ],
+};
+
+// ============================================================================
+// CASE 9: S03_MANY_SOURCES (Ground Truth Multi-Source Fan-In Smurfing)
+// Disputed Amount: ₹60,000.00 | Txn: TXN002489 | Hub: ACC0030
+// ============================================================================
+const CASE_S03_MANY_SOURCES: CaseInvestigationData = {
+  caseId: 'S03_MANY_SOURCES',
+  title: 'Multi-Source Micro-Deposit Fan-In Smurfing (S03)',
+  dateReceived: '15 Oct 2026',
+  transactionReference: 'TXN002489',
+  deviceId: 'DEV0095',
+  status: 'In review',
+  riskScore: 79,
+  riskLevel: 'HIGH',
+  totalDisputedFlowPaise: 6000000,
+  totalDisputedFlowFormatted: '₹60,000.00',
+  layeringPercentage: '100% Funneled Inflow',
+  speedOfExtraction: '3 hours',
+  hopSummary: '30 Remitter Inflows',
+  identifiedMulesCount: 1,
+  identifiedMulesFormatted: '1 central aggregator',
+  muleStatus: 'Smurfing Collector',
+  sharedDeviceCount: '1 binding',
+  sharedDeviceId: 'DEV0095',
+  entitiesCount: 5,
+  relationshipsCount: 4,
+  signals: [
+    {
+      title: '⚡ Multi-Source Fan-In Smurfing (ALR-0006)',
+      severity: 'HIGH',
+      description:
+        '30 independent remitters each deposited ~₹2,000 into central collector account ACC0030 within 3 hours.',
+      severityBg: 'bg-rose-50/70 border-rose-200',
+      severityText: 'text-rose-800',
+    },
+    {
+      title: '⚡ Micro-Deposit Structuring Threshold',
+      severity: 'HIGH',
+      description:
+        'Individual amounts calibrated below high-value reporting triggers, exhibiting abnormal deposit cadence.',
+      severityBg: 'bg-amber-50/70 border-amber-200',
+      severityText: 'text-amber-900',
+    },
+  ],
+  timelineSteps: [
+    { time: '09:00:00', label: 'Inflow Batch 1', description: 'Remitters ACC0031-ACC0035 deposit ₹10,000 total' },
+    { time: '10:00:00', label: 'Inflow Batch 2', description: 'Remitters ACC0036-ACC0045 deposit ₹20,000 total' },
+    { time: '11:00:00', label: 'Inflow Batch 3', description: 'Remitters ACC0046-ACC0060 deposit ₹30,000 total' },
+    { time: '11:30:00', label: 'Consolidation Clearance', description: 'Account ACC0030 balance reaches ₹60,000' },
+  ],
+  nodes: [
+    {
+      id: 'acc_fan_remitter1',
+      type: 'upi',
+      role: 'Origin account',
+      handle: 'feeder.031@synaxis',
+      name: 'Feeder Cluster A (ACC0031)',
+      bank: 'Axis Bank',
+      riskScore: 25,
+      status: 'active',
+      timestamp: '09:00:00',
+      x: 180,
+      y: 160,
+      disputeAmount: 10000,
+    },
+    {
+      id: 'acc_fan_remitter2',
+      type: 'upi',
+      role: 'Origin account',
+      handle: 'feeder.036@synhdfc',
+      name: 'Feeder Cluster B (ACC0036)',
+      bank: 'HDFC Bank',
+      riskScore: 28,
+      status: 'active',
+      timestamp: '10:00:00',
+      x: 180,
+      y: 280,
+      disputeAmount: 20000,
+    },
+    {
+      id: 'acc_fan_remitter3',
+      type: 'upi',
+      role: 'Origin account',
+      handle: 'feeder.046@synicici',
+      name: 'Feeder Cluster C (ACC0046)',
+      bank: 'ICICI Bank',
+      riskScore: 30,
+      status: 'active',
+      timestamp: '11:00:00',
+      x: 180,
+      y: 400,
+      disputeAmount: 30000,
+    },
+    {
+      id: 'acc_fan_hub',
+      type: 'mule',
+      role: 'Aggregator mule',
+      handle: 'rohan.das030@synsbi',
+      name: 'Rohan Das (ACC0030)',
+      bank: 'State Bank of India',
+      riskScore: 79,
+      status: 'flagged',
+      timestamp: '11:30:00',
+      x: 680,
+      y: 280,
+      disputeAmount: 60000,
+    },
+  ],
+  edges: [
+    {
+      id: 'e_fan_1',
+      source: 'acc_fan_remitter1',
+      target: 'acc_fan_hub',
+      type: 'transaction',
+      amount: 10000,
+      amountFormatted: '₹10,000.00',
+      timestamp: '09:00:00',
+      timelineIndex: 0,
+      ruleTriggered: 'MULTI_SOURCE_FAN_IN',
+      curvature: -15,
+    },
+    {
+      id: 'e_fan_2',
+      source: 'acc_fan_remitter2',
+      target: 'acc_fan_hub',
+      type: 'transaction',
+      amount: 20000,
+      amountFormatted: '₹20,000.00',
+      timestamp: '10:00:00',
+      timelineIndex: 1,
+      ruleTriggered: 'MULTI_SOURCE_FAN_IN',
+      curvature: 0,
+    },
+    {
+      id: 'e_fan_3',
+      source: 'acc_fan_remitter3',
+      target: 'acc_fan_hub',
+      type: 'transaction',
+      amount: 30000,
+      amountFormatted: '₹30,000.00',
+      timestamp: '11:00:00',
+      timelineIndex: 2,
+      ruleTriggered: 'MULTI_SOURCE_FAN_IN',
+      curvature: 15,
+    },
+  ],
+};
+
+// ============================================================================
+// CASE 10: S09_SHARED_DEVICE (Ground Truth Rooted Device Collusion Farm)
+// Disputed Amount: ₹34,200.00 | Device: DEV9001 | Collector: ACC0170
+// ============================================================================
+const CASE_S09_SHARED_DEVICE: CaseInvestigationData = {
+  caseId: 'S09_SHARED_DEVICE',
+  title: 'Hardware Collusion: Rooted Device Farm (S09)',
+  dateReceived: '15 Oct 2026',
+  transactionReference: 'TXN002895',
+  deviceId: 'DEV9001',
+  status: 'In review',
+  riskScore: 82,
+  riskLevel: 'HIGH',
+  totalDisputedFlowPaise: 3420000,
+  totalDisputedFlowFormatted: '₹34,200.00',
+  layeringPercentage: '100% Bound',
+  speedOfExtraction: '45 mins',
+  hopSummary: '8 Coordinated Nocturnal Hops',
+  identifiedMulesCount: 8,
+  identifiedMulesFormatted: '8 accounts on 1 phone',
+  muleStatus: 'Device Collusion Farm',
+  sharedDeviceCount: '1 rooted phone',
+  sharedDeviceId: 'DEV9001',
+  entitiesCount: 4,
+  relationshipsCount: 4,
+  signals: [
+    {
+      title: '⚡ Shared Hardware Identifier Abuse (ALR-0016)',
+      severity: 'HIGH',
+      description:
+        '8 distinct user accounts registered on single rooted Android handset DEV9001 conducted nocturnal payments to ACC0170 within 45 minutes.',
+      severityBg: 'bg-rose-50/70 border-rose-200',
+      severityText: 'text-rose-800',
+    },
+    {
+      title: '⚡ Coordinated Nocturnal Timing',
+      severity: 'HIGH',
+      description:
+        'Payments occurred between 02:00 AM and 02:45 AM, completely diverging from baseline user hours.',
+      severityBg: 'bg-amber-50/70 border-amber-200',
+      severityText: 'text-amber-900',
+    },
+  ],
+  timelineSteps: [
+    { time: '02:05:00', label: 'Device Authorization', description: 'DEV9001 binds accounts ACC0171-ACC0178' },
+    { time: '02:15:00', label: 'Payment Burst 1', description: 'ACC0171 & ACC0172 send ₹8,500 to ACC0170' },
+    { time: '02:30:00', label: 'Payment Burst 2', description: 'ACC0173 & ACC0174 send ₹8,800 to ACC0170' },
+    { time: '02:45:00', label: 'Payment Burst 3', description: 'Remaining farm accounts settle ₹16,900 at ACC0170' },
+  ],
+  nodes: [
+    {
+      id: 'dev_s09_phone',
+      type: 'device',
+      role: 'Shared device',
+      handle: 'DEV9001',
+      name: 'Rooted Android Handset (DEV9001)',
+      hardwareModel: 'OnePlus Nord CE 3 (Rooted)',
+      riskScore: 92,
+      status: 'flagged',
+      timestamp: '02:00:00',
+      x: 200,
+      y: 200,
+    },
+    {
+      id: 'acc_s09_mule1',
+      type: 'mule',
+      role: 'Farm member',
+      handle: 'farm.mule1@synaxis',
+      name: 'Farm Node 1 (ACC0171)',
+      bank: 'Axis Bank',
+      riskScore: 82,
+      status: 'flagged',
+      timestamp: '02:15:00',
+      x: 200,
+      y: 360,
+      disputeAmount: 17100,
+    },
+    {
+      id: 'acc_s09_hub',
+      type: 'mule',
+      role: 'Aggregator mule',
+      handle: 'vikram.verma170@synaxis',
+      name: 'Vikram Verma (ACC0170)',
+      bank: 'Axis Bank',
+      riskScore: 88,
+      status: 'flagged',
+      timestamp: '02:45:00',
+      x: 680,
+      y: 280,
+      disputeAmount: 34200,
+    },
+  ],
+  edges: [
+    {
+      id: 'e_s09_bind',
+      source: 'dev_s09_phone',
+      target: 'acc_s09_mule1',
+      type: 'device_link',
+      amount: 0,
+      amountFormatted: 'DEVICE_BIND',
+      timestamp: '02:00:00',
+      timelineIndex: 0,
+      ruleTriggered: 'SHARED_DEVICE',
+      curvature: 0,
+    },
+    {
+      id: 'e_s09_pay',
+      source: 'acc_s09_mule1',
+      target: 'acc_s09_hub',
+      type: 'transaction',
+      amount: 34200,
+      amountFormatted: '₹34,200.00',
+      timestamp: '02:45:00',
+      timelineIndex: 1,
+      ruleTriggered: 'SHARED_DEVICE',
+      curvature: 0,
+    },
+  ],
+};
+
+// ============================================================================
 // MAP OF ALL CASES & LOOKUP FUNCTION
 // ============================================================================
 export const ALL_CASE_INVESTIGATION_DATA: Record<string, CaseInvestigationData> = {
+  // Teammate Ground Truth Benchmark Scenarios
+  'CMP0004': CASE_CMP_2026_0004,
+  'CMP-2026-0004': CASE_CMP_2026_0004,
+  'NCRP-CMP0004': CASE_CMP_2026_0004,
+  'S07_CONVERGENCE': CASE_CMP_2026_0004,
+  'CASE-S07-CONVERGE': CASE_CMP_2026_0004,
+  'S01_RAPID_CHAIN': CASE_S01_RAPID_CHAIN,
+  'CASE-S01-RAPID': CASE_S01_RAPID_CHAIN,
+  'S03_MANY_SOURCES': CASE_S03_MANY_SOURCES,
+  'CASE-S03-FANIN': CASE_S03_MANY_SOURCES,
+  'S05_CYCLE': CASE_S05_CYCLE,
+  'CASE-S05-CYCLE': CASE_S05_CYCLE,
+  'S09_SHARED_DEVICE': CASE_S09_SHARED_DEVICE,
+  'CASE-S09-DEVICE': CASE_S09_SHARED_DEVICE,
+
+  // All 10 Complaints from Shivam's Dataset
+  'CMP0001': {
+    ...CASE_NCRP_2026_0839,
+    caseId: 'CMP0001',
+    title: 'Baseline Dispute: HDFC to SBI UPI Inflow',
+    transactionReference: 'TXN002420',
+    deviceId: 'DEV0027',
+    status: 'Resolved',
+    riskScore: 24,
+    riskLevel: 'MEDIUM',
+    totalDisputedFlowFormatted: '₹578.11',
+    totalDisputedFlowPaise: 57811,
+  },
+  'CMP0002': {
+    ...CASE_NCRP_2026_0839,
+    caseId: 'CMP0002',
+    title: 'Baseline Dispute: Axis to Axis P2P Transfer',
+    transactionReference: 'TXN002648',
+    deviceId: 'DEV0060',
+    status: 'Resolved',
+    riskScore: 32,
+    riskLevel: 'MEDIUM',
+    totalDisputedFlowFormatted: '₹2,243.20',
+    totalDisputedFlowPaise: 224320,
+  },
+  'CMP0003': {
+    ...CASE_NCRP_2026_0836,
+    caseId: 'CMP0003',
+    title: 'Disputed QR Collect Request Abuse',
+    transactionReference: 'TXN002759',
+    deviceId: 'DEV0076',
+    status: 'In review',
+    riskScore: 45,
+    riskLevel: 'MEDIUM',
+    totalDisputedFlowFormatted: '₹1,573.11',
+    totalDisputedFlowPaise: 157311,
+  },
+  'CMP0005': {
+    ...CASE_NCRP_2026_0839,
+    caseId: 'CMP0005',
+    title: 'Phishing Reward Link Debit',
+    transactionReference: 'TXN002868',
+    deviceId: 'DEV0112',
+    status: 'Open',
+    riskScore: 38,
+    riskLevel: 'MEDIUM',
+    totalDisputedFlowFormatted: '₹1,037.38',
+    totalDisputedFlowPaise: 103738,
+  },
+  'CMP0006': {
+    ...CASE_CMP_2026_0004,
+    caseId: 'CMP0006',
+    title: 'Syndicate Convergence: Feeder ACC0133 -> Hub ACC0140',
+    transactionReference: 'TXN002811',
+    deviceId: 'DEV0108',
+    status: 'In review',
+    riskScore: 92,
+    riskLevel: 'CRITICAL',
+    totalDisputedFlowFormatted: '₹12,339.28',
+    totalDisputedFlowPaise: 1233928,
+  },
+  'CMP0007': {
+    ...CASE_CMP_2026_0004,
+    caseId: 'CMP0007',
+    title: 'Syndicate Convergence: Feeder ACC0132 -> Hub ACC0140',
+    transactionReference: 'TXN002858',
+    deviceId: 'DEV0107',
+    status: 'Open',
+    riskScore: 91,
+    riskLevel: 'CRITICAL',
+    totalDisputedFlowFormatted: '₹12,353.66',
+    totalDisputedFlowPaise: 1235366,
+  },
+  'CMP0008': {
+    ...CASE_NCRP_2026_0839,
+    caseId: 'CMP0008',
+    title: 'Baseline Dispute: Verified Merchant Charge',
+    transactionReference: 'TXN002768',
+    deviceId: 'DEV0024',
+    status: 'Resolved',
+    riskScore: 28,
+    riskLevel: 'MEDIUM',
+    totalDisputedFlowFormatted: '₹1,792.02',
+    totalDisputedFlowPaise: 179202,
+  },
+  'CMP0009': {
+    ...CASE_CMP_2026_0004,
+    caseId: 'CMP0009',
+    title: 'Syndicate Convergence: Feeder ACC0131 -> Hub ACC0140',
+    transactionReference: 'TXN002821',
+    deviceId: 'DEV0129',
+    status: 'Open',
+    riskScore: 94,
+    riskLevel: 'CRITICAL',
+    totalDisputedFlowFormatted: '₹14,065.59',
+    totalDisputedFlowPaise: 1406559,
+  },
+  'CMP0010': {
+    ...CASE_CMP_2026_0004,
+    caseId: 'CMP0010',
+    title: 'Syndicate Convergence: Feeder ACC0134 -> Hub ACC0140',
+    transactionReference: 'TXN002841',
+    deviceId: 'DEV0006',
+    status: 'In review',
+    riskScore: 89,
+    riskLevel: 'CRITICAL',
+    totalDisputedFlowFormatted: '₹10,889.77',
+    totalDisputedFlowPaise: 1088977,
+  },
+
+  // Legacy Demo Cases
   'NCRP-2026-0839': CASE_NCRP_2026_0839,
   'NCRP-2026-0841': CASE_NCRP_2026_0841,
   'NCRP-2026-0836': CASE_NCRP_2026_0836,
   'NCRP-2026-0824': CASE_NCRP_2026_0824,
   'NCRP-2026-0812': CASE_NCRP_2026_0812,
-  'CMP-2026-0004': CASE_CMP_2026_0004,
-  // Common aliases
-  'CMP0004': CASE_CMP_2026_0004,
-  'NCRP-CMP0004': CASE_CMP_2026_0004,
 };
 
 /**
@@ -1764,7 +2471,7 @@ export const ALL_CASE_INVESTIGATION_DATA: Record<string, CaseInvestigationData> 
  */
 export function getCaseInvestigationData(caseId?: string | null): CaseInvestigationData {
   if (!caseId) {
-    return CASE_NCRP_2026_0839;
+    return CASE_CMP_2026_0004;
   }
 
   const cleanId = caseId.trim();
@@ -1774,14 +2481,27 @@ export function getCaseInvestigationData(caseId?: string | null): CaseInvestigat
     return ALL_CASE_INVESTIGATION_DATA[cleanId];
   }
 
-  // Substring or normalized matches
-  if (cleanId.includes('839')) return CASE_NCRP_2026_0839;
+  // Normalized substring matches
+  if (cleanId.includes('0004') || cleanId.includes('CONVERGE')) return CASE_CMP_2026_0004;
+  if (cleanId.includes('S01') || cleanId.includes('RAPID')) return CASE_S01_RAPID_CHAIN;
+  if (cleanId.includes('S05') || cleanId.includes('CYCLE')) return CASE_S05_CYCLE;
+  if (cleanId.includes('S03') || cleanId.includes('FAN')) return CASE_S03_MANY_SOURCES;
+  if (cleanId.includes('S09') || cleanId.includes('DEVICE')) return CASE_S09_SHARED_DEVICE;
+  if (cleanId.includes('0001')) return ALL_CASE_INVESTIGATION_DATA['CMP0001'];
+  if (cleanId.includes('0002')) return ALL_CASE_INVESTIGATION_DATA['CMP0002'];
+  if (cleanId.includes('0003')) return ALL_CASE_INVESTIGATION_DATA['CMP0003'];
+  if (cleanId.includes('0005')) return ALL_CASE_INVESTIGATION_DATA['CMP0005'];
+  if (cleanId.includes('0006')) return ALL_CASE_INVESTIGATION_DATA['CMP0006'];
+  if (cleanId.includes('0007')) return ALL_CASE_INVESTIGATION_DATA['CMP0007'];
+  if (cleanId.includes('0008')) return ALL_CASE_INVESTIGATION_DATA['CMP0008'];
+  if (cleanId.includes('0009')) return ALL_CASE_INVESTIGATION_DATA['CMP0009'];
+  if (cleanId.includes('0010')) return ALL_CASE_INVESTIGATION_DATA['CMP0010'];
   if (cleanId.includes('841')) return CASE_NCRP_2026_0841;
   if (cleanId.includes('836')) return CASE_NCRP_2026_0836;
   if (cleanId.includes('824')) return CASE_NCRP_2026_0824;
   if (cleanId.includes('812')) return CASE_NCRP_2026_0812;
-  if (cleanId.includes('CMP0004') || cleanId.includes('0004')) return CASE_CMP_2026_0004;
+  if (cleanId.includes('839')) return CASE_NCRP_2026_0839;
 
-  // Graceful fallback to Case 1
-  return CASE_NCRP_2026_0839;
+  // Default fallback to signature convergence case
+  return CASE_CMP_2026_0004;
 }
