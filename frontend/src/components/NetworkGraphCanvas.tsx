@@ -164,9 +164,11 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
   const isNodeActiveInTimeline = (node: NetworkNode) => {
     // Origin account and its device are always visible from the start
     if (node.id === 'acc_origin' || node.id === 'dev_origin' || node.id === 'acc_linked') return true;
-    // Otherwise check if any visible edge connects to it
+    const hasAnyEdge = edges.some((e) => e.source === node.id || e.target === node.id);
+    if (!hasAnyEdge) return true;
+    // Check if any visible edge connects to it
     return edges.some(
-      (e) => (e.source === node.id || e.target === node.id) && e.timelineIndex <= timelineIndex
+      (e) => (e.source === node.id || e.target === node.id) && (e.timelineIndex === undefined || e.timelineIndex <= timelineIndex)
     );
   };
 
@@ -423,7 +425,7 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
               const tgtNode = distributedNodes.find((n) => n.id === edge.target);
               if (!srcNode || !tgtNode) return null;
 
-              const isVisibleInTimeline = edge.timelineIndex <= timelineIndex;
+              const isVisibleInTimeline = edge.timelineIndex === undefined || edge.timelineIndex <= timelineIndex;
               const isDimmed = activeEdgeIds !== null && !activeEdgeIds.has(edge.id);
               const { pathData, labelX, labelY } = computeCurvedPath(srcNode, tgtNode, edge.curvature || 0);
 

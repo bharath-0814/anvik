@@ -11,6 +11,7 @@ import { TraceConnectionsScreen } from './components/TraceConnectionsScreen';
 import { ComplaintsPanel } from './components/ComplaintsPanel';
 import { FraudTimelinePanel } from './components/FraudTimelinePanel';
 import { InvestigationSummaryPanel } from './components/InvestigationSummaryPanel';
+import { AlertsPanel } from './components/AlertsPanel';
 import { FilterSlidebar } from './components/FilterSlidebar';
 import { ComplaintIntakeModal } from './components/ComplaintIntakeModal';
 import { downloadInvestigationReport } from './utils/reportGenerator';
@@ -37,7 +38,8 @@ import {
   SYNTHETIC_NODES, 
   SYNTHETIC_EDGES, 
   SYNTHETIC_TIMELINE, 
-  DEMO_COMPLAINTS 
+  DEMO_COMPLAINTS,
+  SYNTHETIC_ALERTS
 } from './mock/syntheticData';
 import { 
   GraphNodeData, 
@@ -351,11 +353,58 @@ function DashboardContent() {
   };
 
   // Toggle Left Nav Drawers
-  const handleToggleDrawer = (drawer: 'complaints' | 'timeline' | 'summary') => {
+  const handleToggleDrawer = (drawer: LeftNavDrawer) => {
     if (activeDrawer === drawer) {
       setActiveDrawer(null);
     } else {
       setActiveDrawer(drawer);
+    }
+  };
+
+  // Handler when analyst clicks "Investigate in Graph" inside AlertsPanel
+  const handleInvestigateAlert = (clusterId: string) => {
+    setActiveDrawer(null);
+    setWorkspaceStage('investigation');
+    setIsGraphVisible(true);
+    setIsTextPanelOpen(true);
+
+    if (clusterId.includes('CONVERGENCE') || clusterId.includes('ALR-0001')) {
+      setActiveCaseId('CMP0004');
+      setActiveTxnId('TXN002804');
+      setActiveDevId('DEV0127');
+    } else if (
+      clusterId.includes('RAPID') ||
+      clusterId.includes('ALR-0002') ||
+      clusterId.includes('ALR-0004') ||
+      clusterId.includes('ALR-0005') ||
+      clusterId.includes('ALR-0008') ||
+      clusterId.includes('ALR-0009') ||
+      clusterId.includes('ALR-0010') ||
+      clusterId.includes('ALR-0011') ||
+      clusterId.includes('ALR-0012')
+    ) {
+      setActiveCaseId('S01_RAPID_CHAIN');
+      setActiveTxnId('TXN001945');
+      setActiveDevId('DEV0081');
+    } else if (clusterId.includes('CYCLE') || clusterId.includes('ALR-0003')) {
+      setActiveCaseId('S05_CYCLE');
+      setActiveTxnId('TXN002702');
+      setActiveDevId('DEV0101');
+    } else if (
+      clusterId.includes('FAN_IN') ||
+      clusterId.includes('FANIN') ||
+      clusterId.includes('ALR-0006') ||
+      clusterId.includes('ALR-0014')
+    ) {
+      setActiveCaseId('S03_MANY_SOURCES');
+      setActiveTxnId('TXN002489');
+      setActiveDevId('DEV0095');
+    } else if (clusterId.includes('DEVICE') || clusterId.includes('SHARED')) {
+      setActiveCaseId('S09_SHARED_DEVICE');
+      setActiveTxnId('TXN002895');
+      setActiveDevId('DEV9001');
+    } else {
+      setActiveCaseId('CMP0004');
     }
   };
 
@@ -461,8 +510,8 @@ function DashboardContent() {
         isGraphLoaded={workspaceStage === 'investigation'}
         onReturnToIntake={handleReturnToComplaints}
         onOpenSearch={() => setIsFilterSlidebarOpen(true)}
-        onOpenAlerts={() => handleToggleDrawer('summary')}
-        alertCount={dataSourceMode === 'live' && liveAlerts.length > 0 ? liveAlerts.length : 3}
+        onOpenAlerts={() => handleToggleDrawer('alerts')}
+        alertCount={SYNTHETIC_ALERTS.length}
         onDownloadReport={handleDownloadReport}
         onLogout={handleLogout}
         isLiveConnected={isLiveConnected}
@@ -478,6 +527,7 @@ function DashboardContent() {
             activeDrawer={activeDrawer}
             onToggleDrawer={handleToggleDrawer}
             complaintCount={complaints.length}
+            alertCount={SYNTHETIC_ALERTS.length}
           />
         </div>
 
@@ -706,7 +756,11 @@ function DashboardContent() {
 
         {/* Slide-In Modal Drawer when Complaints or Past Record are clicked from Sidebar */}
         {activeDrawer && (
-          <div className="absolute right-0 top-0 bottom-0 w-[420px] max-w-[90vw] bg-white border-l border-[#E2DFD7] shadow-2xl z-40 flex flex-col animate-in slide-in-from-right duration-200">
+          <div
+            className={`absolute right-0 top-0 bottom-0 ${
+              activeDrawer === 'alerts' ? 'w-[520px] max-w-[95vw]' : 'w-[420px] max-w-[90vw]'
+            } bg-white border-l border-[#E2DFD7] shadow-2xl z-40 flex flex-col animate-in slide-in-from-right duration-200`}
+          >
             {/* Drawer Close Bar */}
             <div className="px-5 py-3.5 border-b border-[#E2DFD7] flex items-center justify-between bg-slate-50">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
@@ -714,6 +768,8 @@ function DashboardContent() {
                   ? 'Complaints & Dispute Reports'
                   : activeDrawer === 'timeline'
                   ? 'Fraud Timeline Sequence'
+                  : activeDrawer === 'alerts'
+                  ? 'Evidence-Linked Fraud Ring Alerts'
                   : 'Investigation Summary & Audit'}
               </span>
               <button
@@ -751,6 +807,14 @@ function DashboardContent() {
                   onClose={() => setActiveDrawer(null)}
                   onDownloadReport={handleDownloadReport}
                 />
+              )}
+              {activeDrawer === 'alerts' && (
+                <div className="h-full overflow-y-auto p-4 bg-[#FBF9F4]">
+                  <AlertsPanel
+                    alerts={SYNTHETIC_ALERTS}
+                    onInvestigateInGraph={handleInvestigateAlert}
+                  />
+                </div>
               )}
             </div>
           </div>

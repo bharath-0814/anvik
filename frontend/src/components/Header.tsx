@@ -4,7 +4,8 @@ import {
   Search, 
   Network,
   Download,
-  Plus
+  Plus,
+  ShieldAlert
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -164,6 +165,21 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <Download className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Download Report</span>
+          </button>
+        )}
+
+        {/* Detection Engine Alerts Button */}
+        {onOpenAlerts && (
+          <button
+            onClick={onOpenAlerts}
+            title="View Evidence-Linked Fraud Ring Alerts"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 transition-all shadow-2xs btn-press"
+          >
+            <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
+            <span className="hidden sm:inline">Alerts</span>
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-rose-200 text-rose-900">
+              {alertCount}
+            </span>
           </button>
         )}
 

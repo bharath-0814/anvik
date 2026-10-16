@@ -683,114 +683,627 @@ export const SYNTHETIC_TIMELINE: TimelineEvent[] = [
 export const SYNTHETIC_ALERTS: SuspiciousAlert[] = [
   {
     id: 'ALR-0001',
-    title: 'Complaint Convergence: Multi-Hop Syndicate Funnel',
-    clusterId: 'CLUSTER_S07_CONVERGENCE',
+    title: 'Complaint Convergence: 6 Feeder Mules to Collector',
+    clusterId: 'CLUSTER_COMPLAINT_CONVERGENCE_ALR-0001',
     severity: 'CRITICAL',
     riskScore: 90,
     patternType: 'MULE_RING',
-    totalVolume: 60380,
-    involvedEntitiesCount: 11,
+    totalVolume: 117139,
+    involvedEntitiesCount: 6,
     detectedAt: '2026-10-15 22:47:50 IST',
-    summary: '5 independent victim complaints converged onto an interconnected mule cluster (ACC0131-ACC0135) with 94% onward forwarding into aggregator hub Diya Das (ACC0140).',
+    summary: 'Detected complaint convergence pattern involving 6 accounts (ACC0131, ACC0132, ACC0133, ACC0134...) and 10 transactions.',
     evidence: [
       {
         ruleId: 'COMPLAINT_CONVERGENCE',
-        ruleName: 'Syndicate Complaint Convergence',
-        description: '5 complaints (CMP0004, CMP0006, CMP0007, CMP0009, CMP0010) funnel funds to common recipient ACC0140 within 4 hours.',
-        metrics: { 'Converging Complaints': 5, 'Traced Volume (₹)': 60380, 'Collector Head': 'ACC0140' }
-      },
-      {
-        ruleId: 'RAPID_ONWARD_TRANSFER',
-        ruleName: 'Rapid Dispersion Churn',
-        description: 'Mule accounts split and forward received funds within 38-58 seconds of victim debit.',
-        metrics: { 'Avg Hop Latency': '48s', 'Forwarding Ratio': '94.2%' }
+        ruleName: 'Complaint Convergence',
+        description: 'Rule COMPLAINT_CONVERGENCE triggered with confidence score 90/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '90%',
+          'Participating Accounts': 6,
+          'Linked Transactions': 10,
+          'Primary Node': 'ACC0131',
+        }
       }
     ],
-    suggestedAction: 'Enforce systemic lien freeze on collector ACC0140 and report network topology to NCRP portal.'
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0131) and review associated transactions.'
   },
   {
     id: 'ALR-0002',
-    title: 'Rapid Onward Transfer: 3-Hop Low-Latency Chain',
-    clusterId: 'CLUSTER_S01_RAPID_CHAIN',
+    title: 'Rapid Onward Transfer: ACC0132 → ACC0140',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0002',
     severity: 'HIGH',
     riskScore: 89,
     patternType: 'RAPID_DISPERSION',
-    totalVolume: 35000,
-    involvedEntitiesCount: 4,
-    detectedAt: '2026-10-15 18:30:00 IST',
-    summary: '₹35,000 victim inflow hops through 3 bank accounts (ACC0011 -> ACC0012 -> ACC0013 -> ACC0014) in under 6 minutes with 95% retention at each hop.',
+    totalVolume: 23966,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0132, ACC0140) and 2 transactions.',
     evidence: [
       {
         ruleId: 'RAPID_ONWARD_TRANSFER',
-        ruleName: 'Multi-Hop Rapid Pass-Through',
-        description: 'Hop 1 forwards 95% in 2m 14s; Hop 2 forwards 95% in 1m 45s.',
-        metrics: { 'Hops': 3, 'Total Latency': '5m 12s', 'Pass-Through Rate': '95.0%' }
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 89/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '89%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0132',
+        }
       }
     ],
-    suggestedAction: 'Issue immediate automated hold on terminal endpoint ACC0014 and request KYC verification.'
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0132) and review associated transactions.'
   },
   {
     id: 'ALR-0003',
-    title: 'Closed Transaction Loop / Cyclic Wash Ring',
-    clusterId: 'CLUSTER_S05_CYCLE',
+    title: 'Transaction Cycle: Closed Loop (3 Nodes)',
+    clusterId: 'CLUSTER_TRANSACTION_CYCLE_ALR-0003',
     severity: 'HIGH',
     riskScore: 85,
     patternType: 'CIRCULAR_ROUTING',
-    totalVolume: 25000,
+    totalVolume: 74252,
     involvedEntitiesCount: 3,
-    detectedAt: '2026-10-15 16:15:00 IST',
-    summary: 'Closed directed cycle detected (ACC0101 -> ACC0102 -> ACC0103 -> ACC0101) circulating ₹25,000 within 52 minutes with 1% leakage per hop.',
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected transaction cycle pattern involving 3 accounts (ACC0101, ACC0102, ACC0103) and 3 transactions.',
     evidence: [
       {
         ruleId: 'TRANSACTION_CYCLE',
-        ruleName: 'Directed Cycle Loop Detection',
-        description: 'Cycle length 3: TXN002702, TXN002703, TXN002705 completed in 52 mins.',
-        metrics: { 'Cycle Length': 3, 'Cycle Retention': '98.0%', 'Duration': '52 mins' }
+        ruleName: 'Transaction Cycle',
+        description: 'Rule TRANSACTION_CYCLE triggered with confidence score 85/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '85%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 3,
+          'Primary Node': 'ACC0101',
+        }
       }
     ],
-    suggestedAction: 'Flag participating accounts for AML circular structuring audit.'
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0101) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0004',
+    title: 'Rapid Onward Transfer: ACC0102 → ACC0103',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0004',
+    severity: 'HIGH',
+    riskScore: 82,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 49750,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0102, ACC0103) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 82/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '82%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0102',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0102) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0005',
+    title: 'Rapid Onward Transfer: ACC0014 → ACC0174',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0005',
+    severity: 'HIGH',
+    riskScore: 81,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 6615,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0014, ACC0174) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 81/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '81%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0014',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0014) and review associated transactions.'
   },
   {
     id: 'ALR-0006',
-    title: 'High-Volume Multi-Source Fan-In (Smurfing)',
-    clusterId: 'CLUSTER_S03_FANIN',
+    title: 'Multi-Source Fan-In: 30 Remitters to ACC0030',
+    clusterId: 'CLUSTER_MULTI_SOURCE_FAN_IN_ALR-0006',
     severity: 'HIGH',
     riskScore: 79,
     patternType: 'MULE_RING',
-    totalVolume: 60000,
+    totalVolume: 59847,
     involvedEntitiesCount: 31,
-    detectedAt: '2026-10-15 14:00:00 IST',
-    summary: '30 unrelated accounts each transferred ~₹2,000 to single aggregator ACC0030 within 3 hours.',
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected multi source fan in pattern involving 31 accounts (ACC0030, ACC0031, ACC0032, ACC0033...) and 30 transactions.',
     evidence: [
       {
         ruleId: 'MULTI_SOURCE_FAN_IN',
-        ruleName: 'Micro-Deposit Inflow Funnel',
-        description: '30 distinct remitters credited account ACC0030 with identical micro-amounts.',
-        metrics: { 'Sender Count': 30, 'Average Amount (₹)': 2000, 'Time Window': '3 hours' }
+        ruleName: 'Multi Source Fan In',
+        description: 'Rule MULTI_SOURCE_FAN_IN triggered with confidence score 79/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '79%',
+          'Participating Accounts': 31,
+          'Linked Transactions': 30,
+          'Primary Node': 'ACC0030',
+        }
       }
     ],
-    suggestedAction: 'Freeze inward transactions on aggregator ACC0030 pending legitimate commercial proof.'
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0030) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0007',
+    title: 'Complaint Convergence: 7 Feeder Mules to Collector',
+    clusterId: 'CLUSTER_COMPLAINT_CONVERGENCE_ALR-0007',
+    severity: 'HIGH',
+    riskScore: 78,
+    patternType: 'MULE_RING',
+    totalVolume: 117904,
+    involvedEntitiesCount: 7,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected complaint convergence pattern involving 7 accounts (ACC0131, ACC0132, ACC0133, ACC0134...) and 11 transactions.',
+    evidence: [
+      {
+        ruleId: 'COMPLAINT_CONVERGENCE',
+        ruleName: 'Complaint Convergence',
+        description: 'Rule COMPLAINT_CONVERGENCE triggered with confidence score 78/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '78%',
+          'Participating Accounts': 7,
+          'Linked Transactions': 11,
+          'Primary Node': 'ACC0131',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0131) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0008',
+    title: 'Rapid Onward Transfer: ACC0069 → ACC0144',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0008',
+    severity: 'HIGH',
+    riskScore: 78,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 4728,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0069, ACC0144) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 78/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '78%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0069',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0069) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0009',
+    title: 'Rapid Onward Transfer: ACC0013 → ACC0014',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0009',
+    severity: 'HIGH',
+    riskScore: 77,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 88920,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0013, ACC0014) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 77/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '77%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0013',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0013) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0010',
+    title: 'Rapid Onward Transfer: ACC0131 → ACC0140',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0010',
+    severity: 'HIGH',
+    riskScore: 77,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 27287,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0131, ACC0140) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 77/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '77%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0131',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0131) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0011',
+    title: 'Rapid Onward Transfer: ACC0012 → ACC0013',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0011',
+    severity: 'HIGH',
+    riskScore: 75,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 93600,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0012, ACC0013) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 75/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '75%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0012',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0012) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0012',
+    title: 'Rapid Onward Transfer: ACC0134 → ACC0140',
+    clusterId: 'CLUSTER_RAPID_ONWARD_TRANSFER_ALR-0012',
+    severity: 'MEDIUM',
+    riskScore: 71,
+    patternType: 'RAPID_DISPERSION',
+    totalVolume: 21126,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected rapid onward transfer pattern involving 2 accounts (ACC0134, ACC0140) and 2 transactions.',
+    evidence: [
+      {
+        ruleId: 'RAPID_ONWARD_TRANSFER',
+        ruleName: 'Rapid Onward Transfer',
+        description: 'Rule RAPID_ONWARD_TRANSFER triggered with confidence score 71/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '71%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 2,
+          'Primary Node': 'ACC0134',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0134) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0013',
+    title: 'Complaint Convergence: 2 Feeder Mules to Collector',
+    clusterId: 'CLUSTER_COMPLAINT_CONVERGENCE_ALR-0013',
+    severity: 'MEDIUM',
+    riskScore: 56,
+    patternType: 'MULE_RING',
+    totalVolume: 3817,
+    involvedEntitiesCount: 2,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected complaint convergence pattern involving 2 accounts (ACC0163, ACC0165) and 3 transactions.',
+    evidence: [
+      {
+        ruleId: 'COMPLAINT_CONVERGENCE',
+        ruleName: 'Complaint Convergence',
+        description: 'Rule COMPLAINT_CONVERGENCE triggered with confidence score 56/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '56%',
+          'Participating Accounts': 2,
+          'Linked Transactions': 3,
+          'Primary Node': 'ACC0163',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0163) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0014',
+    title: 'Multi-Source Fan-In: 8 Remitters to ACC0170',
+    clusterId: 'CLUSTER_MULTI_SOURCE_FAN_IN_ALR-0014',
+    severity: 'MEDIUM',
+    riskScore: 51,
+    patternType: 'MULE_RING',
+    totalVolume: 34622,
+    involvedEntitiesCount: 9,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected multi source fan in pattern involving 9 accounts (ACC0170, ACC0171, ACC0172, ACC0173...) and 8 transactions.',
+    evidence: [
+      {
+        ruleId: 'MULTI_SOURCE_FAN_IN',
+        ruleName: 'Multi Source Fan In',
+        description: 'Rule MULTI_SOURCE_FAN_IN triggered with confidence score 51/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '51%',
+          'Participating Accounts': 9,
+          'Linked Transactions': 8,
+          'Primary Node': 'ACC0170',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0170) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0015',
+    title: 'Complaint Convergence: 5 Feeder Mules to Collector',
+    clusterId: 'CLUSTER_COMPLAINT_CONVERGENCE_ALR-0015',
+    severity: 'MEDIUM',
+    riskScore: 50,
+    patternType: 'MULE_RING',
+    totalVolume: 72173,
+    involvedEntitiesCount: 5,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected complaint convergence pattern involving 5 accounts (ACC0049, ACC0131, ACC0133, ACC0135...) and 7 transactions.',
+    evidence: [
+      {
+        ruleId: 'COMPLAINT_CONVERGENCE',
+        ruleName: 'Complaint Convergence',
+        description: 'Rule COMPLAINT_CONVERGENCE triggered with confidence score 50/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '50%',
+          'Participating Accounts': 5,
+          'Linked Transactions': 7,
+          'Primary Node': 'ACC0049',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0049) and review associated transactions.'
   },
   {
     id: 'ALR-0016',
-    title: 'Hardware Collusion: Rooted Device Farm',
-    clusterId: 'CLUSTER_S09_SHARED_DEVICE',
-    severity: 'HIGH',
-    riskScore: 82,
-    patternType: 'MULE_RING',
-    totalVolume: 34200,
-    involvedEntitiesCount: 9,
-    detectedAt: '2026-10-15 02:45:00 IST',
-    summary: '8 distinct account identities bound to single rooted handset DEV9001 executed synchronized nocturnal payments to ACC0170.',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0016',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 21936,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0019, ACC0069, ACC0080) and 28 transactions.',
     evidence: [
       {
         ruleId: 'SHARED_DEVICE',
-        ruleName: 'Multi-Account Hardware Collusion',
-        description: 'Device DEV9001 authorized payments across 8 distinct user identities in 45 minutes.',
-        metrics: { 'Device ID': 'DEV9001', 'Accounts Bound': 8, 'Window': '02:00 - 02:45 IST' }
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 28,
+          'Primary Node': 'ACC0019',
+        }
       }
     ],
-    suggestedAction: 'Blacklist hardware identifier DEV9001 across member bank gateways.'
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0019) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0017',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0017',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 88197,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0035, ACC0101, ACC0200) and 72 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 72,
+          'Primary Node': 'ACC0035',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0035) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0018',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0018',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 7869,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0054, ACC0084, ACC0190) and 15 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 15,
+          'Primary Node': 'ACC0054',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0054) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0019',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0019',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 67863,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0087, ACC0102, ACC0142) and 66 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 66,
+          'Primary Node': 'ACC0087',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0087) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0020',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0020',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 64896,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0094, ACC0124, ACC0140) and 91 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 91,
+          'Primary Node': 'ACC0094',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0094) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0021',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0021',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 41071,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0118, ACC0120, ACC0196) and 65 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 65,
+          'Primary Node': 'ACC0118',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0118) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0022',
+    title: 'Shared Device Collusion: Hardware Cluster (3 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0022',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 64394,
+    involvedEntitiesCount: 3,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 3 accounts (ACC0139, ACC0144, ACC0182) and 104 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 3,
+          'Linked Transactions': 104,
+          'Primary Node': 'ACC0139',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0139) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0023',
+    title: 'Shared Device Collusion: Hardware Cluster (8 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0023',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 34622,
+    involvedEntitiesCount: 8,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 8 accounts (ACC0171, ACC0172, ACC0173, ACC0174...) and 8 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 8,
+          'Linked Transactions': 8,
+          'Primary Node': 'ACC0171',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0171) and review associated transactions.'
+  },
+  {
+    id: 'ALR-0024',
+    title: 'Shared Device Collusion: Hardware Cluster (5 Accounts)',
+    clusterId: 'CLUSTER_SHARED_DEVICE_ALR-0024',
+    severity: 'LOW',
+    riskScore: 20,
+    patternType: 'DEVICE_FARM',
+    totalVolume: 18103,
+    involvedEntitiesCount: 5,
+    detectedAt: '2026-10-15 22:47:50 IST',
+    summary: 'Detected shared device pattern involving 5 accounts (ACC0181, ACC0182, ACC0183, ACC0184...) and 30 transactions.',
+    evidence: [
+      {
+        ruleId: 'SHARED_DEVICE',
+        ruleName: 'Shared Device',
+        description: 'Rule SHARED_DEVICE triggered with confidence score 20/100 based on synthetic bank and gateway records.',
+        metrics: {
+          'Confidence Score': '20%',
+          'Participating Accounts': 5,
+          'Linked Transactions': 30,
+          'Primary Node': 'ACC0181',
+        }
+      }
+    ],
+    suggestedAction: 'Initiate supervisory audit on primary node (ACC0181) and review associated transactions.'
   },
   {
     id: 'ALT_2026_094',
