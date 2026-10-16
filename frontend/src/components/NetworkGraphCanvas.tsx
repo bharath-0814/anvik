@@ -16,6 +16,7 @@ interface NetworkGraphCanvasProps {
   edges: NetworkEdge[];
   selectedNodeId: string | null;
   onSelectNode: (node: NetworkNode | null) => void;
+  onHoverNode?: (node: NetworkNode | null) => void;
   timelineIndex: number; // 0 to 4
   frozenNodeIds?: Set<string>;
 }
@@ -25,6 +26,7 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
   edges,
   selectedNodeId,
   onSelectNode,
+  onHoverNode,
   timelineIndex,
   frozenNodeIds = new Set(),
 }) => {
@@ -538,6 +540,7 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
                   }}
                   onMouseEnter={(e) => {
                     setHoveredNodeId(node.id);
+                    onHoverNode?.(node);
                     const rect = containerRef.current?.getBoundingClientRect();
                     const screenX = e.clientX - (rect?.left || 0);
                     const screenY = e.clientY - (rect?.top || 0);
@@ -552,6 +555,7 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
                   onMouseLeave={() => {
                     setHoveredNodeId(null);
                     setHoveredNode(null);
+                    onHoverNode?.(null);
                   }}
                 >
                   {/* SELECTION HALO */}
@@ -691,7 +695,11 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
                           : isHovered ? 'fill-slate-950' : 'fill-slate-800'
                       }`}
                     >
-                      {isFrozen ? `${node.role} (FROZEN)` : node.role}
+                      {isFrozen
+                        ? `${node.role} (FROZEN)`
+                        : node.accountId
+                        ? `${node.accountId} · ${node.name.split(' ')[0]}`
+                        : node.role}
                     </text>
 
                     {/* Bottom: VPA handle / Hardware ID in muted 10px */}
@@ -716,10 +724,10 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
       {/* 4. MICRO-CARD HOVER TOOLTIP */}
       {hoveredNode && (
         <div
-          className="absolute z-30 pointer-events-none p-3 rounded-xl bg-white border border-[#E2DFD7] shadow-xl text-xs w-60 select-none animate-in fade-in zoom-in-95 duration-100"
+          className="absolute z-30 pointer-events-none p-3 rounded-xl bg-white border border-[#E2DFD7] shadow-xl text-xs w-64 select-none animate-in fade-in zoom-in-95 duration-100"
           style={{
-            left: `${Math.min(Math.max(hoveredNode.screenX + 16, 20), (containerRef.current?.clientWidth || 600) - 260)}px`,
-            top: `${Math.min(Math.max(hoveredNode.screenY - 20, 50), (containerRef.current?.clientHeight || 400) - 130)}px`,
+            left: `${Math.min(Math.max(hoveredNode.screenX + 16, 20), (containerRef.current?.clientWidth || 600) - 275)}px`,
+            top: `${Math.min(Math.max(hoveredNode.screenY - 20, 50), (containerRef.current?.clientHeight || 400) - 145)}px`,
           }}
         >
           <div className="flex items-center justify-between gap-1 mb-1.5 pb-1 border-b border-slate-100">
@@ -740,6 +748,12 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
           </div>
 
           <div className="space-y-1 text-[11px] text-slate-600">
+            {hoveredNode.node.accountId && (
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Account ID:</span>
+                <span className="font-mono text-[#007065] font-bold">{hoveredNode.node.accountId}</span>
+              </div>
+            )}
             <div className="flex items-center justify-between">
               <span className="text-slate-400">Identifier:</span>
               <span className="font-mono text-slate-800 font-medium truncate max-w-[130px]">
@@ -750,6 +764,12 @@ export const NetworkGraphCanvas: React.FC<NetworkGraphCanvasProps> = ({
               <div className="flex items-center justify-between">
                 <span className="text-slate-400">Institution:</span>
                 <span className="text-slate-800 font-medium">{hoveredNode.node.bank}</span>
+              </div>
+            )}
+            {hoveredNode.node.associatedDeviceId && (
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Device Link:</span>
+                <span className="font-mono text-slate-700 font-medium text-[10px]">{hoveredNode.node.associatedDeviceId}</span>
               </div>
             )}
             <div className="flex items-center justify-between">

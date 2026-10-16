@@ -145,17 +145,24 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
             <div className="p-4 rounded-xl border border-[#E2DFD7] bg-[#FAFAFA]">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div>
-                  <span
-                    className={`inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider mb-1.5 ${
-                      selectedNode.type === 'mule'
-                        ? 'bg-rose-100 text-rose-800'
-                        : selectedNode.type === 'collect'
-                        ? 'bg-amber-100 text-amber-800'
-                        : 'bg-emerald-100 text-[#007065]'
-                    }`}
-                  >
-                    {selectedNode.role}
-                  </span>
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span
+                      className={`inline-block px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${
+                        selectedNode.type === 'mule'
+                          ? 'bg-rose-100 text-rose-800'
+                          : selectedNode.type === 'collect'
+                          ? 'bg-amber-100 text-amber-800'
+                          : 'bg-emerald-100 text-[#007065]'
+                      }`}
+                    >
+                      {selectedNode.role}
+                    </span>
+                    {selectedNode.accountId && (
+                      <span className="font-mono bg-[#007065]/10 text-[#007065] px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#007065]/20">
+                        {selectedNode.accountId}
+                      </span>
+                    )}
+                  </div>
                   <h3 className="font-bold text-sm text-slate-900 leading-tight">
                     {selectedNode.name}
                   </h3>
@@ -177,10 +184,22 @@ export const InvestigationInsightsRail: React.FC<InvestigationInsightsRailProps>
 
               {/* Node Details Grid (Adjusts evenly based on available width) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-600 pt-1">
+                {selectedNode.accountId && (
+                  <div className="p-2 rounded-lg bg-white border border-slate-200">
+                    <span className="text-slate-400 block text-[10px]">Account ID</span>
+                    <span className="font-bold text-[#007065] font-mono text-[11px]">{selectedNode.accountId}</span>
+                  </div>
+                )}
                 {selectedNode.bank && (
                   <div className="p-2 rounded-lg bg-white border border-slate-200">
                     <span className="text-slate-400 block text-[10px]">Institution</span>
                     <span className="font-semibold text-slate-800">{selectedNode.bank}</span>
+                  </div>
+                )}
+                {selectedNode.associatedDeviceId && (
+                  <div className="p-2 rounded-lg bg-white border border-slate-200">
+                    <span className="text-slate-400 block text-[10px]">Associated Device</span>
+                    <span className="font-semibold text-slate-800 font-mono text-[10px]">{selectedNode.associatedDeviceId}</span>
                   </div>
                 )}
                 {selectedNode.hardwareModel && (

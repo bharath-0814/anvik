@@ -6,6 +6,8 @@ export interface NetworkNode {
   role: string;
   handle: string; // VPA, Hardware ID, or Collect Ref
   name: string;
+  accountId?: string; // e.g. ACC0125, ACC0135
+  associatedDeviceId?: string; // e.g. DEV0127, DEV0091
   bank?: string;
   hardwareModel?: string;
   riskScore: number;

@@ -213,6 +213,7 @@ function DashboardContent() {
   }, [networkEdges, displayNodes]);
 
   const [selectedNetworkNode, setSelectedNetworkNode] = useState<NetworkNode | null>(null);
+  const [hoveredNetworkNode, setHoveredNetworkNode] = useState<NetworkNode | null>(null);
   const [timelineIndex, setTimelineIndex] = useState<number>(4);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
@@ -662,8 +663,11 @@ function DashboardContent() {
                 <div className="w-full h-full p-4 overflow-hidden animate-in fade-in duration-200">
                   <div className="h-full rounded-2xl overflow-hidden border border-[#E8E4D8] shadow-2xs bg-white">
                     <InvestigationInsightsRail
-                      selectedNode={selectedNetworkNode}
-                      onClearSelection={() => setSelectedNetworkNode(null)}
+                      selectedNode={hoveredNetworkNode || selectedNetworkNode}
+                      onClearSelection={() => {
+                        setSelectedNetworkNode(null);
+                        setHoveredNetworkNode(null);
+                      }}
                       edges={networkEdges}
                       nodes={networkNodes}
                       frozenNodeIds={frozenNodeIds}
@@ -692,8 +696,11 @@ function DashboardContent() {
                   >
                     <div className="w-[380px] lg:w-[420px] h-full rounded-2xl overflow-hidden border border-[#E8E4D8] shadow-2xs bg-white">
                       <InvestigationInsightsRail
-                        selectedNode={selectedNetworkNode}
-                        onClearSelection={() => setSelectedNetworkNode(null)}
+                        selectedNode={hoveredNetworkNode || selectedNetworkNode}
+                        onClearSelection={() => {
+                          setSelectedNetworkNode(null);
+                          setHoveredNetworkNode(null);
+                        }}
                         edges={networkEdges}
                         nodes={networkNodes}
                         frozenNodeIds={frozenNodeIds}
@@ -732,8 +739,9 @@ function DashboardContent() {
                       <NetworkGraphCanvas
                         nodes={displayNodes}
                         edges={displayEdges}
-                        selectedNodeId={selectedNetworkNode?.id || null}
+                        selectedNodeId={(hoveredNetworkNode || selectedNetworkNode)?.id || null}
                         onSelectNode={setSelectedNetworkNode}
+                        onHoverNode={setHoveredNetworkNode}
                         timelineIndex={timelineIndex}
                         frozenNodeIds={frozenNodeIds}
                       />
