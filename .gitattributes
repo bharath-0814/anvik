@@ -1,0 +1,62 @@
+# ==============================================================================
+# ANVIK — GIT ATTRIBUTES CONFIGURATION
+# Cross-platform line ending normalization & GitHub Linguist language statistics
+# ==============================================================================
+
+# Default behavior: Automatic line ending normalization (LF on checkout)
+* text=auto eol=lf
+
+# Explicit text files
+*.py text eol=lf diff=python
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.toml text eol=lf
+*.sql text eol=lf
+*.sh text eol=lf
+*.csv text eol=lf
+
+# Windows-specific files
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# ------------------------------------------------------------------------------
+# GitHub Linguist Overrides (Keep PR diffs clean & language statistics accurate)
+# ------------------------------------------------------------------------------
+# Collapse massive synthetic evaluation datasets in PR reviews
+backend/data/*.csv linguist-generated=true
+backend/data/incoming/*.csv linguist-generated=true
+backend/data/*.json linguist-generated=true
+backend/data/incoming/*.json linguist-generated=true
+backend/app/detection/alerts_data.json linguist-generated=true
+
+# Mark dependency lockfiles as generated
+package-lock.json linguist-generated=true
+frontend/package-lock.json linguist-generated=true
+
+# Documentation files
+docs/*.md linguist-documentation=true
+README.md linguist-documentation=true
+AGENTS.md linguist-documentation=true
+GEMINI.md linguist-documentation=true

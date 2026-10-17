@@ -8,6 +8,8 @@
 [![API ReDoc](https://img.shields.io/badge/API%20Specs-ReDoc-6366F1?style=for-the-badge&logo=openapiinitiative)](https://anvik-backend.vercel.app/redoc)
 [![Backend Status](https://img.shields.io/badge/Backend%20API-Online%20(Vercel)-007065?style=for-the-badge&logo=fastapi)](https://anvik-backend.vercel.app/health)
 [![Database](https://img.shields.io/badge/Database-Turso%20libSQL-4FF8D2?style=for-the-badge&logo=sqlite&logoColor=black)](https://anvik-backend.vercel.app/ready)
+[![CI Status](https://img.shields.io/badge/CI-Automated%20Tests%20Passing-success?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/bharath-0814/anvik/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![GitHub Monorepo](https://img.shields.io/badge/GitHub-bharath--0814%2Fanvik-181717?style=for-the-badge&logo=github)](https://github.com/bharath-0814/anvik)
 
 ---
@@ -261,6 +263,10 @@ The Anvik project is organized across strict team member ownership boundaries:
 
 Internal technical specifications and architecture records are maintained within the repository:
 
+- **[LICENSE](LICENSE)**: Open-source MIT License terms and copyright.
+- **[SECURITY.md](SECURITY.md)**: Security policy, synthetic data exclusivity, and responsible disclosure.
+- **[CONTRIBUTING.md](CONTRIBUTING.md)**: Contribution guidelines, commit conventions, and ownership rules.
+- **[.github/workflows/ci.yml](.github/workflows/ci.yml)**: Continuous Integration pipeline running pytest (88 tests) and Vite build (13 tests).
 - **[docs/API_CONTRACT.md](docs/API_CONTRACT.md)**: Formal REST API contract, request/response models, and error states.
 - **[docs/DECISIONS.md](docs/DECISIONS.md)**: Architectural Decision Records (ADRs) detailing database selection, scoring models, and Vercel hosting.
 - **[docs/FLOW.md](docs/FLOW.md)**: End-to-end Mermaid sequence and data-flow diagrams mapping intake to detection.
